@@ -2,6 +2,8 @@
 <html>
   <head>
     <link rel="stylesheet" href="style.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="searchitem.js"></script>
     <title></title>
   </head>
   <body>
@@ -17,6 +19,12 @@
         </td>
       </tr>
     </table>
-  
+  <div>
+
+  <input id="input"    placeholder="Search" onkeypress="searchKeyPress(event)"></input>
+<button id="searchButton" onclick="search()">Search</button>
+</div>
+
+<div id="results"></div>
   </body>
 </html>
