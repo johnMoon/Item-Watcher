@@ -29,8 +29,15 @@
 				});
 			};
 			
+			
+			function openSearchWindow(){
+			
+			
+			
+			}
+			
 			function openSubWindow(){
-				alert("the subwindow will only be visible inside a game");
+				//alert("the subwindow will only be visible inside a game");
 				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
 					if (result.status == "success"){
 						overwolf.windows.restore(result.window.id, function(result){
@@ -55,6 +62,13 @@
 			function runTeamSpeak(){
 				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
 			};
+			
+			function search(){
+				var searchItem =document.getElementById("search").value;
+				var api = "https//api.guildwars2.com/v2/items"
+				
+				
+			}
 		</script>
 	</head>
 
@@ -70,20 +84,22 @@
 		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
 		<div id="content" onmousedown="dragMove();">
 			<h1>Watch Window</h1>
+		
+			<input id= "search"			type = "text"  name = "searchBox" placeholder= "add item here..">
+			<input type="image" onclick= "window.open('searchWindow.html')" src="image/search.png" alt="Search" width="20" height="18">
+			<input type= "image" src= "image/add_button.png" alt = "Add" width = "20" height = "18">
 			
-			<input type = "text"  name = "searchBox" placeholder= "add item here..">
+			
+			
 			<hr>
 			<div style = "overflow:auto		">
 			<button id="close" onclick="closeWindow();">Close</button>
 			<button id="run-teamspeak" onclick="runTeamSpeak();">Run TeamSpeak</button>
 			<button onclick="takeScreenshot();">Take Screenshot</button>
+			<button id = "search-subWindow" onclick = "openSearchWindow();">Open Search-Window</button> 
 			<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
 			<img id="screenshot" width="300px"></img>
-			<button >close</button>
-				<button >close</button>
-					<button >close</button>
-						<button >close</button>
-							<button >close</button>
+			
 							
 			
 			</div>
