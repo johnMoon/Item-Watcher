@@ -3,6 +3,8 @@
 	<head> 
 		<link rel="stylesheet" href="style.css" />
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src= "mainWindowSearch.js" ></script>
 		<title>Demo app</title>
 		<script>
 			function dragResize(edge){
@@ -36,6 +38,7 @@
 			
 			}
 			
+			
 			function openSubWindow(){
 				//alert("the subwindow will only be visible inside a game");
 				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
@@ -46,6 +49,7 @@
 					}
 				});
 			};
+
 			
 			function takeScreenshot(){
 				overwolf.media.takeScreenshot(function(result){
@@ -86,7 +90,7 @@
 			<h1>Watch Window</h1>
 		
 			<input id= "search"			type = "text"  name = "searchBox" placeholder= "add item here..">
-			<input type="image" onclick= "window.open('searchWindow.html')" src="image/search.png" alt="Search" width="20" height="18">
+			<input id= "searchButton1"	type="image" onclick= "findMatchingItem()" src="image/search.png" alt="Search" width="20" height="18">
 			<input type= "image" src= "image/add_button.png" alt = "Add" width = "20" height = "18">
 			
 			

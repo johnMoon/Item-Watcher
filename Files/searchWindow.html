@@ -6,7 +6,70 @@
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<title>Demo app</title>
 		<script>
-		
+		function dragResize(edge){
+				overwolf.windows.getCurrentWindow(function(result){
+					if (result.status=="success"){
+						overwolf.windows.dragResize(result.window.id, edge);
+					}
+				});
+			};
+			
+			function dragMove(){
+				overwolf.windows.getCurrentWindow(function(result){
+					if (result.status=="success"){
+						overwolf.windows.dragMove(result.window.id);
+					}
+				});
+			};
+			
+			function closeWindow(){
+				overwolf.windows.getCurrentWindow(function(result){
+					if (result.status=="success"){
+						overwolf.windows.close(result.window.id);
+					}
+				});
+			};
+			
+			
+			function openSearchWindow(){
+			
+			
+			
+			}
+			
+			function openSubWindow(){
+				//alert("the subwindow will only be visible inside a game");
+				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
+					if (result.status == "success"){
+						overwolf.windows.restore(result.window.id, function(result){
+								console.log(result);
+						});
+					}
+				});
+			};
+			
+			function takeScreenshot(){
+				overwolf.media.takeScreenshot(function(result){
+					if (result.status == "success"){
+						var img = document.getElementById("screenshot");
+						img.src = result.url;
+						img.onload = function() {
+							overwolf.media.shareImage(img, "Screen Shot");
+						};
+					}
+				});
+			}
+			
+			function runTeamSpeak(){
+				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
+			};
+			
+			function search(){
+				var searchItem =document.getElementById("search").value;
+				var api = "https//api.guildwars2.com/v2/items"
+				
+				
+			}
 		</script>
 	</head>
 	<body>
@@ -18,8 +81,15 @@
 		<div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
 		<div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
 		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
-	 <h1>Search Window </h1>
-	 
+		
+	 <div id="content" onmousedown="dragMove();">
+		<div style = "overflow:auto		">
+			<h1>Search Window </h1>
+			<input id= "search"	type = "text"  name = "searchBox" placeholder= "add item here..">
+			<input id= "searchButton2"type="image" onclick= "window.open('searchWindow.html')" src="image/search1.png" alt="Search" width="20" height="18">
+			
+		</div>
+	</div>
 	</body>
 </html>	
 	
