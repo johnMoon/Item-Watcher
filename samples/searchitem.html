@@ -7,24 +7,29 @@
     <title></title>
   </head>
   <body>
-    <table class="search-item-cell">
-      <tr>
-        <td>
-          <img id="screenshot" src="https://render.guildwars2.com/file/6BD5B65FBC6ED450219EC86DD570E59F4DA3791F/433643.png"
-          height="32" width="32" />
-        </td>
-        <td id="search-item-1-name">Strong Soft Wood Longbow of Fire</td>
-        <td class="search-add">
-          <button id="search-add-1-button">X</button>
-        </td>
-      </tr>
-    </table>
+<h3>TEMPLATE</h3>
+<!-- When list item have multiple component, new lines are shown as spaces on site :( -->
+<ul  class="none-list">
+<li id="item-cell-template" class="search-item-cell">
+<img id="screenshot" class ="item-img" src="https://render.guildwars2.com/file/6BD5B65FBC6ED450219EC86DD570E59F4DA3791F/433643.png" height="32" width="32" /><span class="item-name">Strong Soft Wood Longbow of Fire</span><button id="search-add-1-button" class="right-button">X</button>
+</li>
+	
+</ul>
   <div>
 
   <input id="input"    placeholder="Search" onkeypress="searchKeyPress(event)"></input>
 <button id="searchButton" onclick="search()">Search</button>
+
+
+
+
+</div>
+<div >
+
+<ul id="resultList" class="none-list">
+</ul>
 </div>
 
-<div id="results"></div>
+
   </body>
 </html>

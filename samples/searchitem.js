@@ -9,11 +9,16 @@ function searchKeyPress(e) {
 
 
 function search() {
-	var searchTerm = document.getElementById('input').value.trim();
+	var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
 	console.log(searchTerm);
+	console.log(encodeURIComponent(searchTerm));
+	searchTerm =encodeURIComponent(searchTerm);
+	// BUG! there are some (4) items that have / in them. currently search apis cant handle this.
+	// wait for gw2 official api
 	if( searchTerm ) { // if not empty or null
 
 	var spidy = "http://www.gw2spidy.com/api/v0.9/json/item-search/"+searchTerm+"?callback=?";
+		console.log(spidy);
 	$.getJSON(spidy, function (data) {
 		console.log(data);
 		console.log(data.count);
@@ -23,7 +28,8 @@ function search() {
 		console.log(data.total);
 
 	}).done(function (data) {
-		$('#results').empty();
+		// Need to handle request failures and timeouts
+		$('#resultList').empty();
 		var div = $(document.createElement('div'));
 
 		var p = $(document.createElement('p')).text("count: " + data.count);
@@ -34,18 +40,20 @@ function search() {
 		p = $(document.createElement('p')).text("total: " + data.total);
 		result = $(div).append($(p));
 
-		$(result).appendTo("#results");
+		$(result).appendTo("#resultList");
 
+		if (data.total==0){
+			
+			$(document.createElement('p')).text("No items can be found.").appendTo("#resultList");;
+
+		$(result).appendTo("#resultList");
+			return;
+		}
+		
 		$.each(data.results, function (i, item) {
 
-			var div = $(document.createElement('div'));
-			div.text(i);
-			var span = $(document.createElement('span')).text(item.data_id + " " + item.name);
-			var img = $(document.createElement('img')).attr('src', item.img);
-			var result = $(div).append($(img));
-			result = $(div).append($(span));
-			$(result).appendTo("#results");
 
+			createSearchItem(i, item.img,  item.name)
 		});
 	}); ;
 	} else {
@@ -53,4 +61,25 @@ function search() {
 			console.log("search term is empty");
 	}
 	
+}
+
+
+
+function createSearchItem(index, imageSrc, itemName){
+			
+	var li = $(document.createElement('li'));
+	$(li).attr('id', "item-cell-"+index).addClass("search-item-cell" );
+	var img = $(document.createElement('img')).attr('src', imageSrc);
+	$(img).attr('height', "32").attr('width', "32");
+	$(img).addClass("item-img");
+	var span = $(document.createElement('span')).text(itemName);
+	span.addClass("item-name" );
+	var button = $(document.createElement('button')).text("X");
+	button.addClass( "right-button" );
+
+	var result = $(li).append($(img));
+	result = $(li).append($(span));
+	result = $(li).append($(button));
+	$(result).appendTo("#resultList");
+
 }
