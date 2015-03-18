@@ -5,90 +5,25 @@
 	<link rel="stylesheet" href="style.css" />
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<title>Demo app</title>
-		<script>
-		function dragResize(edge){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragResize(result.window.id, edge);
-					}
-				});
-			};
-			
-			function dragMove(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragMove(result.window.id);
-					}
-				});
-			};
-			
-			function closeWindow(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.close(result.window.id);
-					}
-				});
-			};
-			
-			
-			function openSearchWindow(){
-			
-			
-			
-			}
-			
-			function openSubWindow(){
-				//alert("the subwindow will only be visible inside a game");
-				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
-					if (result.status == "success"){
-						overwolf.windows.restore(result.window.id, function(result){
-								console.log(result);
-						});
-					}
-				});
-			};
-			
-			function takeScreenshot(){
-				overwolf.media.takeScreenshot(function(result){
-					if (result.status == "success"){
-						var img = document.getElementById("screenshot");
-						img.src = result.url;
-						img.onload = function() {
-							overwolf.media.shareImage(img, "Screen Shot");
-						};
-					}
-				});
-			}
-			
-			function runTeamSpeak(){
-				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
-			};
-			
-			function search(){
-				var searchItem =document.getElementById("search").value;
-				var api = "https//api.guildwars2.com/v2/items"
-				
-				
-			}
-		</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="searchitem.js"></script>
+
 	</head>
-	<body>
-		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
-		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
-		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
-		<div class="resizeGrip" id="resizeGripRight" onmousedown="dragResize('Right');"></div>
-		<div class="resizeGrip" id="resizeGripBottomRight" onmousedown="dragResize('BottomRight');"></div>
-		<div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
-		<div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
-		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
+	<body onresize="resizeListener()">
 		
-	 <div id="content" onmousedown="dragMove();">
-		<div style = "overflow:auto		">
+	 <div id="content" >
+		<div id="search-header">
 			<h1>Search Window </h1>
-			<input id= "search"	type = "text"  name = "searchBox" placeholder= "add item here..">
-			<input id= "searchButton2"type="image" onclick= "window.open('searchWindow.html')" src="image/search1.png" alt="Search" width="20" height="18">
-			
+
+			<input id="input"    placeholder="Search" onkeypress="searchKeyPress(event)"></input>
+			<input type="image" id="searchButton" src="image/search1.png"  onclick="search()" class="searchButton"></input>
 		</div>
+		<div  id ="result-container" class="resultContainer" >
+
+			<ul id="resultList"  class="none-list">
+		</ul>
+	</div>
+
 	</div>
 	</body>
 </html>	
