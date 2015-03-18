@@ -2,7 +2,6 @@
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
-	background: rgba(240, 200, 255, 0.8);
 }
 
 .resizeGrip {
@@ -120,7 +119,7 @@ width:170px;
 border:1px solid #000;
 width:300px;
 margin:1px;
-/* support multiple column?   display: inline-block;*/
+  display: inline-block;
 }
 
 
@@ -154,3 +153,25 @@ margin:1px;
     overflow-y: auto;
     height: 300px;
 }
+
+// item color
+
+
+.junk{
+color:#AAA;
+}
+.basic{
+color:#000;
+}
+.fine{
+color:#62A4DA;}
+.masterwork{
+color:#1a9306;}
+.rare{
+color:#fcd00b;}
+.exotic{
+color:#ffa405;}
+.ascended{
+color:#fb3e8d;}
+.legendary{
+color:#4C139D;}

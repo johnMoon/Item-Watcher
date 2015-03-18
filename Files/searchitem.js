@@ -1,45 +1,4 @@
-// OVERWOLF WINDOW
 
-function dragResize(edge){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragResize(result.window.id, edge);
-	
-
-					}
-				});
-			};
-			
-			// we need to make sure scroll bar will work instead of being moved
-			function dragMove(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragMove(result.window.id);
-						
-					}
-				});
-			};
-			
-			function closeWindow(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.close(result.window.id);
-					}
-				});
-			};
-			
-			
-	
-			function openSubWindow(){
-				//alert("the subwindow will only be visible inside a game");
-				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
-					if (result.status == "success"){
-						overwolf.windows.restore(result.window.id, function(result){
-								console.log(result);
-						});
-					}
-				});
-			};
 		
 
 // SEARCH
@@ -55,34 +14,33 @@ function searchKeyPress(e) {
 
 function search() {
 	var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
-	console.log(searchTerm);
-	console.log(encodeURIComponent(searchTerm));
 	searchTerm =encodeURIComponent(searchTerm);
 	// BUG! there are some (4) items that have / in them. currently search apis cant handle this.
 	// wait for gw2 official api
 	if( searchTerm ) { // if not empty or null
 
 	var spidy = "http://www.gw2spidy.com/api/v0.9/json/item-search/"+searchTerm+"?callback=?";
-		console.log(spidy);
-	$.getJSON(spidy, function (data) {
-		console.log(data);
-		console.log(data.count);
-		console.log(data.last_page);
-		console.log(data.page);
-		console.log(data.results);
-		console.log(data.total);
-
-	}).done(function (data) {
+	$.getJSON(spidy).done(function (data) {
 		// Need to handle request failures and timeouts
+
+		// get result statistics
+		var itemCount = data.count;
+		var currentPage =  data.page;
+		var lastPage =  data.last_page;
+		var itemTotal =  data.total;
+
+		// prepare content
 		$('#resultList').empty();
 		var div = $(document.createElement('div'));
 
-		var p = $(document.createElement('p')).text("count: " + data.count);
+		var p = $(document.createElement('p')).text("count: " + itemCount);
 		var result = $(div).append($(p));
 
-		p = $(document.createElement('p')).text("page: " + data.page + "/" + data.last_page);
+
+
+		p = $(document.createElement('p')).text("page: " + currentPage + "/" + lastPage);
 		result = $(div).append($(p));
-		p = $(document.createElement('p')).text("total: " + data.total);
+		p = $(document.createElement('p')).text("total: " + itemTotal);
 		result = $(div).append($(p));
 
 		$(result).appendTo("#resultList");
@@ -98,7 +56,7 @@ function search() {
 		$.each(data.results, function (i, item) {
 
 
-			createSearchItem(i, item.img,  item.name)
+			createSearchItem(i, item.img,  item.name,   item.rarity,item.restriction_level  );
 		});
 	}); ;
 	} else {
@@ -110,16 +68,22 @@ function search() {
 
 
 
-function createSearchItem(index, imageSrc, itemName){
+function createSearchItem(index, imageSrc, itemName, rarity, level){
+			
 			
 	var li = $(document.createElement('li'));
 	$(li).attr('id', "item-cell-"+index).addClass("search-item-cell" );
 	var img = $(document.createElement('img')).attr('src', imageSrc);
 	$(img).attr('height', "32").attr('width', "32");
 	$(img).addClass("item-img");
-	var span = $(document.createElement('span')).text(itemName);
+	onImageFail(img);
+	
+	// Future dont show level for level 0 items
+	
+	var span = $(document.createElement('span')).text(itemName+ " Lv. " + level);
 	span.addClass("item-name" );
-	var button = $(document.createElement('button')).text("X");
+	span.addClass(getColorClass(rarity)  );
+	var button = $(document.createElement('button')).text("+");
 	button.addClass( "right-button" );
 
 	var result = $(li).append($(img));
@@ -127,6 +91,51 @@ function createSearchItem(index, imageSrc, itemName){
 	result = $(li).append($(button));
 	$(result).appendTo("#resultList");
 
+}
+
+// This is dependant on api : currently spidy
+
+
+function getColorClass( rarityID) {
+switch(rarityID) {
+    case 0:
+        return "junk";
+        break;
+    case 1:
+        return "common";
+        break;
+    case 2:
+        return "fine";
+        break;
+    case 3:
+        return "masterwork";
+        break;
+    case 4:
+        return "rare";
+        break;
+    case 5:
+        return "exotic";
+        break;
+    case 6:
+        return "ascended";
+        break;
+    case 7:
+        return "legendary";
+        break;
+    default:
+    	console.log("Unknown rarityID "  + rarityID);
+     	return "";
+}
+
+
+}
+
+
+// default image on error
+function onImageFail(img){
+$(img).error(function () {
+ 	 $(this).unbind("error").attr("src", "image/default_image.jpg");
+	});
 }
 
 
