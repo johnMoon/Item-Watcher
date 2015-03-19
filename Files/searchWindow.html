@@ -8,6 +8,7 @@
 	<script src = "searchWindow.js"></script>
 
 		<title>Demo app</title>
+<<<<<<< HEAD
 		<script>
 		function dragResize(edge){
 				overwolf.windows.getCurrentWindow(function(result){
@@ -97,6 +98,27 @@
 			
 				
 		
+=======
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="searchitem.js"></script>
+
+	</head>
+	<body onresize="resizeListener()">
+		
+	 <div id="content" >
+		<div id="search-header">
+			<h1>Search Window </h1>
+
+			<input id="input"    placeholder="Search" onkeypress="searchKeyPress(event)"></input>
+			<input type="image" id="searchButton" src="image/search1.png"  onclick="search()" class="searchButton"></input>
+		</div>
+		<div  id ="result-container" class="resultContainer" >
+
+			<ul id="resultList"  class="none-list">
+		</ul>
+	</div>
+
+>>>>>>> f9693f9bb418f581e48e196da9ea9ddd620c14b9
 	</div>
 	</body>
 </html>	

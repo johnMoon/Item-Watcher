@@ -196,15 +196,7 @@ function createSearchItem(name,image,bPrice,sPrice){
 		 $(result).appendTo("#searchResult");
 		 
 		 
-		   $(searchResult).ready(
-            function() {
-                setInterval(function() {
-                    var randomnumber = Math.floor(Math.random() * 100);
-                    $('#show').text(
-                            'I am getting refreshed every 3 seconds..! Random Number ==> '
-                                    + randomnumber);
-                }, 3000);
-            });
+		
 	 
 	//$(li).attr('id', "item-cell-"+index).addClass("search-item-cell" );
 	//var img = $(document.createElement('img')).attr('src', imageSrc);
