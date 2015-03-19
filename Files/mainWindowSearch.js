@@ -17,7 +17,7 @@ function findMatchingItem(){
 
 
 		}).done(function(data){
-		if(!data.result){
+		if(data.total != 1){
 			openSubWindow();
 		
 		}

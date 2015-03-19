@@ -4,6 +4,9 @@
 	
 	<link rel="stylesheet" href="style.css" />
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src = "searchWindow.js"></script>
+
 		<title>Demo app</title>
 		<script>
 		function dragResize(edge){
@@ -31,11 +34,7 @@
 			};
 			
 			
-			function openSearchWindow(){
-			
-			
-			
-			}
+		
 			
 			function openSubWindow(){
 				//alert("the subwindow will only be visible inside a game");
@@ -64,31 +63,40 @@
 				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
 			};
 			
-			function search(){
-				var searchItem =document.getElementById("search").value;
-				var api = "https//api.guildwars2.com/v2/items"
-				
-				
-			}
+		 $(document).ready(
+            function() {
+                setInterval(function() {
+                    var randomnumber = Math.floor(Math.random() * 100);
+                    $('#show').text(
+                            'I am getting refreshed every 3 seconds..! Random Number ==> '
+                                    + randomnumber);
+									
+									console.log("Hey I am in ready section");
+                }, 30000);
+            });
+		
+		
+		
 		</script>
 	</head>
 	<body>
-		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
-		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
-		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
-		<div class="resizeGrip" id="resizeGripRight" onmousedown="dragResize('Right');"></div>
-		<div class="resizeGrip" id="resizeGripBottomRight" onmousedown="dragResize('BottomRight');"></div>
-		<div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
-		<div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
-		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
+
 		
 	 <div id="content" onmousedown="dragMove();">
-		<div style = "overflow:auto		">
+		
 			<h1>Search Window </h1>
-			<input id= "search"	type = "text"  name = "searchBox" placeholder= "add item here..">
-			<input id= "searchButton2"type="image" onclick= "window.open('searchWindow.html')" src="image/search1.png" alt="Search" width="20" height="18">
+			<input id= "search"	type = "text"  onkeypress ="pressedEnter(event)" name = "searchBox" placeholder= "add item here..">
+			<input id= "searchButton2"type="image" onclick= "displayMatchingSets()" src="image/search1.png" alt="Search" width="20" height="18">
 			
-		</div>
+			
+			
+			<ul id="searchResult" class="none-list">
+			<ul id= "show" >
+	
+	
+			
+				
+		
 	</div>
 	</body>
 </html>	

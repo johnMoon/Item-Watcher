@@ -53,9 +53,10 @@ function search() {
 		$.each(data.results, function (i, item) {
 
 
-			createSearchItem(i, item.img,  item.name)
+			createSearchItem(i, item.img,  item.name);
+			
 		});
-	}); ;
+	}); 
 	} else {
 		
 			console.log("search term is empty");
