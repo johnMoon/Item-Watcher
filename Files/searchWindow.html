@@ -4,107 +4,30 @@
 	
 	<link rel="stylesheet" href="style.css" />
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src = "searchWindow.js"></script>
 
-		<title>Demo app</title>
-<<<<<<< HEAD
-		<script>
-		function dragResize(edge){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragResize(result.window.id, edge);
-					}
-				});
-			};
-			
-			function dragMove(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragMove(result.window.id);
-					}
-				});
-			};
-			
-			function closeWindow(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.close(result.window.id);
-					}
-				});
-			};
-			
-			
-		
-			
-			function openSubWindow(){
-				//alert("the subwindow will only be visible inside a game");
-				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
-					if (result.status == "success"){
-						overwolf.windows.restore(result.window.id, function(result){
-								console.log(result);
-						});
-					}
-				});
-			};
-			
-			function takeScreenshot(){
-				overwolf.media.takeScreenshot(function(result){
-					if (result.status == "success"){
-						var img = document.getElementById("screenshot");
-						img.src = result.url;
-						img.onload = function() {
-							overwolf.media.shareImage(img, "Screen Shot");
-						};
-					}
-				});
-			}
-			
-			function runTeamSpeak(){
-				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
-			};
-			
-		 $(document).ajaxSuccess(
-            function() {
-                setInterval(function() {
-                    var randomnumber = Math.floor(Math.random() * 100);
-                    $('#show').text(
-                            'I am getting refreshed every 3 seconds..! Random Number ==> '
-                                    + randomnumber);
-									
-									console.log("Hey I am in ready section");
-                }, 30000);
-            });
-		
-		
-		
-		</script>
-	</head>
-	<body>
 
 		
-	 <div id="content" onmousedown="dragMove();">
-		
-			<h1>Search Window </h1>
-			<input id= "search"	type = "text"  onkeypress ="pressedEnter(event)" name = "searchBox" placeholder= "add item here..">
-			<input id= "searchButton2"type="image" onclick= "displayMatchingSets()" src="image/search1.png" alt="Search" width="20" height="18">
-			
-			
-			
-			<ul id="searchResult" class="none-list">
-			<ul id= "show" >
 	
-	
-			
-				
-		
-=======
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="searchitem.js"></script>
 
+	
+	<script>
+		$(function(){
+  			setInterval(function() {
+                var randomnumber = Math.floor(Math.random() * 100);
+                $('#show').text('I am getting refreshed every 5 seconds..! Random Number ==> '+ randomnumber);
+				console.log("Hey I am in ready section");
+                }, 5000);
+		});
+		
+	</script>
+
+	<title>Demo app</title>
 	</head>
 	<body onresize="resizeListener()">
-		
+	<ul id= "show" > Update Test</ul>
 	 <div id="content" >
 		<div id="search-header">
 			<h1>Search Window </h1>
@@ -118,7 +41,6 @@
 		</ul>
 	</div>
 
->>>>>>> f9693f9bb418f581e48e196da9ea9ddd620c14b9
 	</div>
 	</body>
 </html>	

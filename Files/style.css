@@ -91,10 +91,7 @@ width: 100%;
 }
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f9693f9bb418f581e48e196da9ea9ddd620c14b9
 .watch-header {
 border-top:1px solid #000;
 border-left:1px solid #000;
@@ -130,22 +127,15 @@ width:170px;
 border:1px solid #000;
 width:300px;
 margin:1px;
-<<<<<<< HEAD
-/* support multiple column?   display: inline-block;*/
-=======
+
   display: inline-block;
->>>>>>> f9693f9bb418f581e48e196da9ea9ddd620c14b9
 }
 
 
 .none-list {
   list-style-type: none;
       padding-left:0;
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> f9693f9bb418f581e48e196da9ea9ddd620c14b9
 }
 .item-img{vertical-align: middle;}
 .item-name {
@@ -157,12 +147,8 @@ margin:1px;
   margin: 0 ;
 
 }
-<<<<<<< HEAD
-.right-button {
- vertical-align: middle;
- 
-}
-=======
+
+
 .item-level {
  
 
@@ -208,4 +194,3 @@ color:#ffa405;}
 color:#fb3e8d;}
 .legendary{
 color:#4C139D;}
->>>>>>> f9693f9bb418f581e48e196da9ea9ddd620c14b9
