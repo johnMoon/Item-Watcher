@@ -16,8 +16,7 @@
 	<script>
 		$(function(){
   			setInterval(function() {
-                var randomnumber = Math.floor(Math.random() * 100);
-                $('#show').text('I am getting refreshed every 5 seconds..! Random Number ==> '+ randomnumber);
+                $('#show').text('I am getting refreshed every 5 seconds..! Date==> '+  new Date());
 				console.log("Hey I am in ready section");
                 }, 5000);
 		});
