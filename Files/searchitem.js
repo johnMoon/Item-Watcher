@@ -78,9 +78,16 @@ function createSearchItem(index, imageSrc, itemName, rarity, level){
 	$(img).addClass("item-img");
 	onImageFail(img);
 	
-	// Future dont show level for level 0 items
 	
-	var span = $(document.createElement('span')).text(itemName+ " Lv. " + level);
+	var span = $(document.createElement('span')).text(itemName);
+	
+	if (level && level > 0) {
+		var spanLevel = $(document.createElement('span')).text(" Lv. " + level);
+		spanLevel.addClass("item-level" );
+		span.append($(spanLevel));
+	}
+	
+	
 	span.addClass("item-name" );
 	span.addClass(getColorClass(rarity)  );
 	var button = $(document.createElement('button')).text("+");
@@ -142,7 +149,7 @@ $(img).error(function () {
 // Listeners
 
 function resizeListener() {
-		var content = $("#content");
+	var content = $("#content");
 	var searchHeader = $("#search-header");
 	var resultContainer = $("#result-container");
 	resultContainer.height(content.height() - searchHeader.height() );

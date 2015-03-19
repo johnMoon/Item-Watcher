@@ -138,6 +138,14 @@ margin:1px;
   margin: 0 ;
 
 }
+.item-level {
+ 
+
+white-space: nowrap;
+
+  color:#000;
+
+}
 .right-button {
  vertical-align: middle;
  
