@@ -48,8 +48,7 @@ function search() {
 		if (data.total==0){
 			
 			$(document.createElement('p')).text("No items can be found.").appendTo("#resultList");;
-
-		$(result).appendTo("#resultList");
+			$(result).appendTo("#resultList");
 			return;
 		}
 		

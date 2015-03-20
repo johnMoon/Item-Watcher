@@ -5,7 +5,7 @@
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src= "mainWindowSearch.js" ></script>
-		<title>Demo app</title>
+		
 		<script>
 			function dragResize(edge){
 				overwolf.windows.getCurrentWindow(function(result){
@@ -74,23 +74,18 @@
 				
 			}
 		</script>
+		<title>Demo app</title>
 	</head>
 
 	<body>
 	
-		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
-		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
-		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
-		<div class="resizeGrip" id="resizeGripRight" onmousedown="dragResize('Right');"></div>
-		<div class="resizeGrip" id="resizeGripBottomRight" onmousedown="dragResize('BottomRight');"></div>
-		<div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
-		<div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
-		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
+	
 		<div id="content" onmousedown="dragMove();">
 			<h1>Watch Window</h1>
-		
+			<p id = "updatetime"></p>
+
 			<input id= "search"			type = "text"  name = "searchBox" placeholder= "add item here..">
-			<input id= "searchButton1"	type="image" onclick= "findMatchingItem()" src="image/search.png" alt="Search" width="20" height="18">
+			<input id= "searchButton1"	type="image" onclick= "displayMatchingSets()" src="image/search.png" alt="Search" width="20" height="18">
 			<input type= "image" src= "image/add_button.png" alt = "Add" width = "20" height = "18">
 			
 			
@@ -103,10 +98,16 @@
 			<button id = "search-subWindow" onclick = "openSearchWindow();">Open Search-Window</button> 
 			<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
 			<img id="screenshot" width="300px"></img>
-			
+			<input id= "itemId"  name = "itemId" placeholder= "Test: ItemId" value="19748" onkeypress="testItemIdPress(event)"> </input>
+
 							
 			
 			</div>
+		<div id = "testItem">
+			
 		</div>
+		</div>
+
+	
 	</body>
 </html>
