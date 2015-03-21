@@ -7,37 +7,7 @@
 		<script src= "mainWindowSearch.js" ></script>
 		
 		<script>
-			function dragResize(edge){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragResize(result.window.id, edge);
-					}
-				});
-			};
-			
-			function dragMove(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragMove(result.window.id);
-					}
-				});
-			};
-			
-			function closeWindow(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.close(result.window.id);
-					}
-				});
-			};
-			
-			
-			function openSearchWindow(){
-			
-			
-			
-			}
-			
+		
 			
 			function openSubWindow(){
 				//alert("the subwindow will only be visible inside a game");
@@ -51,28 +21,7 @@
 			};
 
 			
-			function takeScreenshot(){
-				overwolf.media.takeScreenshot(function(result){
-					if (result.status == "success"){
-						var img = document.getElementById("screenshot");
-						img.src = result.url;
-						img.onload = function() {
-							overwolf.media.shareImage(img, "Screen Shot");
-						};
-					}
-				});
-			}
 			
-			function runTeamSpeak(){
-				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
-			};
-			
-			function search(){
-				var searchItem =document.getElementById("search").value;
-				var api = "https//api.guildwars2.com/v2/items"
-				
-				
-			}
 			
 		</script>
 		<title>Demo app</title>
@@ -81,25 +30,22 @@
 	<body>
 	
 	
-		<div id="content" onmousedown="dragMove();">
+	
 			<h1>Watch Window</h1>
 			<p id = "updatetime"></p>
 
-			<input id= "search"			type = "text"  name = "searchBox" placeholder= "add item here..">
-			<input id= "searchButton1"	type="image" onclick= "displayMatchingSets()" src="image/search.png" alt="Search" width="20" height="18">
-			<input type= "image" src= "image/add_button.png" alt = "Add" width = "20" height = "18">
+			
+			<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
 			
 			
 			
 			<hr>
 			<div style = "overflow:auto		">
-			<button id="close" onclick="closeWindow();">Close</button>
-			<button id="run-teamspeak" onclick="runTeamSpeak();">Run TeamSpeak</button>
-			<button onclick="takeScreenshot();">Take Screenshot</button>
-			<button id = "search-subWindow" onclick = "openSearchWindow();">Open Search-Window</button> 
+			
+			
 			<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
 			<img id="screenshot" width="300px"></img>
-			<input id= "itemId"  name = "itemId" placeholder= "Test: ItemId" value="19748" onkeypress="testItemIdPress(event)"> </input>
+			
 
 							
 			
@@ -107,7 +53,7 @@
 		<div id = "testItem">
 			
 		</div>
-		</div>
+		
 
 	
 	</body>

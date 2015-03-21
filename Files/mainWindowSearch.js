@@ -81,7 +81,7 @@ function updateItemData(searchItemIDs) {
 function updateItemPrices() {
    
     // note use the ids param
-
+	console.log("i am in updateItemPrices()");
     //defensive
     if (listWatchItemId.length >0 ) {
       var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + listWatchItemId.join();

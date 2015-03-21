@@ -197,6 +197,9 @@ function createSearchItem(name,image,bPrice,sPrice){
 		 
 		 
 		
+		
+		
+		
 	 
 	//$(li).attr('id', "item-cell-"+index).addClass("search-item-cell" );
 	//var img = $(document.createElement('img')).attr('src', imageSrc);
