@@ -1,6 +1,5 @@
 var listWatchItemId = [];
 
-
 function findMatchingItem() {
     var searchItem = document.getElementById("search").value.trim();
 
@@ -44,7 +43,7 @@ function testItemIdPress(e) {
         // set the id somewhere
         // query
 
-        updateItemData();
+       // updateItemData();
         
     }
 }
@@ -53,13 +52,13 @@ function testItemIdPress(e) {
 // should only need to run once per new watched item
 // check if it items have been created yet, users can only add one at a time
 // only creates one item, make a different method that loads multiple ids on start
-function updateItemData() {
-    var searchItemIDs = document.getElementById("itemId").value.replace("/", " ").trim();
+function updateItemData(searchItemIDs) {
     searchItemIDs = encodeURIComponent(searchItemIDs);
     var names = "https://api.guildwars2.com/v2/items?ids=" + searchItemIDs;
     
 
     // not sure if need concurncy control. REVIEW when completely merged with the search window
+	// apparently js is always single threaded
     $.getJSON(names).done(function(data) {
 
          $.each(data, function(i, item) {
@@ -68,7 +67,6 @@ function updateItemData() {
                 var img = item.icon;
                 var itemId= item.id;
                 createSearchItem(itemId, itemName, img, "", "");
-                listWatchItemId.push(itemId);
             });
                 
         updateItemPrices();
@@ -113,61 +111,6 @@ function updateItemPrices() {
 
 
 
-/// test
-
-
-
-function displayMatchingSets() {
-
-
-    $('#searchResult').empty();
-
-    var searchItemIDs = document.getElementById("search").value.replace("/", " ").trim();
-    searchItemIDs = encodeURIComponent(searchItemIDs);
-
-    var prices = "https://api.guildwars2.com/v2/commerce/prices/" + searchItemIDs;
-
-    var names = "https://api.guildwars2.com/v2/items/" + searchItemIDs;
-
-
-    if (searchItemIDs) {
-
-        $.getJSON(prices, function(data) {
-            console.log(data);
-            console.log(data.id);
-            console.log(data.sells.unit_price);
-            console.log(data.buys);
-
-
-        }).done(function(data) {
-            var sells = data.sells.unit_price;
-            var buys = data.buys.unit_price;
-            var itemName;
-            var img;
-
-            $.getJSON(names).done(function(data) {
-                itemName = data.name;
-                img = data.icon;
-
-                createSearchItem(data.id, itemName, img, buys, sells);
-
-
-            });
-
-
-
-
-        });
-
-
-
-
-    }
-
-
-
-
-}
 
 
 function createSearchItem(itemId, name, image, bPrice, sPrice) {
@@ -277,12 +220,57 @@ $(function(){
         }, 5000);
 
 
+	// check if there are any saved watched items
+	// if there are any reload for local storage
+	
+	//updateItemData(searchItemIDs) 
+	
+	// if failed to reload from pervious save, delete the items 
+	reloadItemListState();
+	
 });
 
+// persistences
+function saveItemListState(){
+	
+	window.localStorage.setItem( "item-list-state",	JSON.stringify( listWatchItemId)  ); 
 
-function onStorageEvent(storageEvent){
-
-    alert("storage event");
 }
 
-window.addEventListener('storage', onStorageEvent, false);
+function reloadItemListState(){
+	console.log("Attempting to reload previous list state");
+	var previousItemList = window.localStorage.getItem( "item-list-state"); 
+	if (previousItemList) {
+		// there was item list before
+		listWatchItemId = JSON.parse( previousItemList );
+		updateItemData(listWatchItemId);
+	}
+}
+
+function onStorageEvent(storageEvent){
+    console.log(storageEvent);
+	
+	
+	
+
+	if (storageEvent.key.indexOf("add-item-") !=-1) {
+		// check if new
+		var newId = JSON.parse( storageEvent.newValue );
+		if (newId && $.inArray(newId,listWatchItemId)==-1) {
+			listWatchItemId.push(newId);
+			saveItemListState();
+			
+			// insert into array
+			//create stucture
+			updateItemData(newId);
+		
+		}
+		
+		// done with the event
+		window.localStorage.removeItem(storageEvent.key);
+	
+	}
+	
+}
+window.addEventListener('storage', onStorageEvent);
+
