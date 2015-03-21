@@ -275,4 +275,14 @@ $(function(){
             $("#updatetime").text(new Date());
        
         }, 5000);
+
+
 });
+
+
+function onStorageEvent(storageEvent){
+
+    alert("storage event");
+}
+
+window.addEventListener('storage', onStorageEvent, false);

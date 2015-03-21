@@ -55,7 +55,7 @@ function search() {
 		$.each(data.results, function (i, item) {
 
 
-			createSearchItem(i, item.img,  item.name,   item.rarity,item.restriction_level  );
+			createSearchItem(item.data_id, item.img,  item.name,   item.rarity,item.restriction_level  );
 		});
 	}); ;
 	} else {
@@ -67,11 +67,11 @@ function search() {
 
 
 
-function createSearchItem(index, imageSrc, itemName, rarity, level){
+function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 			
 			
 	var li = $(document.createElement('li'));
-	$(li).attr('id', "item-cell-"+index).addClass("search-item-cell" );
+	$(li).attr('id', "item-cell-"+itemId).addClass("search-item-cell" );
 	var img = $(document.createElement('img')).attr('src', imageSrc);
 	$(img).attr('height', "32").attr('width', "32");
 	$(img).addClass("item-img");
@@ -91,7 +91,11 @@ function createSearchItem(index, imageSrc, itemName, rarity, level){
 	span.addClass(getColorClass(rarity)  );
 	var button = $(document.createElement('button')).text("+");
 	button.addClass( "right-button" );
-
+	button.click(
+		function() {
+			addItem(itemId);
+		}
+		);
 	var result = $(li).append($(img));
 	result = $(li).append($(span));
 	result = $(li).append($(button));
@@ -99,6 +103,13 @@ function createSearchItem(index, imageSrc, itemName, rarity, level){
 
 }
 
+function addItem(itemId) {
+
+
+
+	console.log(itemId);
+	window.localStorage.setItem( "add-item-"+itemId,JSON.stringify( itemId )	  ); 
+}
 // This is dependant on api : currently spidy
 
 
