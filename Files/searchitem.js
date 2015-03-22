@@ -1,5 +1,6 @@
 // CONSTANTS
 var gw2ItemUrl = "https://api.guildwars2.com/v2/items?ids=";
+var gw2TpUrl = "https://api.guildwars2.com/v2/commerce/prices?ids=";
 var callbackParam ="callback=?";
 var spidySearchUrl="http://www.gw2spidy.com/api/v0.9/json/item-search/";
 
@@ -53,6 +54,7 @@ function search() {
 	tempIds =[];
 	tempItemObjs = [];
 
+	$('#resultList').empty();// new search, remove old data
 	disablePagination(); // reset pagination ui elements to first page
 	getSearchPage(searchTerm, requestedPage);
 
@@ -134,9 +136,17 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 
 		
 		var rawItems=[];
+		var rawObjs=[];
 
 		$.each(data.results, function (i, item) {
 			rawItems.push(item.data_id);
+			rawObjs[item.data_id] ={
+						id: item.data_id,
+						icon: item.img,
+						name: item.name,
+						rarity: item.rarity,
+						level: item.restriction_level	
+						};
 		});
 
 		console.log(rawItems);
@@ -150,32 +160,28 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			return;
 		}
 		
-		var names = gw2ItemUrl + searchItemIDs;
+		var names = gw2TpUrl + searchItemIDs;
 		    
 		$.getJSON(names).done(function(data) {
 			
 			var localIds=[];
 			var localObjs=[];
 			
+			// check if the data is in  a array?
+			// seems like api sends a 404 error so we dont need to check
 			
 	         $.each(data, function(i, item) {
-    			var flags = item.flags;
 				if(!item){
 					console.log("invalid item", item);
 				}
-					if ( $.inArray("AccountBound",flags)==-1 && $.inArray("SoulbindOnAcquire",flags)==-1) {
+				
 						localIds.push(item.id);
-						localObjs.push({
-								id: item.id,
-								icon: item.icon,
-								name: item.name,
-								rarity: item.rarity,
-								level: item.level	
-								}
+						localObjs.push(
+						rawObjs[item.id]
 							);
 							
 							
-		         		}
+		         		
 				});
 				
 			if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
@@ -212,7 +218,7 @@ function handleNewMappedResults(searchTerm, pageNumber){
 		if (tempIds.length >0){
 			console.log("a new page mappinig as been found " + pageNumber, tempIds);
 
-			createSearchItems(tempItemObjs);	
+			createSearchItems(tempItemObjs,true);	
 			pageArray[pageNumber] = tempIds;
 			currentPage = requestedPage;
 		} else {
@@ -224,7 +230,7 @@ function handleNewMappedResults(searchTerm, pageNumber){
 				$('#resultList').empty();
 				$(document.createElement('p')).text("No items can be found.").appendTo("#resultList");;
 			}
-
+		requestedPage=currentPage ;
 	
 		}
 		
@@ -253,7 +259,7 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 
 			return;
 		}
-		createSearchItems(data);
+		createSearchItems(data, false);
 	});
 }
 
@@ -335,10 +341,14 @@ function prevPage(){
 	getSearchPage(currentSearchTerm, requestedPage);
 }
 
-function createSearchItems(data) {
+function createSearchItems(data, bConvertRare) {
 	$('#resultList').empty();
 	$.each(data, function(i, item) {
-		createSearchItem(item.id, item.icon,  item.name,   item.rarity,item.level  );
+		var rare = item.rarity;
+		if (bConvertRare) {
+		 rare = getColorClass( rare) 
+		}
+		createSearchItem(item.id, item.icon,  item.name,  rare,item.level  );
 	});
 	
 }
