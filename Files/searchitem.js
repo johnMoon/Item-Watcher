@@ -193,6 +193,8 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	var img = $(document.createElement('img')).attr('src', imageSrc);
 	$(img).attr('height', "32").attr('width', "32");
 	$(img).addClass("item-img");
+	//add border around an image
+	$(img).addClass(rarity.toLowerCase()+"-border");
 	onImageFail(img);
 	
 	
@@ -206,7 +208,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	
 	span.addClass("item-name" );
-	span.addClass(rarity.toLowerCase()  );
+	span.addClass(rarity.toLowerCase());
 	var button = $(document.createElement('button')).text("+");
 	button.addClass( "right-button" );
 	button.click(
