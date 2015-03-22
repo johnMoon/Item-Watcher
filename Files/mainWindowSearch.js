@@ -76,7 +76,7 @@ function updateItemData(searchItemIDs) {
 
 }
 
-// Update data assumes that there is aleast one item already
+// Update data assumes that there is at least one item already
 // item id are stored in array and are valid tp 
 // only update prices 
 function updateItemPrices() {
@@ -118,7 +118,9 @@ function createSearchItem(itemId, name, rarity, image, bPrice, sPrice) {
 
     //var li = $(document.createElement('li'));
 	var div = $(document.createElement('div'));	
+		div.attr('id',"window-item-cell-" + itemId);
 		div.addClass('mainWindow-item-cell');
+		
 	var img = $(document.createElement('img')).attr('src', image);
 	 $(img).attr('height', "32").attr('width',"32");
 	 $(img).addClass("item-img");
@@ -128,7 +130,9 @@ function createSearchItem(itemId, name, rarity, image, bPrice, sPrice) {
 		p.addClass('item-name');
 		
 	 var button = $(document.createElement('button')).text("X");
-
+		button.click( 
+		function(){removeItem(itemId);}
+		);
 	 
 	 var div2 = $(document.createElement('div'));
 	 div2.addClass('graph-buysell');
@@ -206,6 +210,22 @@ $(function(){
 	reloadItemListState();
 	
 });
+
+
+function removeItem(itemId){
+console.log(itemId);
+
+var index = listWatchItemId.indexOf(itemId);
+listWatchItemId.splice(index,1);
+var newWatchItemId = listWatchItemId;
+window.localStorage.removeItem("item-list-state");
+window.localStorage.setItem( "item-list-state",	JSON.stringify( newWatchItemId)  ); 
+//$("#testItem" "#window-item-cell-" + itemId).remove();
+
+$(".mainWindow-item-cell").remove("#window-item-cell-"+itemId);
+
+
+}
 
 // persistences
 function saveItemListState(){
