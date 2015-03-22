@@ -1,11 +1,22 @@
-// for each page(index), contain the known mapping of search pages 
-var pageArray = [];
-var userPage= 0; // page which the user is on
-var parsedPage =0; // the highest search result page that has be parsed
-var lastPage = 0; // the max page number for the search. parse page should not go beyond this
-var currentSearchTerm= ""; // make sure to reset this every new search , (RAW)
-		
+// CONSTANTS
+var gw2ItemUrl = "https://api.guildwars2.com/v2/items?ids=";
+var gw2TpUrl = "https://api.guildwars2.com/v2/commerce/prices?ids=";
+var callbackParam ="callback=?";
+var spidySearchUrl="http://www.gw2spidy.com/api/v0.9/json/item-search/";
 
+// for each page(index), contain the known mapping of items
+var pageArray = [];
+var requestedPage= 1; // page wants to be on
+var currentPage= 1; // page user is currenty viewing
+var parsedPage =0; // the highest search result page that has be parsed
+var lastPage = 1; // the max page number for the search. parse page should not go beyond this
+var currentSearchTerm= ""; // make sure to reset this every new search , (RAW)
+
+		
+var tempIds =[];
+var tempItemObjs = [];
+		
+		
 // SEARCH
 
 function searchKeyPress(e) {
@@ -20,15 +31,32 @@ function searchKeyPress(e) {
 // call this function only when using the search box, not for pagination
 function search() {
 	var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
+	requestedPage = 1;
+	searchTerm =encodeURIComponent(searchTerm);
+	// check is this is a new search term is the same as the loaded or loading on
+	if (searchTerm == currentSearchTerm) {
+		// check if it is the same page
+		if (currentPage == requestedPage){
+			// either its being loaded or is loaded already
+			console.log("search is the same " + searchTerm, currentSearchTerm,currentPage, requestedPage);
+
+			return;
+		}
+		
+	}
+	
 	currentSearchTerm = searchTerm;
 	pageArray = [];
-	userPage = 1;
-	lastPage=0;
-	parsedPage-0;
 
+	lastPage=1;
+	parsedPage=0;
 
-	resetPagination(); // reset pagination ui elements to first page
-	getSearchPage(searchTerm, userPage);
+	tempIds =[];
+	tempItemObjs = [];
+
+	$('#resultList').empty();// new search, remove old data
+	disablePagination(); // reset pagination ui elements to first page
+	getSearchPage(searchTerm, requestedPage);
 
 	
 }
@@ -40,101 +68,31 @@ Each result page showned to the user has atleast 50items unless it is the last p
 
 search term is raw, need to be encoded
 
+
+sets the current page to the requested number, if 
+that page is not possible(no items left), dont change page name
 **/
-function getSearchPage(rawSearchTerm, pageNumber){
+function getSearchPage(searchTerm, pageNumber){
 	// BUG! there are some (4) items that have / in them. currently search apis cant handle this.
 	// wait for gw2 official api
-	var searchTerm =encodeURIComponent(rawSearchTerm);
+	
 
 	if( searchTerm ) { // if not empty or null
-
-
-	
-	var spidy = "http://www.gw2spidy.com/api/v0.9/json/item-search/"+searchTerm+"/"+pageNumber+"?callback=?";
-	$.getJSON(spidy).done(function (data) {
-		// Need to handle request failures and timeouts
-
-		// get result statistics
-		var itemCount = data.count;
-		var currentPage =  data.page;
-		lastPage =  data.last_page;
-		var itemTotal =  data.total;
-
-		// prepare content
-		$('#resultList').empty();
-		var div = $(document.createElement('div'));
-
-		var p = $(document.createElement('p')).text("Raw count: " + itemCount);
-		var result = $(div).append($(p));
-
-
-
-		p = $(document.createElement('p')).text("Raw page: " + currentPage + "/" + lastPage);
-		result = $(div).append($(p));
-		p = $(document.createElement('p')).text("Raw total: " + itemTotal);
-		result = $(div).append($(p));
-
-		$(result).appendTo("#resultList");
-
-		if (data.total==0){
-			
-			$(document.createElement('p')).text("No items can be found.").appendTo("#resultList");;
-			$(result).appendTo("#resultList");
-			return;
+		var mapping = checkPreMapped(pageNumber);
+		if (mapping){
+			console.log("Mapping has been found");
+			queryCleanItemIds(searchTerm,pageNumber, mapping);
+			currentPage = pageNumber;
 		}
-		
-		var rawItems=[];
-
-		$.each(data.results, function (i, item) {
-
-			// prepare every item to be queried to see if sellable
-			// we only need id since we can get the nessary data from 
-			rawItems.push(item.data_id);
-
-			//createSearchItem(item.data_id, item.img,  item.name,   item.rarity,item.restriction_level  );
-		});
-
-		console.log(rawItems);
-
-
-
-
-		// note that this only works if there is atleast one valid item, HANDLE if all are invalid! valid = [json] not valid is json
-		//validate items
-		    searchItemIDs = encodeURIComponent(rawItems.join());
-		    var names = "https://api.guildwars2.com/v2/items?ids=" + searchItemIDs;
-		    
-
-		    // not sure if need concurncy control. REVIEW when completely merged with the search window
-			// apparently js is always single threaded
-		    $.getJSON(names).done(function(data) {
-
-		         $.each(data, function(i, item) {
-    					console.log(item.flags);
-    					var flags = item.flags;
-
-		         		if ( $.inArray("AccountBound",flags)==-1 && $.inArray("SoulbindOnAcquire",flags)==-1) {
-
-
-							
-			               	createSearchItem(item.id, item.icon,  item.name,   item.rarity,item.level  );
-
-
-		         		}
-		       
-
-		          
-		            });
-		                
-		   
-		        });
-
-
-
-
-
-
-	}); ;
+		else{
+			// perform mapping for requested page
+			console.log("No mapping");
+			queryCalculateItemMap(searchTerm,pageNumber);
+		}
+	
+		//refresh pagination number
+		//
+	
 	} else {
 		
 			console.log("search term is empty");
@@ -143,12 +101,175 @@ function getSearchPage(rawSearchTerm, pageNumber){
 
 }
 
+function checkPreMapped(page) {
+	return pageArray[page];
+}
+
+/**
+
+assumes that we should start from the parsed paged counter
+
+**/
+function queryCalculateItemMap(searchTerm, pageNumber) {
+	var itemCount ;
+	var currentPage= parsedPage+1;
+	var itemTotal ;
+	
+
+	if (currentPage> lastPage || tempIds.length > 50) {
+		handleNewMappedResults(searchTerm,pageNumber);
+		return;
+	}
+	var spidy = spidySearchUrl+searchTerm+"/"+currentPage+"?"+callbackParam;
+	$.getJSON(spidy).done(function (data) {
+		// Need to handle request failures and timeouts
+
+		// get result statistics
+		itemCount = data.count;
+		lastPage =  data.last_page;
+		itemTotal =  data.total;
+
+		console.log(itemCount, itemTotal, lastPage);
+		
+
+
+
+		
+		var rawItems=[];
+		var rawObjs=[];
+
+		$.each(data.results, function (i, item) {
+			rawItems.push(item.data_id);
+			rawObjs[item.data_id] ={
+						id: item.data_id,
+						icon: item.img,
+						name: item.name,
+						rarity: item.rarity,
+						level: item.restriction_level	
+						};
+		});
+
+		console.log(rawItems);
+
+		//TODO
+		//note that this only works if there is atleast one valid item, HANDLE if all are invalid! valid = [json] not valid is json
+		//validate items
+		searchItemIDs = encodeURIComponent(rawItems.join());
+		if (!searchItemIDs || 0 === searchItemIDs.length){
+			handleNewMappedResults(searchTerm,pageNumber);
+			return;
+		}
+		
+		var names = gw2TpUrl + searchItemIDs;
+		    
+		$.getJSON(names).done(function(data) {
+			
+			var localIds=[];
+			var localObjs=[];
+			
+			// check if the data is in  a array?
+			// seems like api sends a 404 error so we dont need to check
+			
+	         $.each(data, function(i, item) {
+				if(!item){
+					console.log("invalid item", item);
+				}
+				
+						localIds.push(item.id);
+						localObjs.push(
+						rawObjs[item.id]
+							);
+							
+							
+		         		
+				});
+				
+			if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
+				// the search term or page got switch while this was being loaded
+							console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
+
+				return;
+			}
+			
+			tempIds = tempIds.concat(localIds);
+			tempItemObjs =tempItemObjs.concat(localObjs);
+			parsedPage =currentPage;
+			 queryCalculateItemMap(searchTerm, pageNumber)
+			})  .fail(function() {
+				// this page only contained invalid results
+				console.log("This page only contained invalid results", currentPage, searchTerm);
+				parsedPage =currentPage;
+				queryCalculateItemMap(searchTerm, pageNumber)
+
+			});
+
+	}); 
+	
+
+}
+
+function handleNewMappedResults(searchTerm, pageNumber){
+		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
+			// the search term or page got switch while this was being loaded
+			console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
+
+			return;
+		}
+		if (tempIds.length >0){
+			console.log("a new page mappinig as been found " + pageNumber, tempIds);
+
+			createSearchItems(tempItemObjs,true);	
+			pageArray[pageNumber] = tempIds;
+			currentPage = requestedPage;
+		} else {
+			console.log("There are no more tradeabled items, and all have been parsed");
+			// do nothing?
+			// print out to user that there are no more items
+			// unless its the first page, then we print out error 
+			if (pageNumber==1){
+				$('#resultList').empty();
+				$(document.createElement('p')).text("No items can be found.").appendTo("#resultList");;
+			}
+		requestedPage=currentPage ;
+	
+		}
+		
+		tempIds = [];
+		tempItemObjs =[];
+}
+
+
+/**
+assumes that the given id array contains validated ids
+
+query office api
+**/
+function queryCleanItemIds(searchTerm, pageNumber, mapping){
+	console.log("queryCleanItemIds ", mapping);
+
+	searchItemIDs = encodeURIComponent(mapping.join());
+	var names = gw2ItemUrl + searchItemIDs;
+	// not sure if need concurncy control. REVIEW when completely merged with the search window
+	// apparently js is always single threaded
+	$.getJSON(names).done(function(data) {
+		
+		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
+			// the search term or page got switch while this was being loaded
+						console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
+
+			return;
+		}
+		createSearchItems(data, false);
+	});
+}
+
 
 /**
 update text
 **/
-function resetPagination() {
+function disablePagination() {
 
+// disable pagination until loading is complete
 }
 
 /**
@@ -166,6 +287,25 @@ update pagination variables and parsed pages
 function nextPage(){
 
 
+		// check if it is the same page
+	if (currentPage != requestedPage){
+		// this means its currently being loaded
+		// it will be gaurteed that the search term is the same since
+		// pagination is be disabled when a search term is search for the first time
+		console.log("change paged as already been requested " + currentSearchTerm,currentPage, requestedPage);
+
+		return;
+	}
+		
+	
+
+
+	tempIds =[];
+	tempItemObjs = [];
+	requestedPage=currentPage+1;
+	console.log("Request next page current page " + currentPage + " requested " + requestedPage);;
+	getSearchPage(currentSearchTerm, requestedPage);
+
 }
 
 
@@ -182,7 +322,35 @@ update pagination variables
 **/
 function prevPage(){
 
+		// check if it is the same page
+	if (currentPage != requestedPage){
+		// this means its currently being loaded
+		// it will be gaurteed that the search term is the same since
+		// pagination is be disabled when a search term is search for the first time
+		console.log("change paged as already been requested " + currentSearchTerm,currentPage, requestedPage);
 
+		return;
+	}
+		
+	tempIds =[];
+	tempItemObjs = [];
+	  requestedPage = currentPage-1;
+	  if (requestedPage <1) {
+		  requestedPage=1;
+	  }
+	getSearchPage(currentSearchTerm, requestedPage);
+}
+
+function createSearchItems(data, bConvertRare) {
+	$('#resultList').empty();
+	$.each(data, function(i, item) {
+		var rare = item.rarity;
+		if (bConvertRare) {
+		 rare = getColorClass( rare) 
+		}
+		createSearchItem(item.id, item.icon,  item.name,  rare,item.level  );
+	});
+	
 }
 
 function createSearchItem(itemId, imageSrc, itemName, rarity, level){
