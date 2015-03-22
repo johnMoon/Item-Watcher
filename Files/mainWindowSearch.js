@@ -217,10 +217,7 @@ console.log(itemId);
 
 var index = listWatchItemId.indexOf(itemId);
 listWatchItemId.splice(index,1);
-var newWatchItemId = listWatchItemId;
-window.localStorage.removeItem("item-list-state");
-window.localStorage.setItem( "item-list-state",	JSON.stringify( newWatchItemId)  ); 
-//$("#testItem" "#window-item-cell-" + itemId).remove();
+saveItemListState();
 
 $(".mainWindow-item-cell").remove("#window-item-cell-"+itemId);
 
