@@ -209,9 +209,9 @@ display:inline-block;
 /*test Item*/
 #testItem{
 
-	border: red solid 1px;
+	
     overflow-y: auto;
-    height: 400px;
+    height: 300px;
 
 }
 
