@@ -5,10 +5,12 @@ var spidySearchUrl="http://www.gw2spidy.com/api/v0.9/json/item-search/";
 
 // for each page(index), contain the known mapping of items
 var pageArray = [];
-var userPage= 1; // page which the user is or wants to be on
+var requestedPage= 1; // page wants to be on
+var currentPage= 1; // page user is currenty viewing
 var parsedPage =0; // the highest search result page that has be parsed
 var lastPage = 1; // the max page number for the search. parse page should not go beyond this
 var currentSearchTerm= ""; // make sure to reset this every new search , (RAW)
+
 		
 var tempIds =[];
 var tempItemObjs = [];
@@ -28,13 +30,14 @@ function searchKeyPress(e) {
 // call this function only when using the search box, not for pagination
 function search() {
 	var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
+	requestedPage = 1;
 	searchTerm =encodeURIComponent(searchTerm);
 	// check is this is a new search term is the same as the loaded or loading on
 	if (searchTerm == currentSearchTerm) {
 		// check if it is the same page
-		if (1 == userPage){
+		if (currentPage == requestedPage){
 			// either its being loaded or is loaded already
-			console.log("search is the same " + searchTerm, currentSearchTerm,1, userPage);
+			console.log("search is the same " + searchTerm, currentSearchTerm,currentPage, requestedPage);
 
 			return;
 		}
@@ -43,15 +46,15 @@ function search() {
 	
 	currentSearchTerm = searchTerm;
 	pageArray = [];
-	userPage = 1;
+
 	lastPage=1;
 	parsedPage=0;
 
 	tempIds =[];
 	tempItemObjs = [];
 
-	resetPagination(); // reset pagination ui elements to first page
-	getSearchPage(searchTerm, userPage);
+	disablePagination(); // reset pagination ui elements to first page
+	getSearchPage(searchTerm, requestedPage);
 
 	
 }
@@ -75,11 +78,13 @@ function getSearchPage(searchTerm, pageNumber){
 	if( searchTerm ) { // if not empty or null
 		var mapping = checkPreMapped(pageNumber);
 		if (mapping){
+			console.log("Mapping has been found");
 			queryCleanItemIds(searchTerm,pageNumber, mapping);
-			userPage = pageNumber;
+			currentPage = pageNumber;
 		}
 		else{
 			// perform mapping for requested page
+			console.log("No mapping");
 			queryCalculateItemMap(searchTerm,pageNumber);
 		}
 	
@@ -173,9 +178,9 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 		         		}
 				});
 				
-			if (!(searchTerm==currentSearchTerm&& pageNumber==userPage)){
+			if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 				// the search term or page got switch while this was being loaded
-							console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, userPage);
+							console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
 
 				return;
 			}
@@ -184,6 +189,12 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			tempItemObjs =tempItemObjs.concat(localObjs);
 			parsedPage =currentPage;
 			 queryCalculateItemMap(searchTerm, pageNumber)
+			})  .fail(function() {
+				// this page only contained invalid results
+				console.log("This page only contained invalid results", currentPage, searchTerm);
+				parsedPage =currentPage;
+				queryCalculateItemMap(searchTerm, pageNumber)
+
 			});
 
 	}); 
@@ -192,9 +203,9 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 }
 
 function handleNewMappedResults(searchTerm, pageNumber){
-		if (!(searchTerm==currentSearchTerm&& pageNumber==userPage)){
+		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 			// the search term or page got switch while this was being loaded
-			console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, userPage);
+			console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
 
 			return;
 		}
@@ -202,8 +213,8 @@ function handleNewMappedResults(searchTerm, pageNumber){
 			console.log("a new page mappinig as been found " + pageNumber, tempIds);
 
 			createSearchItems(tempItemObjs);	
-			userPage = pageNumber;
 			pageArray[pageNumber] = tempIds;
+			currentPage = requestedPage;
 		} else {
 			console.log("There are no more tradeabled items, and all have been parsed");
 			// do nothing?
@@ -213,6 +224,7 @@ function handleNewMappedResults(searchTerm, pageNumber){
 				$('#resultList').empty();
 				$(document.createElement('p')).text("No items can be found.").appendTo("#resultList");;
 			}
+
 	
 		}
 		
@@ -235,9 +247,9 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 	// apparently js is always single threaded
 	$.getJSON(names).done(function(data) {
 		
-		if (!(searchTerm==currentSearchTerm&& pageNumber==userPage)){
+		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 			// the search term or page got switch while this was being loaded
-						console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, userPage);
+						console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
 
 			return;
 		}
@@ -249,8 +261,9 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 /**
 update text
 **/
-function resetPagination() {
+function disablePagination() {
 
+// disable pagination until loading is complete
 }
 
 /**
@@ -268,6 +281,25 @@ update pagination variables and parsed pages
 function nextPage(){
 
 
+		// check if it is the same page
+	if (currentPage != requestedPage){
+		// this means its currently being loaded
+		// it will be gaurteed that the search term is the same since
+		// pagination is be disabled when a search term is search for the first time
+		console.log("change paged as already been requested " + currentSearchTerm,currentPage, requestedPage);
+
+		return;
+	}
+		
+	
+
+
+	tempIds =[];
+	tempItemObjs = [];
+	requestedPage=currentPage+1;
+	console.log("Request next page current page " + currentPage + " requested " + requestedPage);;
+	getSearchPage(currentSearchTerm, requestedPage);
+
 }
 
 
@@ -284,7 +316,23 @@ update pagination variables
 **/
 function prevPage(){
 
+		// check if it is the same page
+	if (currentPage != requestedPage){
+		// this means its currently being loaded
+		// it will be gaurteed that the search term is the same since
+		// pagination is be disabled when a search term is search for the first time
+		console.log("change paged as already been requested " + currentSearchTerm,currentPage, requestedPage);
 
+		return;
+	}
+		
+	tempIds =[];
+	tempItemObjs = [];
+	  requestedPage = currentPage-1;
+	  if (requestedPage <1) {
+		  requestedPage=1;
+	  }
+	getSearchPage(currentSearchTerm, requestedPage);
 }
 
 function createSearchItems(data) {
