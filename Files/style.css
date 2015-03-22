@@ -1,4 +1,6 @@
-﻿html {
+﻿
+
+html {
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
@@ -121,6 +123,7 @@ text-align:right;
 
 .graph {
 width:170px;
+
 }
 
 .search-item-cell {
@@ -142,7 +145,7 @@ margin:1px;
  
   display: inline-block; 
   width: 240px;
- vertical-align: middle;
+  vertical-align: middle;
   padding:0 ; 
   margin: 0 ;
 
@@ -172,6 +175,38 @@ white-space: nowrap;
     overflow-y: auto;
     height: 300px;
 }
+
+
+.mainWindow-item-cell {
+border:1px solid #000;
+width:300px;
+margin:1px;
+
+  //display: inline-block;
+}
+
+.buy-sell{
+height:1px;
+width:100px;
+
+
+}
+
+.graph-buysell{
+width:300px;
+margin:1px;
+display:inline-block;
+
+
+}
+
+.buy-sell-prices{
+margin-left:20px;
+display:inline-block;
+
+
+}
+
 
 // item color
 
