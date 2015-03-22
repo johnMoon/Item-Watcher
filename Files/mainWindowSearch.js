@@ -67,7 +67,8 @@ function updateItemData(searchItemIDs) {
                 var img = item.icon;
                 var itemId= item.id;
 				var rarity = item.rarity;
-                createSearchItem(itemId, itemName, rarity,img, "", "");
+				var level = item.level;
+                createSearchItem(itemId, itemName, rarity,img,level, "", "");
             });
                 
         updateItemPrices();
@@ -114,7 +115,7 @@ function updateItemPrices() {
 
 
 
-function createSearchItem(itemId, name, rarity, image, bPrice, sPrice) {
+function createSearchItem(itemId, name, rarity, image,level, bPrice, sPrice) {
 
     //var li = $(document.createElement('li'));
 	var div = $(document.createElement('div'));	
@@ -128,7 +129,11 @@ function createSearchItem(itemId, name, rarity, image, bPrice, sPrice) {
 	
 	var p = $(document.createElement('p')).text(name);
 		p.addClass('item-name');
-		
+		if (level && level > 0) {
+		var spanLevel = $(document.createElement('span')).text(" Lv. " + level);
+		spanLevel.addClass("item-level" );
+		p.append($(spanLevel));
+	}
 	 var button = $(document.createElement('button')).text("X");
 		button.click( 
 		function(){removeItem(itemId);}
