@@ -422,7 +422,7 @@ switch(rarityID) {
         return "junk";
         break;
     case 1:
-        return "common";
+        return "basic";
         break;
     case 2:
         return "fine";
@@ -476,7 +476,7 @@ function resizeListener() {
 
 $(function(){
    resizeListener();
-   
+
 $(".imageButton").mouseup(function(){
 	console.log("blur")
    $(this).blur();
