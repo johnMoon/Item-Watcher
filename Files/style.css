@@ -178,11 +178,11 @@ white-space: nowrap;
 
 
 .mainWindow-item-cell {
+
 border:1px solid #000;
 width:300px;
 margin:1px;
-
-  //display: inline-block;
+display: inline-block;
 }
 
 .buy-sell{
@@ -207,11 +207,11 @@ display:inline-block;
 
 }
 /*test Item*/
-#testItem{
+#watchlist-container{
 
 	
     overflow-y: auto;
-    height: 300px;
+    height: 330px;
 
 }
 

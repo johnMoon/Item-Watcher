@@ -318,5 +318,24 @@ function onStorageEvent(storageEvent){
 	}
 	
 }
+
+function resizeListener() {
+	var content = $("#watchListContents");
+	var header = $("#header");
+	var watchListContainer = $("#watchListContainer");
+	watchListContainer.height(content.height() - header.height());
+	
+}
+
+
+
+
+
+// resize on load!
+
+$(function(){
+   resizeListener();
+});
+
 window.addEventListener('storage', onStorageEvent);
 
