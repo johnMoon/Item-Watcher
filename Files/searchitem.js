@@ -94,7 +94,7 @@ function getSearchPage(searchTerm, pageNumber){
 		//
 	
 	} else {
-		
+			requestedPage = currentPage;
 			console.log("search term is empty");
 	}
 
@@ -233,7 +233,9 @@ function handleNewMappedResults(searchTerm, pageNumber){
 		requestedPage=currentPage ;
 	
 		}
-		
+
+		enablePagination();
+		updatePageNumber()
 		tempIds = [];
 		tempItemObjs =[];
 }
@@ -260,6 +262,7 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 			return;
 		}
 		createSearchItems(data, false);
+		updatePageNumber();
 	});
 }
 
@@ -268,8 +271,21 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 update text
 **/
 function disablePagination() {
+        $('#prevButton').prop('disabled', true);
+        $('#pageNumber').prop('disabled', true);
 
-// disable pagination until loading is complete
+        $('#nextButton').prop('disabled', true);
+
+}
+
+function enablePagination(){
+    $('#prevButton').prop('disabled', false);
+    $('#pageNumber').prop('disabled', false);
+	$('#nextButton').prop('disabled', false);
+}
+
+function updatePageNumber(){
+	$("#pageNumber").text(currentPage);
 }
 
 /**
@@ -285,6 +301,7 @@ if the next page produces pages with no valid results check the next page
 update pagination variables and parsed pages	
 **/
 function nextPage(){
+	console.log("next page button is pressed");
 
 
 		// check if it is the same page
@@ -303,7 +320,6 @@ function nextPage(){
 	tempIds =[];
 	tempItemObjs = [];
 	requestedPage=currentPage+1;
-	console.log("Request next page current page " + currentPage + " requested " + requestedPage);;
 	getSearchPage(currentSearchTerm, requestedPage);
 
 }
@@ -321,7 +337,7 @@ dont allow user to go below page 1
 update pagination variables
 **/
 function prevPage(){
-
+	console.log("previous page button is pressed");
 		// check if it is the same page
 	if (currentPage != requestedPage){
 		// this means its currently being loaded
@@ -334,10 +350,12 @@ function prevPage(){
 		
 	tempIds =[];
 	tempItemObjs = [];
-	  requestedPage = currentPage-1;
-	  if (requestedPage <1) {
-		  requestedPage=1;
-	  }
+ 	if (currentPage == 1) {
+		  return;
+	 }
+
+	requestedPage = currentPage-1;
+	 
 	getSearchPage(currentSearchTerm, requestedPage);
 }
 
@@ -392,10 +410,6 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 }
 
 function addItem(itemId) {
-
-
-
-	console.log(itemId);
 	window.localStorage.setItem( "add-item-"+itemId,JSON.stringify( itemId )	  ); 
 }
 
@@ -458,9 +472,14 @@ function resizeListener() {
 
 
 
-
 // resize on load!
 
 $(function(){
    resizeListener();
+   
+$(".imageButton").mouseup(function(){
+	console.log("blur")
+   $(this).blur();
+});
+
 });
