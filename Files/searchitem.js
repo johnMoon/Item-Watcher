@@ -399,7 +399,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	button.addClass( "right-button" );
 	button.click(
 		function() {
-			addItem(itemId);
+			addItem(itemId,imageSrc, itemName, rarity, level);
 		}
 		);
 	var result = $(li).append($(img));
@@ -409,8 +409,11 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 
 }
 
-function addItem(itemId) {
-	window.localStorage.setItem( "add-item-"+itemId,JSON.stringify( itemId )	  ); 
+function addItem(itemId,imageSrc, itemName, rarity, level) {
+
+	window.localStorage.setItem( "add-item-"+itemId,JSON.stringify( 
+		{id:itemId,img:imageSrc, name:itemName, rarity:rarity, level:level} )
+			  ); 
 }
 
 
@@ -483,3 +486,25 @@ $(".imageButton").mouseup(function(){
 });
 
 });
+
+
+
+function onStorageEvent(storageEvent){
+    console.log(storageEvent);
+	
+	
+	//TODO 
+    // if there any messages from watched window
+    // its probably that the item already watched
+	if (storageEvent.key.indexOf("item-exists") !=-1) {
+
+
+		
+		// done with the event
+		window.localStorage.removeItem(storageEvent.key);
+	
+	}
+	
+}
+
+window.addEventListener('storage', onStorageEvent);

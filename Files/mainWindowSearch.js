@@ -1,28 +1,6 @@
 var listWatchItemId = [];
 
-function findMatchingItem() {
-    var searchItem = document.getElementById("search").value.trim();
 
-    console.log(searchItem);
-
-    if (searchItem) {
-        var spidy = "http://www.gw2spidy.com/api/v0.9/json/item-search/" + searchItem + "?callback=?";
-
-
-        $.getJSON(spidy).done(function(data) {
-            if (data.total != 1) {
-                openSubWindow();
-            }
-            $.each(data.results, function(i, item) {
-                if (item.name == searchItem) {
-
-                    console.log("There is a matching Item");
-                }
-            });
-        });
-
-    }
-}
 
 function openSubWindow() {
     //alert("the subwindow will only be visible inside a game");
@@ -37,20 +15,9 @@ function openSubWindow() {
 
 
 
-function testItemIdPress(e) {
-    e = e || window.event;
-    if (e.keyCode == 13) {
-        // set the id somewhere
-        // query
-
-       // updateItemData();
-        
-    }
-}
 
 
-// should only need to run once per new watched item
-// check if it items have been created yet, users can only add one at a time
+// should only need to run once per new watched item and if obj isnt passed ie on reload
 // only creates one item, make a different method that loads multiple ids on start
 function updateItemData(searchItemIDs) {
     searchItemIDs = encodeURIComponent(searchItemIDs);
@@ -61,7 +28,15 @@ function updateItemData(searchItemIDs) {
 	// apparently js is always single threaded
     $.getJSON(names).done(function(data) {
 
-         $.each(data, function(i, item) {
+         parseObjsAndUpdate(data);
+
+        });
+
+}
+
+
+function parseObjsAndUpdate(itemObj){
+ 	$.each(itemObj, function(i, item) {
 
                 var itemName = item.name;
                 var img = item.icon;
@@ -71,11 +46,9 @@ function updateItemData(searchItemIDs) {
                 createSearchItem(itemId, itemName, rarity,img,level, "", "");
             });
                 
-        updateItemPrices();
-
-        });
-
+    updateItemPrices();
 }
+
 
 // Update data assumes that there is at least one item already
 // item id are stored in array and are valid tp 
@@ -295,21 +268,24 @@ function reloadItemListState(){
 
 function onStorageEvent(storageEvent){
     console.log(storageEvent);
-	
-	
-	
 
 	if (storageEvent.key.indexOf("add-item-") !=-1) {
 		// check if new
-		var newId = JSON.parse( storageEvent.newValue );
+		var obj = JSON.parse( storageEvent.newValue );
+		var newId = obj.itemId;
 		if (newId && $.inArray(newId,listWatchItemId)==-1) {
 			listWatchItemId.push(newId);
 			saveItemListState();
 			
 			// insert into array
 			//create stucture
-			updateItemData(newId);
-		
+			//updateItemData(newId);
+			
+			parseObjsAndUpdate([obj])
+
+		} else {
+			// tell search window that the item has already been added
+			window.localStorage.setItem( "item-exists" ,newId  ); 
 		}
 		
 		// done with the event
