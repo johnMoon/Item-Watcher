@@ -188,14 +188,20 @@ function createSearchItem(itemId, name, rarity, image,level, bPrice, sPrice) {
 	 $(result).appendTo("#testItem");
    
 }
-
+var interval;
 
 // check if there are any existing watched items
 // reload them
 // then turn on timer
-$(function(){
-    setInterval(
+
+$(document).ready(function(){
+		var frequency = document.getElementById("frequency-changer").value;
+			console.log("current frequency is " + frequency + "I am in first function");
+	
+     interval = setInterval(
+	
         function() {
+				console.log("first setInterval function");
             if (listWatchItemId.length > 0) {
                 console.log("prices have been updated at "+ new Date());
                 updateItemPrices();    
@@ -203,7 +209,7 @@ $(function(){
 
             $("#updatetime").text(new Date());
        
-        }, 5000);
+        }, frequency);
 
 
 	// check if there are any saved watched items
@@ -214,8 +220,49 @@ $(function(){
 	// if failed to reload from pervious save, delete the items 
 	reloadItemListState();
 	
-});
+}); 
 
+
+var frequencyInterval  =0 ;
+
+function changeFrequency(){
+		
+		console.log(interval);
+		if(interval){
+		window.clearInterval(interval);}
+		
+		console.log("frequencyInterval = " + frequencyInterval);
+		if(frequencyInterval){
+		window.clearInterval(frequencyInterval);
+		}
+		
+		
+		var frequency = document.getElementById("frequency-changer").value;
+			console.log("current frequency is " + frequency + "I am in second function");
+	
+  frequencyInterval=  setInterval(
+	
+     function() {
+	console.log("second setInterval function");
+            if (listWatchItemId.length > 0) {
+                console.log("prices have been updated at "+ new Date());
+                updateItemPrices();    
+            }
+
+            $("#updatetime").text(new Date());
+       
+        }, frequency);
+
+	// check if there are any saved watched items
+	// if there are any reload for local storage
+	
+	//updateItemData(searchItemIDs) 
+	
+	// if failed to reload from pervious save, delete the items 
+	//reloadItemListState();
+	
+	
+};
 
 function removeItem(itemId){
 console.log(itemId);
