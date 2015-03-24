@@ -285,7 +285,7 @@ function onStorageEvent(storageEvent){
 
 		} else {
 			// tell search window that the item has already been added
-			window.localStorage.setItem( "item-exists" ,newId  ); 
+			window.localStorage.setItem( "item-exists" ,obj.name  ); 
 		}
 		
 		// done with the event

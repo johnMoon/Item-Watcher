@@ -485,21 +485,27 @@ $(".imageButton").mouseup(function(){
    $(this).blur();
 });
 
+// any data hide alerts will hide instead of remove itself
+    $("#notificationButton").on("click", function(){
+        $("#notificationAlert").hide();
+		resizeListener();
+    });
+
+
 });
 
 
 
 function onStorageEvent(storageEvent){
-    console.log(storageEvent);
 	
 	
-	//TODO 
-    // if there any messages from watched window
-    // its probably that the item already watched
+	console.log("onStorageEvent" ,storageEvent);
 	if (storageEvent.key.indexOf("item-exists") !=-1) {
 
-
-		
+		console.log("item exists!" ,storageEvent);
+		$("#notificationItemName").text(storageEvent.newValue);
+		$("#notificationAlert").show();
+		resizeListener();
 		// done with the event
 		window.localStorage.removeItem(storageEvent.key);
 	

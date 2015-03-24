@@ -7,10 +7,13 @@
 
 
 		
-	
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="searchitem.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 
 
 
@@ -19,6 +22,11 @@
 	<body onresize="resizeListener()">
 	 <div id="content" >
 		<div id="search-header">
+			<div id="notificationAlert" class="alert alert-info alert-dismissible" role="alert" style="display: none">
+			  <button id="notificationButton"  type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  Item <strong id="notificationItemName"></strong> is already watched!
+			</div>
+		
 			<input id="input"    placeholder="Search" onkeypress="searchKeyPress(event)"></input>
 			<input type="image" id="searchButton" src="image/search1.png"  onclick="search()" class="searchButton imageButton"></input>
 
