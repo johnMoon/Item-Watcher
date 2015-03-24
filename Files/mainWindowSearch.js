@@ -272,7 +272,7 @@ function onStorageEvent(storageEvent){
 	if (storageEvent.key.indexOf("add-item-") !=-1) {
 		// check if new
 		var obj = JSON.parse( storageEvent.newValue );
-		var newId = obj.itemId;
+		var newId = obj.id;
 		if (newId && $.inArray(newId,listWatchItemId)==-1) {
 			listWatchItemId.push(newId);
 			saveItemListState();

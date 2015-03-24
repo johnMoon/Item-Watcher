@@ -412,7 +412,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 function addItem(itemId,imageSrc, itemName, rarity, level) {
 
 	window.localStorage.setItem( "add-item-"+itemId,JSON.stringify( 
-		{id:itemId,img:imageSrc, name:itemName, rarity:rarity, level:level} )
+		{id:itemId,icon:imageSrc, name:itemName, rarity:rarity, level:level} )
 			  ); 
 }
 
