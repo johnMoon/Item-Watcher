@@ -1,5 +1,5 @@
 var listWatchItemId = [];
-
+var newFrequency ;
 
 
 function openSubWindow() {
@@ -168,8 +168,20 @@ var interval;
 // then turn on timer
 
 $(document).ready(function(){
-		var frequency = document.getElementById("frequency-changer").value;
-			console.log("current frequency is " + frequency + "I am in first function");
+var frequency;
+var prevFrequency = window.localStorage.getItem( "frequency"); 
+	if (prevFrequency) {
+		// there was item list before
+		frequency = JSON.parse( prevFrequency );
+		console.log("current frequency is " + frequency + "I am using prevFrequency")
+		
+		console.log(localStorage.getItem('frequency')/1000);
+		console.log(JSON.stringify(localStorage.getItem('frequency')/1000) + " sec");
+		//document.getElementById("frequency-changer").options[2].selected = true;+
+		 document.getElementById("frequency-changer").value = localStorage['frequency'];
+		}else{
+			frequency = document.getElementById("frequency-changer").value;
+			console.log("current frequency is " + frequency + "I am in first function");}
 	
      interval = setInterval(
 	
@@ -210,9 +222,9 @@ function changeFrequency(){
 		}
 		
 		
-		var frequency = document.getElementById("frequency-changer").value;
-			console.log("current frequency is " + frequency + "I am in second function");
-	
+		newFrequency = document.getElementById("frequency-changer").value;
+			console.log("current frequency is " + newFrequency + "I am in second function");
+		    saveFrequency();
   frequencyInterval=  setInterval(
 	
      function() {
@@ -224,7 +236,7 @@ function changeFrequency(){
 
             $("#updatetime").text(new Date());
        
-        }, frequency);
+        }, newFrequency);
 
 	// check if there are any saved watched items
 	// if there are any reload for local storage
@@ -236,6 +248,14 @@ function changeFrequency(){
 	
 	
 };
+
+function saveFrequency(){
+
+window.localStorage.setItem('frequency',newFrequency);
+
+}
+
+
 
 function removeItem(itemId){
 console.log(itemId);
