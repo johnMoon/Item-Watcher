@@ -1,4 +1,5 @@
 var listWatchItemId = [];
+var listCharts = {};
 var newFrequency ;
 
 
@@ -14,6 +15,86 @@ function openSubWindow() {
 };
 
 
+//////////// CHARTING
+
+
+function drawChart(chartDiv, itemId) {
+
+	console.log("at drawign chart div", chartDiv);
+	var data = new google.visualization.DataTable();
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'Buy');
+    data.addColumn('number', 'Sell');
+	var chart = new google.visualization.LineChart(chartDiv);
+	listCharts[itemId] = {chart: chart, data: data};
+    chart.draw(data, chartOptions);
+	
+}
+var maxDataPoints = 20;
+
+	
+var chartOptions  = {
+	   
+		        backgroundColor: {
+				fill:	'#E4E4E4',
+        stroke: '#4322c0',
+        strokeWidth: 1,
+            
+    },
+           'width':170,
+                     'height':40,
+        hAxis: {
+            textPosition: 'none',
+            gridlines: {
+                color: 'transparent'
+            },
+            baseline: {
+                color: 'transparent'
+            },
+        },
+        vAxis: {
+            textPosition: 'none',
+            gridlines: {
+                color: 'transparent'
+            },
+            baseline: {
+                color: 'transparent'
+            },
+        },
+        legend: {
+            position: 'none'
+        },
+        enableInteractivity: false,
+        tooltip: {
+            trigger: 'none'
+        },
+        chartArea: {
+            left:3,
+            top:2,
+            width:166 ,     
+            height:36 ,
+  
+            
+}
+        
+    };
+
+function addDataPoint(itemId, buy, sell){
+	var chartObj = listCharts[itemId] ;
+	var chart = chartObj["chart"];
+	var data = chartObj["data"];
+	var currentDate = new Date();
+	var dataNum = data.getNumberOfRows();
+	if (data.getNumberOfRows()== 0	){
+		// hack to get a line always
+		data.addRow([currentDate.getTime()-1,buy,sell]); 	
+	} else if (dataNum >= maxDataPoints){
+		data.removeRow(0);
+	}
+	data.addRow([currentDate.getTime(),buy,sell]); 
+	chart.draw(data, chartOptions);      
+}
+//////////// 
 
 
 
@@ -56,7 +137,6 @@ function parseObjsAndUpdate(itemObj){
 function updateItemPrices() {
    
     // note use the ids param
-	console.log("i am in updateItemPrices()");
     //defensive
     if (listWatchItemId.length >0 ) {
       var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + listWatchItemId.join();
@@ -75,6 +155,9 @@ function updateItemPrices() {
                 // price formating for prices
                 $("#"+itemId+"-sell").text(buys);
                 $("#"+itemId+"-buy").text(sells);
+				
+				addDataPoint(itemId, buys,  sells);
+				
             });
         });
     }
@@ -115,17 +198,16 @@ function createSearchItem(itemId, name, rarity, image,level, bPrice, sPrice) {
 	 var div2 = $(document.createElement('div'));
 	 div2.addClass('graph-buysell');
 	
-		
-	 var img2 = $(document.createElement('img')).attr('src','https://www.google.com/jsapi?autoload={%20&#39;modules&#39;:[{%20&#39;name&#39;:&#39;visualization&#39;,%20&#39;version&#39;:&#39;1&#39;,%20&#39;packages&#39;:[&#39;corechart&#39;]%20}]%20}');
-		$(img2).attr('width',"180x").attr('height',"32px");
-	 var span = $(document.createElement('span'));
-	 span.attr('width',"170px");
+
+	var chartDiv = $(document.createElement('div'));	
+	chartDiv.addClass("chart-div");
+// google should have loaded when the paged got loaded?
+	console.log($(chartDiv), chartDiv);
+	drawChart($(chartDiv)[0], itemId);
+
 	 
-		
-		
-		span.append($(img2));
-		
-	 div2.append(span);
+	 div2.append(chartDiv);
+	 
 	 
 	 var div3 = $(document.createElement('div'));
 	 div3.addClass('buy-sell-prices');

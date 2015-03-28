@@ -4,9 +4,18 @@
 		<link rel="stylesheet" href="style.css" />
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		    <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+		  
+		  
 		<script src= "mainWindowSearch.js" ></script>
-		   <script type="text/javascript"
-    src="https://www.google.com/jsapi?autoload={%20&#39;modules&#39;:[{%20&#39;name&#39;:&#39;visualization&#39;,%20&#39;version&#39;:&#39;1&#39;,%20&#39;packages&#39;:[&#39;corechart&#39;]%20}]%20}"></script>
+
 		
 		<script>
 		
@@ -36,25 +45,24 @@
 	<body>
 	
 	
-			<p id = "updatetime"></p>
+		<p id = "updatetime"></p>
 		<div id = "watchListContents">
-				<div id = "header">
-					<h1>Watch Window</h1>
-			
-
-			
-					<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
-					<form> 
-					<select id="frequency-changer" onchange= "changeFrequency()" >
-						<option value = "5000">5 sec</option>
-						<option value = "10000">10 sec</option>
-						<option value = "20000">20 sec</option>
-						<option value = "30000">30 sec</option>
-						<option value = "60000">60 sec</option>
-					</select>
-		
-					</form>
+			<div id = "header">
+				<h1>Watch Window</h1>
+				<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
+				<form> 
+				<select id="frequency-changer" onchange= "changeFrequency()" >
+					<option value = "5000">5 sec</option>
+					<option value = "10000">10 sec</option>
+					<option value = "20000">20 sec</option>
+					<option value = "30000">30 sec</option>
+					<option value = "60000">60 sec</option>
+				</select>
+				</form>
+				<div id="canvas-holder1">
+					<canvas id="chart1" width="180" height="32" />
 				</div>
+			</div>
 				<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
 			
 				

@@ -57,8 +57,8 @@ text-align:right;
 }
 
 .graph {
-width:170px;
-
+width:180px;
+height:32px;
 }
 
 .search-item-cell {
@@ -190,8 +190,8 @@ border-style:solid;}
 border-color:#4C139D;
 border-style:solid;}
 
+/*item color*/
 
-// item color
 
 
 .junk{
@@ -212,3 +212,13 @@ color:#ffa405;}
 color:#fb3e8d;}
 .legendary{
 color:#4C139D;}
+
+/*charts*/
+
+.chart-div {
+
+    padding : 0px;
+display: inline-block;
+  height: 40px;  
+      width: 170px; 
+}
