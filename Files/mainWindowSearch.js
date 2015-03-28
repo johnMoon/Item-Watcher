@@ -178,7 +178,7 @@ var prevFrequency = window.localStorage.getItem( "frequency");
 		console.log(localStorage.getItem('frequency')/1000);
 		console.log(JSON.stringify(localStorage.getItem('frequency')/1000) + " sec");
 		//document.getElementById("frequency-changer").options[2].selected = true;+
-		 document.getElementById("frequency-changer").value = localStorage['frequen'];
+		 document.getElementById("frequency-changer").value = localStorage['frequency'];
 		}else{
 			frequency = document.getElementById("frequency-changer").value;
 			console.log("current frequency is " + frequency + "I am in first function");}
