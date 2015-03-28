@@ -400,7 +400,7 @@ function onStorageEvent(storageEvent){
 function resizeListener() {
 	var content = $("#watchListContents");
 	var header = $("#header");
-	var watchListContainer = $("#watchListContainer");
+	var watchListContainer = $("#watchlist-container");
 	watchListContainer.height(content.height() - header.height());
 	
 }
