@@ -33,13 +33,14 @@
 		<title>Demo app</title>
 	</head>
 
-	<body>
+	<body onresize= "resizeListener()">
 	
 	
-			<p id = "updatetime"></p>
+		<p id = "updatetime"></p>
 		<div id = "watchListContents">
+		
 				<div id = "header">
-					<h1>Watch Window</h1>
+					
 			
 
 			
@@ -54,19 +55,12 @@
 					</select>
 		
 					</form>
+					<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
 				</div>
-				<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
+				
 			
 				
 				<div id= "watchlist-container">
-			
-			
-				
-			
-			
-
-							
-			
 				
 					<div id = "testItem" class= "testItem">
 			

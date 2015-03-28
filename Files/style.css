@@ -159,7 +159,10 @@ right: 10px;
 padding: 10px;
 
 }
-
+@font-face {
+   font-family: myFirstFont;
+    src: "http://www.fontspace...k/foglihtenno01";
+}
 
 /*item border*/
 

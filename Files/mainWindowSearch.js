@@ -178,7 +178,7 @@ var prevFrequency = window.localStorage.getItem( "frequency");
 		console.log(localStorage.getItem('frequency')/1000);
 		console.log(JSON.stringify(localStorage.getItem('frequency')/1000) + " sec");
 		//document.getElementById("frequency-changer").options[2].selected = true;+
-		 document.getElementById("frequency-changer").value = localStorage['frequency'];
+		 document.getElementById("frequency-changer").value = localStorage['frequen'];
 		}else{
 			frequency = document.getElementById("frequency-changer").value;
 			console.log("current frequency is " + frequency + "I am in first function");}
@@ -318,7 +318,7 @@ function onStorageEvent(storageEvent){
 function resizeListener() {
 	var content = $("#watchListContents");
 	var header = $("#header");
-	var watchListContainer = $("#watchListContainer");
+	var watchListContainer = $("#watchlist-container");
 	watchListContainer.height(content.height() - header.height());
 	
 }
