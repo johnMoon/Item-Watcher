@@ -20,7 +20,6 @@ function openSubWindow() {
 
 function drawChart(chartDiv, itemId) {
 
-	console.log("at drawign chart div", chartDiv);
 	var data = new google.visualization.DataTable();
     data.addColumn('number', 'X');
     data.addColumn('number', 'Buy');
@@ -202,7 +201,6 @@ function createSearchItem(itemId, name, rarity, image,level, bPrice, sPrice) {
 	var chartDiv = $(document.createElement('div'));	
 	chartDiv.addClass("chart-div");
 // google should have loaded when the paged got loaded?
-	console.log($(chartDiv), chartDiv);
 	drawChart($(chartDiv)[0], itemId);
 
 	 
@@ -340,7 +338,6 @@ window.localStorage.setItem('frequency',newFrequency);
 
 
 function removeItem(itemId){
-console.log(itemId);
 
 var index = listWatchItemId.indexOf(itemId);
 listWatchItemId.splice(index,1);
@@ -369,7 +366,6 @@ function reloadItemListState(){
 }
 
 function onStorageEvent(storageEvent){
-    console.log(storageEvent);
 
 	if (storageEvent.key.indexOf("add-item-") !=-1) {
 		// check if new
