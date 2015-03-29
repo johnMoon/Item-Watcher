@@ -151,6 +151,7 @@ function updateItemPrices() {
 				$("#" + itemId + "-buyCopper").text(copper);
 				$("#" + itemId + "-buyCopperIcon").show();
 
+
 				if (silver > 0 || gold > 0) {
 					if (gold > 0) {
 						$("#" + itemId + "-buyGold").text(gold);
@@ -327,6 +328,7 @@ $(document).ready(function () {
 
 	interval = setInterval(
 
+
 			function () {
 
 			if (listWatchItemId.length > 0) {
@@ -358,6 +360,7 @@ function changeFrequency() {
 	if (frequencyInterval) {
 		window.clearInterval(frequencyInterval);
 	}
+
 
 	newFrequency = document.getElementById("frequency-changer").value;
 
