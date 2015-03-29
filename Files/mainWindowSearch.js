@@ -170,7 +170,7 @@ function updateItemPrices() {
 
                
 				  
-				
+				addDataPoint(itemId, buys,sells);
 				
 				if(buys > 10000){
 				console.log(buys);
@@ -223,8 +223,9 @@ function updateItemPrices() {
               
                 $("#"+itemId+"-sellGold").text(sellGold);
 				$("#"+itemId+"-sellGold").append(sGoldImage);
+				
 				var sellSilver = (sells%10000 - (sells%100))/100;
-				$("#"+itemId+"-sellSilver").text(silver);
+				$("#"+itemId+"-sellSilver").text(sellSilver);
 				$("#"+itemId+"-sellSilver").append(sSilverImage);
 				console.log(silver);
 				
@@ -238,29 +239,29 @@ function updateItemPrices() {
 				if(sells <9999 && sells >99){
 				
 				var sellSilver = (sells%10000 - (sells%100))/100;
-				$("#"+itemId+"-sellSilver").text(silver);
+				$("#"+itemId+"-sellSilver").text(sellSilver);
 				$("#"+itemId+"-sellSilver").append(sSilverImage);
-				console.log(silver);
+			
 				
 				 var sellCopper = sells%100;
 				 
-				 $("#"+itemId+"-sellCopper").text(copper);
+				 $("#"+itemId+"-sellCopper").text(sellCopper);
 				 $("#"+itemId+"-sellCopper").append(sCopperImage);
 				
 				} else{
 				
 					var sellCopper = sells%100;
 			
-				 $("#"+itemId+"-sellCopper").text(copper);
+				 $("#"+itemId+"-sellCopper").text(sellCopper);
 				 $("#"+itemId+"-sellCopper").append(sCopperImage);
-				
+			
 				
 				}
 				
 				
 
 				
-				addDataPoint(itemId, buys,  sells);
+				//addDataPoint(itemId, buys,sells);
 
 				
             });
