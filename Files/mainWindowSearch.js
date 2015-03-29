@@ -15,6 +15,7 @@ function openSubWindow() {
 };
 
 
+
 //////////// CHARTING
 
 
@@ -151,19 +152,19 @@ function updateItemPrices() {
                 var buys = item.buys.unit_price;
                 var itemId = item.id;
 				
-		 var goldImage = $(document.createElement('img')).attr('src','image/Gold_coin.png');
+		 var goldImage = $(document.createElement('img')).attr('src',"image/Gold_coin.png");
 		 $(goldImage).attr('height', "11").attr('width',"11");
-		 var silverImage = $(document.createElement('img')).attr('src','image/Silver_coin.png');
+		 var silverImage = $(document.createElement('img')).attr('src',"image/Silver_coin.png");
 		  $(silverImage).attr('height', "11").attr('width',"11");
-		 var copperImage = $(document.createElement('img')).attr('src','image/Copper_coin.png');
+		 var copperImage = $(document.createElement('img')).attr('src',"image/Copper_coin.png");
 		  $(copperImage).attr('height', "11").attr('width',"11");
 		 
 		 
-		  var sGoldImage = $(document.createElement('img')).attr('src','image/Gold_coin.png');
+		  var sGoldImage = $(document.createElement('img')).attr('src',"image/Gold_coin.png");
 		 $(sGoldImage).attr('height', "11").attr('width',"11");
-		 var sSilverImage = $(document.createElement('img')).attr('src','image/Silver_coin.png');
+		 var sSilverImage = $(document.createElement('img')).attr('src',"image/Silver_coin.png");
 		  $(sSilverImage).attr('height', "11").attr('width',"11");
-		 var sCopperImage = $(document.createElement('img')).attr('src','image/Copper_coin.png');
+		 var sCopperImage = $(document.createElement('img')).attr('src',"image/Copper_coin.png");
 		  $(sCopperImage).attr('height', "11").attr('width',"11");
                 // refer to buy element and sell element by id-buy or id-sell
                 // price formating for prices
@@ -405,7 +406,7 @@ var prevFrequency = window.localStorage.getItem( "frequency");
 		
 		
 		
-		//document.getElementById("frequency-changer").options[2].selected = true;+
+		
 		 document.getElementById("frequency-changer").value = localStorage['frequency'];
 		}else{
 			frequency = document.getElementById("frequency-changer").value;}
@@ -416,7 +417,7 @@ var prevFrequency = window.localStorage.getItem( "frequency");
         function() {
 				
             if (listWatchItemId.length > 0) {
-                console.log("prices have been updated at "+ new Date());
+               
                 updateItemPrices();    
             }
 
@@ -458,7 +459,7 @@ function changeFrequency(){
      function() {
 	
             if (listWatchItemId.length > 0) {
-                console.log("prices have been updated at "+ new Date());
+                
                 updateItemPrices();    
             }
 
