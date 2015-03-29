@@ -117,7 +117,7 @@ function parseObjsAndUpdate(itemObj) {
 		var itemId = item.id;
 		var rarity = item.rarity;
 		var level = item.level;
-		createSearchItem(itemId, itemName, rarity, img, level, "", "");
+		createWatchItem(itemId, itemName, rarity, img, level);
 	});
 
 	updateItemPrices();
@@ -146,9 +146,6 @@ function updateItemPrices() {
 				updatePriceHelper(itemId, buys, "buy");
 				updatePriceHelper(itemId, sells, "sell");
 
-		
-
-
 			});
 		});
 	}
@@ -159,7 +156,6 @@ function updatePriceHelper(itemId, price, buySell) {
 	var silver = (price % 10000 - (price % 100)) / 100;
 	var copper = price % 100;
 	$("#" + itemId + "-"+buySell+"Copper").text(copper);
-	$("#" + itemId + "-"+buySell+"CopperIcon").show();
 
 	if (silver > 0 || gold > 0) {
 		if (gold > 0) {
@@ -180,112 +176,85 @@ function updatePriceHelper(itemId, price, buySell) {
 	}
 }
 
-function createSearchItem(itemId, name, rarity, image, level, bPrice, sPrice) {
+function createWatchItem(itemId, name, rarity, image, level) {
 
-	var div = $(document.createElement('div'));
-	div.attr('id', "window-item-cell-" + itemId);
-	div.addClass('mainWindow-item-cell');
+	var cellDiv = $(document.createElement('div'));
+	cellDiv.attr('id', "window-item-cell-" + itemId);
+	cellDiv.addClass('mainWindow-item-cell');
 
-	var img = $(document.createElement('img')).attr('src', image);
-	$(img).attr('height', "32").attr('width', "32");
-	$(img).addClass("item-img");
-	$(img).addClass(rarity.toLowerCase() + "-border");
+	var iconImg = $(document.createElement('img'));
+	$(iconImg).attr('src', image).attr('height', "32").attr('width', "32");
+	$(iconImg).addClass(rarity.toLowerCase() + "-border item-img");
 
-	var p = $(document.createElement('p')).text(name);
-	p.addClass('item-name');
+	var itemName = $(document.createElement('p')).text(name);
+	itemName.addClass('item-name');
 	if (level && level > 0) {
 		var spanLevel = $(document.createElement('span')).text(" Lv. " + level);
 		spanLevel.addClass("item-level");
-		p.append($(spanLevel));
+		itemName.append($(spanLevel));
 	}
-	var button = $(document.createElement('button')).text("X");
-	button.click(
+	var removeButton = $(document.createElement('button')).text("X");
+	removeButton.click(
 		function () {
 		removeItem(itemId);
 	});
 
-	var div2 = $(document.createElement('div'));
-	div2.addClass('graph-buysell');
+	var priceContainer = $(document.createElement('div'));
+	priceContainer.addClass('graph-buysell');
 
 	var chartDiv = $(document.createElement('div'));
 	chartDiv.addClass("chart-div");
-	// google should have loaded when the paged got loaded?
 	drawChart($(chartDiv)[0], itemId);
 
-	div2.append(chartDiv);
+	priceContainer.append(chartDiv);
 
-	var div3 = $(document.createElement('div'));
-	div3.addClass('buy-sell-prices');
+	var priceDiv = $(document.createElement('div'));
+	priceDiv.addClass('buy-sell-prices');
 
-	var p2 = $(document.createElement('p')).text("Buy:");
-	p2.addClass('buy-sell');
+	var buyElem =createPriceElement(itemId, "buy");
+	var sellElem = createPriceElement(itemId, "sell");
+	priceDiv.append(sellElem, buyElem);
+	
 
-	var span2 = $(document.createElement('span')).text(bPrice);
-	$(span2).attr("id", itemId + "-buyGold");
 
-	var span3 = $(document.createElement('span')).text(bPrice);
+	priceContainer.append(priceDiv);
 
-	$(span3).attr("id", itemId + "-buySilver");
+	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
 
-	var span4 = $(document.createElement('span')).text(bPrice);
-	$(span4).attr("id", itemId + "-buyCopper");
-
-	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-buyGoldIcon");
-	$(goldImage).attr('height', "11").attr('width', "11");
-	$(goldImage).hide();
-	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-buySilverIcon");
-	$(silverImage).attr('height', "11").attr('width', "11");
-	$(silverImage).hide();
-	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-buyCopperIcon");
-	$(copperImage).attr('height', "11").attr('width', "11");
-	$(copperImage).hide();
-
-	p2.append(span2);
-	p2.append(goldImage);
-	p2.append(span3);
-	p2.append(silverImage);
-	p2.append(span4);
-	p2.append(copperImage);
-
-	var p3 = $(document.createElement('p')).text("Sell:");
-	p3.addClass('buy-sell');
-	var span5 = $(document.createElement('span')).text(sPrice);
-	$(span5).attr("id", itemId + "-sellGold");
-
-	var span6 = $(document.createElement('span')).text(sPrice);
-	$(span6).attr("id", itemId + "-sellSilver");
-
-	var span7 = $(document.createElement('span')).text(sPrice);
-	$(span7).attr("id", itemId + "-sellCopper");
-
-	var sGoldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-sellGoldIcon");
-	$(sGoldImage).attr('height', "11").attr('width', "11");
-	$(sGoldImage).hide();
-	var sSilverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-sellSilverIcon");
-	$(sSilverImage).attr('height', "11").attr('width', "11");
-	$(sSilverImage).hide();
-	var sCopperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-sellCopperIcon");
-	$(sCopperImage).attr('height', "11").attr('width', "11");
-	$(sCopperImage).hide();
-	p3.append(span5);
-	p3.append(sGoldImage);
-	p3.append(span6);
-	p3.append(sSilverImage);
-	p3.append(span7);
-	p3.append(sCopperImage);
-
-	div3.append(p2);
-	div3.append(p3);
-
-	div2.append(div3);
-
-	var result = div.append($(img));
-	result.append(p);
-	result.append($(button));
-	result.append(div2);
 
 	$(result).appendTo("#testItem");
 
+}
+
+function createPriceElement(itemId, buySell){
+	var label = "Sell:";
+	if (buySell == "buy"){
+		label= "Buy:"
+	}
+	var buyElem = $(document.createElement('p')).text(label);
+	buyElem.addClass('buy-sell');
+
+	var buyGold = $(document.createElement('span'));
+	$(buyGold).attr("id", itemId + "-"+buySell+"Gold");
+
+	var buySilver = $(document.createElement('span'));
+
+	$(buySilver).attr("id", itemId + "-"+buySell+"Silver");
+
+	var buyCopper = $(document.createElement('span')).text("0");
+	$(buyCopper).attr("id", itemId + "-"+buySell+"Copper");
+
+	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-"+buySell+"GoldIcon");
+
+	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-"+buySell+"SilverIcon");
+	
+	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon");
+	
+	$(goldImage, silverImage, copperImage).attr('height', "11").attr('width', "11");
+	$(goldImage, silverImage).hide();
+	buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
+
+	return buyElem;
 }
 
 // check if there are any existing watched items
