@@ -173,41 +173,43 @@ function updateItemPrices() {
 				addDataPoint(itemId, buys,sells);
 				
 				if(buys > 10000){
-				console.log(buys);
-				var gold = (buys - (buys%10000))/10000;
-				console.log(gold);
+				$("#"+itemId+"-buyGold").empty();
+				$("#"+itemId+"-buySilver").empty();
+				$("#"+itemId+"-buyCopper").empty();
 				
-               
+				
+				
+				var gold = (buys - (buys%10000))/10000;
                 $("#"+itemId+"-buyGold").text(gold);
 				$("#"+itemId+"-buyGold").append(goldImage);
+				
 				var silver = (buys%10000 - (buys%100))/100;
 				$("#"+itemId+"-buySilver").text(silver);
 				$("#"+itemId+"-buySilver").append(silverImage);
-				console.log(silver);
+			
 				
-				 var copper = buys%100;
-				 console.log(copper);
+				 var copper = buys%100;	
 				 $("#"+itemId+"-buyCopper").text(copper);
 				 $("#"+itemId+"-buyCopper").append(copperImage);
 				
 				
 				}
 				 if(buys <9999 && buys >99){
+				 $("#"+itemId+"-buySilver").empty();
+				 $("#"+itemId+"-buyCopper").empty();
 				
 				var silver = (buys%10000 - (buys%100))/100;
 				$("#"+itemId+"-buySilver").text(silver);
 				$("#"+itemId+"-buySilver").append(silverImage);
-				console.log(silver);
 				
-				 var copper = buys%100;
-				 console.log(copper);
+				
+				 var copper = buys%100;				
 				 $("#"+itemId+"-buyCopper").text(copper);
 				 $("#"+itemId+"-buyCopper").append(copperImage);
 				
 				} else{
-				
-					var copper = buys%100;
-				 console.log(copper);
+				 $("#"+itemId+"-buyCopper").empty();
+				var copper = buys%100;	 
 				 $("#"+itemId+"-buyCopper").text(copper);
 				 $("#"+itemId+"-buyCopper").append(copperImage);
 				
@@ -216,42 +218,43 @@ function updateItemPrices() {
 				
 				
 				if(sells > 10000){
-			
-				var sellGold = (sells - (sells%10000))/10000;
-			
+				$("#"+itemId+"-sellGold").empty();
+				$("#"+itemId+"-sellSilver").empty();
+				$("#"+itemId+"-sellCopper").empty();
 				
-              
+				var sellGold = (sells - (sells%10000))/10000;					     
                 $("#"+itemId+"-sellGold").text(sellGold);
 				$("#"+itemId+"-sellGold").append(sGoldImage);
 				
 				var sellSilver = (sells%10000 - (sells%100))/100;
+				
 				$("#"+itemId+"-sellSilver").text(sellSilver);
 				$("#"+itemId+"-sellSilver").append(sSilverImage);
-				console.log(silver);
+			
 				
-				 var sellCopper = sells%100;
-				 console.log(copper);
+				 var sellCopper = sells%100;		
 				 $("#"+itemId+"-sellCopper").text(sellCopper);
 				 $("#"+itemId+"-sellCopper").append(sCopperImage);
 				
 				
 				}
 				if(sells <9999 && sells >99){
+				$("#"+itemId+"-sellSilver").empty();
+				$("#"+itemId+"-sellCopper").empty();
 				
 				var sellSilver = (sells%10000 - (sells%100))/100;
 				$("#"+itemId+"-sellSilver").text(sellSilver);
 				$("#"+itemId+"-sellSilver").append(sSilverImage);
 			
 				
-				 var sellCopper = sells%100;
-				 
+				 var sellCopper = sells%100;				 
 				 $("#"+itemId+"-sellCopper").text(sellCopper);
 				 $("#"+itemId+"-sellCopper").append(sCopperImage);
 				
 				} else{
+				$("#"+itemId+"-sellCopper").empty();
 				
-					var sellCopper = sells%100;
-			
+					var sellCopper = sells%100;			
 				 $("#"+itemId+"-sellCopper").text(sellCopper);
 				 $("#"+itemId+"-sellCopper").append(sCopperImage);
 			
@@ -261,7 +264,7 @@ function updateItemPrices() {
 				
 
 				
-				//addDataPoint(itemId, buys,sells);
+		
 
 				
             });
@@ -399,20 +402,19 @@ var prevFrequency = window.localStorage.getItem( "frequency");
 	if (prevFrequency) {
 		// there was item list before
 		frequency = JSON.parse( prevFrequency );
-		console.log("current frequency is " + frequency + "I am using prevFrequency")
 		
-		console.log(localStorage.getItem('frequency')/1000);
-		console.log(JSON.stringify(localStorage.getItem('frequency')/1000) + " sec");
+		
+		
 		//document.getElementById("frequency-changer").options[2].selected = true;+
 		 document.getElementById("frequency-changer").value = localStorage['frequency'];
 		}else{
-			frequency = document.getElementById("frequency-changer").value;
-			console.log("current frequency is " + frequency + "I am in first function");}
+			frequency = document.getElementById("frequency-changer").value;}
+			
 	
      interval = setInterval(
 	
         function() {
-				console.log("first setInterval function");
+				
             if (listWatchItemId.length > 0) {
                 console.log("prices have been updated at "+ new Date());
                 updateItemPrices();    
@@ -438,23 +440,23 @@ var frequencyInterval  =0 ;
 
 function changeFrequency(){
 		
-		console.log(interval);
+		
 		if(interval){
 		window.clearInterval(interval);}
 		
-		console.log("frequencyInterval = " + frequencyInterval);
+		
 		if(frequencyInterval){
 		window.clearInterval(frequencyInterval);
 		}
 		
 		
 		newFrequency = document.getElementById("frequency-changer").value;
-			console.log("current frequency is " + newFrequency + "I am in second function");
+			
 		    saveFrequency();
   frequencyInterval=  setInterval(
 	
      function() {
-	console.log("second setInterval function");
+	
             if (listWatchItemId.length > 0) {
                 console.log("prices have been updated at "+ new Date());
                 updateItemPrices();    
