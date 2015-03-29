@@ -3,7 +3,6 @@ var listCharts = {};
 var newFrequency;
 
 function openSubWindow() {
-	//alert("the subwindow will only be visible inside a game");
 	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
 		if (result.status == "success") {
 			overwolf.windows.restore(result.window.id, function (result) {
@@ -104,7 +103,6 @@ function updateItemData(searchItemIDs) {
 	// not sure if need concurncy control. REVIEW when completely merged with the search window
 	// apparently js is always single threaded
 	$.getJSON(names).done(function (data) {
-
 		parseObjsAndUpdate(data);
 
 	});
@@ -145,58 +143,40 @@ function updateItemPrices() {
 
 				addDataPoint(itemId, buys, sells);
 
-				var gold = (buys - (buys % 10000)) / 10000;
-				var silver = (buys % 10000 - (buys % 100)) / 100;
-				var copper = buys % 100;
-				$("#" + itemId + "-buyCopper").text(copper);
-				$("#" + itemId + "-buyCopperIcon").show();
+				updatePriceHelper(itemId, buys, "buy");
+				updatePriceHelper(itemId, sells, "sell");
 
+		
 
-				if (silver > 0 || gold > 0) {
-					if (gold > 0) {
-						$("#" + itemId + "-buyGold").text(gold);
-						$("#" + itemId + "-buyGoldIcon").show();
-
-					} else {
-						$("#" + itemId + "-buyGold").empty();
-						$("#" + itemId + "-buyGoldIcon").hide();
-					}
-					$("#" + itemId + "-buySilver").text(silver);
-					$("#" + itemId + "-buySilverIcon").show();
-				} else {
-					$("#" + itemId + "-buyGold").empty();
-					$("#" + itemId + "-buySilver").empty();
-					$("#" + itemId + "-buyGoldIcon").hide();
-					$("#" + itemId + "-buySilverIcon").hide();
-				}
-
-				var sellGold = (sells - (sells % 10000)) / 10000;
-				var sellSilver = (sells % 10000 - (sells % 100)) / 100;
-				var sellCopper = sells % 100;
-
-				$("#" + itemId + "-sellCopper").text(sellCopper);
-				$("#" + itemId + "-sellCopperIcon").show();
-
-				if (sellSilver > 0 || sellGold > 0) {
-					if (sellGold > 0) {
-						$("#" + itemId + "-sellGold").text(sellGold);
-						$("#" + itemId + "-sellGoldIcon").show();
-
-					} else {
-						$("#" + itemId + "-sellGold").empty();
-						$("#" + itemId + "-sellGoldIcon").hide();
-					}
-					$("#" + itemId + "-sellSilver").text(sellSilver);
-					$("#" + itemId + "-sellSilverIcon").show();
-				} else {
-					$("#" + itemId + "-sellGold").empty();
-					$("#" + itemId + "-sellSilver").empty();
-					$("#" + itemId + "-sellGoldIcon").hide();
-					$("#" + itemId + "-sellSilverIcon").hide();
-				}
 
 			});
 		});
+	}
+}
+
+function updatePriceHelper(itemId, price, buySell) {
+	var gold = (price - (price % 10000)) / 10000;
+	var silver = (price % 10000 - (price % 100)) / 100;
+	var copper = price % 100;
+	$("#" + itemId + "-"+buySell+"Copper").text(copper);
+	$("#" + itemId + "-"+buySell+"CopperIcon").show();
+
+	if (silver > 0 || gold > 0) {
+		if (gold > 0) {
+			$("#" + itemId + "-"+buySell+"Gold").text(gold);
+			$("#" + itemId + "-"+buySell+"GoldIcon").show();
+
+		} else {
+			$("#" + itemId + "-"+buySell+"Gold").empty();
+			$("#" + itemId + "-"+buySell+"GoldIcon").hide();
+		}
+		$("#" + itemId + "-"+buySell+"Silver").text(silver);
+		$("#" + itemId + "-"+buySell+"SilverIcon").show();
+	} else {
+		$("#" + itemId + "-"+buySell+"Gold").empty();
+		$("#" + itemId + "-"+buySell+"Silver").empty();
+		$("#" + itemId + "-"+buySell+"GoldIcon").hide();
+		$("#" + itemId + "-"+buySell+"SilverIcon").hide();
 	}
 }
 
@@ -307,7 +287,6 @@ function createSearchItem(itemId, name, rarity, image, level, bPrice, sPrice) {
 	$(result).appendTo("#testItem");
 
 }
-var interval;
 
 // check if there are any existing watched items
 // reload them
@@ -319,48 +298,23 @@ $(document).ready(function () {
 	if (prevFrequency) {
 		// there was item list before
 		frequency = JSON.parse(prevFrequency);
-
-		//document.getElementById("frequency-changer").options[2].selected = true;+
 		document.getElementById("frequency-changer").value = localStorage['frequency'];
 	} else {
 		frequency = document.getElementById("frequency-changer").value;
 	}
+	changeFrequency();
 
-	interval = setInterval(
-
-
-			function () {
-
-			if (listWatchItemId.length > 0) {
-				updateItemPrices();
-			}
-
-			$("#updatetime").text(new Date());
-
-		}, frequency);
-
-	// check if there are any saved watched items
-	// if there are any reload for local storage
-
-	//updateItemData(searchItemIDs)
-
-	// if failed to reload from pervious save, delete the items
 	reloadItemListState();
 
 });
 
-var frequencyInterval = 0;
+var frequencyInterval;
 
 function changeFrequency() {
-
-	if (interval) {
-		window.clearInterval(interval);
-	}
 
 	if (frequencyInterval) {
 		window.clearInterval(frequencyInterval);
 	}
-
 
 	newFrequency = document.getElementById("frequency-changer").value;
 
@@ -372,8 +326,6 @@ function changeFrequency() {
 			if (listWatchItemId.length > 0) {
 				updateItemPrices();
 			}
-
-			$("#updatetime").text(new Date());
 
 		}, newFrequency);
 
