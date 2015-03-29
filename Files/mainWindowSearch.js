@@ -150,117 +150,61 @@ function updateItemPrices() {
                 var sells = item.sells.unit_price;
                 var buys = item.buys.unit_price;
                 var itemId = item.id;
-				
-		 var goldImage = $(document.createElement('img')).attr('src','image/Gold_coin.png');
-		 $(goldImage).attr('height', "11").attr('width',"11");
-		 var silverImage = $(document.createElement('img')).attr('src','image/Silver_coin.png');
-		  $(silverImage).attr('height', "11").attr('width',"11");
-		 var copperImage = $(document.createElement('img')).attr('src','image/Copper_coin.png');
-		  $(copperImage).attr('height', "11").attr('width',"11");
-		 
-		 
-		  var sGoldImage = $(document.createElement('img')).attr('src','image/Gold_coin.png');
-		 $(sGoldImage).attr('height', "11").attr('width',"11");
-		 var sSilverImage = $(document.createElement('img')).attr('src','image/Silver_coin.png');
-		  $(sSilverImage).attr('height', "11").attr('width',"11");
-		 var sCopperImage = $(document.createElement('img')).attr('src','image/Copper_coin.png');
-		  $(sCopperImage).attr('height', "11").attr('width',"11");
-                // refer to buy element and sell element by id-buy or id-sell
-                // price formating for prices
 
-               
-				  
 				addDataPoint(itemId, buys,sells);
 				
-				if(buys > 10000){
-				$("#"+itemId+"-buyGold").empty();
-				$("#"+itemId+"-buySilver").empty();
-				$("#"+itemId+"-buyCopper").empty();
-				
-				
-				
 				var gold = (buys - (buys%10000))/10000;
-                $("#"+itemId+"-buyGold").text(gold);
-				$("#"+itemId+"-buyGold").append(goldImage);
-				
 				var silver = (buys%10000 - (buys%100))/100;
-				$("#"+itemId+"-buySilver").text(silver);
-				$("#"+itemId+"-buySilver").append(silverImage);
+				var copper = buys%100;	
+	    		$("#"+itemId+"-buyCopper").text(copper);
+    			$("#"+itemId+"-buyCopperIcon").show();
+				
+				if (silver > 0 || gold > 0) {
+					if (gold > 0) {
+						$("#"+itemId+"-buyGold").text(gold);
+						$("#"+itemId+"-buyGoldIcon").show();
+							
+					} else {
+						$("#"+itemId+"-buyGold").empty();
+						$("#"+itemId+"-buyGoldIcon").hide();
+					}
+						$("#"+itemId+"-buySilver").text(silver);
+						$("#"+itemId+"-buySilverIcon").show();
+				} else {
+					$("#"+itemId+"-buyGold").empty();
+					$("#"+itemId+"-buySilver").empty();
+					$("#"+itemId+"-buyGoldIcon").hide();
+					$("#"+itemId+"-buySilverIcon").hide();
+				}
+				
 			
 				
-				 var copper = buys%100;	
-				 $("#"+itemId+"-buyCopper").text(copper);
-				 $("#"+itemId+"-buyCopper").append(copperImage);
-				
-				
-				}
-				 if(buys <9999 && buys >99){
-				 $("#"+itemId+"-buySilver").empty();
-				 $("#"+itemId+"-buyCopper").empty();
-				
-				var silver = (buys%10000 - (buys%100))/100;
-				$("#"+itemId+"-buySilver").text(silver);
-				$("#"+itemId+"-buySilver").append(silverImage);
-				
-				
-				 var copper = buys%100;				
-				 $("#"+itemId+"-buyCopper").text(copper);
-				 $("#"+itemId+"-buyCopper").append(copperImage);
-				
-				} else{
-				 $("#"+itemId+"-buyCopper").empty();
-				var copper = buys%100;	 
-				 $("#"+itemId+"-buyCopper").text(copper);
-				 $("#"+itemId+"-buyCopper").append(copperImage);
-				
-				}
-				
-				
-				
-				if(sells > 10000){
-				$("#"+itemId+"-sellGold").empty();
-				$("#"+itemId+"-sellSilver").empty();
-				$("#"+itemId+"-sellCopper").empty();
-				
-				var sellGold = (sells - (sells%10000))/10000;					     
-                $("#"+itemId+"-sellGold").text(sellGold);
-				$("#"+itemId+"-sellGold").append(sGoldImage);
-				
+				var sellGold = (sells - (sells%10000))/10000;	
 				var sellSilver = (sells%10000 - (sells%100))/100;
-				
-				$("#"+itemId+"-sellSilver").text(sellSilver);
-				$("#"+itemId+"-sellSilver").append(sSilverImage);
+				var sellCopper = sells%100;		
 			
+		
+
+				$("#"+itemId+"-sellCopper").text(sellCopper);
+				$("#"+itemId+"-sellCopperIcon").show(); 
 				
-				 var sellCopper = sells%100;		
-				 $("#"+itemId+"-sellCopper").text(sellCopper);
-				 $("#"+itemId+"-sellCopper").append(sCopperImage);
-				
-				
+				if (sellSilver > 0 || sellGold > 0) {
+					if (sellGold > 0) {
+						$("#"+itemId+"-sellGold").text(sellGold);
+						$("#"+itemId+"-sellGoldIcon").show();
+							
+					} else {
+						$("#"+itemId+"-sellGold").empty();
+						$("#"+itemId+"-sellGoldIcon").hide();
+					}
+						$("#"+itemId+"-sellSilver").text(sellSilver);
+						$("#"+itemId+"-sellSilverIcon").show();
+				} else {
+					$("#"+itemId+"-sellGold").empty();
+					$("#"+itemId+"-sellSilver").empty();
+					$("#"+itemId+"-sellGoldIcon").hide();
+					$("#"+itemId+"-sellSilverIcon").hide();
 				}
-				if(sells <9999 && sells >99){
-				$("#"+itemId+"-sellSilver").empty();
-				$("#"+itemId+"-sellCopper").empty();
-				
-				var sellSilver = (sells%10000 - (sells%100))/100;
-				$("#"+itemId+"-sellSilver").text(sellSilver);
-				$("#"+itemId+"-sellSilver").append(sSilverImage);
-			
-				
-				 var sellCopper = sells%100;				 
-				 $("#"+itemId+"-sellCopper").text(sellCopper);
-				 $("#"+itemId+"-sellCopper").append(sCopperImage);
-				
-				} else{
-				$("#"+itemId+"-sellCopper").empty();
-				
-					var sellCopper = sells%100;			
-				 $("#"+itemId+"-sellCopper").text(sellCopper);
-				 $("#"+itemId+"-sellCopper").append(sCopperImage);
-			
-				
-				}
-				
 				
 
 				
@@ -339,21 +283,23 @@ function createSearchItem(itemId, name, rarity, image,level, bPrice, sPrice) {
 		 var span4 = $(document.createElement('span')).text(bPrice);
 		 $(span4).attr("id", itemId +"-buyCopper");
 		 
-		
-	
-		 
-		 
-				 
-	 
-	 
+		  var goldImage = $(document.createElement('img')).attr('src','image/Gold_coin.png').attr("id", itemId +"-buyGoldIcon");
+		 $(goldImage).attr('height', "11").attr('width',"11");
+		 $(goldImage).hide();
+		 var silverImage = $(document.createElement('img')).attr('src','image/Silver_coin.png').attr("id", itemId +"-buySilverIcon");
+		  $(silverImage).attr('height', "11").attr('width',"11");
+		   $(silverImage).hide();
+		 var copperImage = $(document.createElement('img')).attr('src','image/Copper_coin.png').attr("id", itemId +"-buyCopperIcon");
+		  $(copperImage).attr('height', "11").attr('width',"11");
+		 	   $(copperImage).hide();
 		 
 			p2.append(span2);
+			p2.append(goldImage);
 			p2.append(span3);
+			p2.append(silverImage);
 			p2.append(span4);
-		 
-		// p2.append(silverImage);
-		// p2.append(copperImage);
-	 
+		 	p2.append(copperImage);
+	
 	var p3 = $(document.createElement('p')).text("Sell:"); 
 		p3.addClass('buy-sell');
 	var span5 = $(document.createElement('span')).text(sPrice);
@@ -366,9 +312,23 @@ function createSearchItem(itemId, name, rarity, image,level, bPrice, sPrice) {
 		
 			var span7 = $(document.createElement('span')).text(sPrice);
 		$(span7).attr("id", itemId +"-sellCopper");
+		
+		var sGoldImage = $(document.createElement('img')).attr('src','image/Gold_coin.png').attr("id", itemId +"-sellGoldIcon");
+		 $(sGoldImage).attr('height', "11").attr('width',"11");
+		 $(sGoldImage).hide();
+		 var sSilverImage = $(document.createElement('img')).attr('src','image/Silver_coin.png').attr("id", itemId +"-sellSilverIcon");
+		  $(sSilverImage).attr('height', "11").attr('width',"11");
+		  	 $(sSilverImage).hide();
+		 var sCopperImage = $(document.createElement('img')).attr('src','image/Copper_coin.png').attr("id", itemId +"-sellCopperIcon");
+		  $(sCopperImage).attr('height', "11").attr('width',"11");
+	 $(sCopperImage).hide();
 		p3.append(span5);
+		p3.append(sGoldImage);
 		p3.append(span6);
+		p3.append(sSilverImage);
 		p3.append(span7);
+		p3.append(sCopperImage);
+		
 		
 		
 		div3.append(p2);
@@ -416,7 +376,6 @@ var prevFrequency = window.localStorage.getItem( "frequency");
         function() {
 				
             if (listWatchItemId.length > 0) {
-                console.log("prices have been updated at "+ new Date());
                 updateItemPrices();    
             }
 
@@ -458,7 +417,6 @@ function changeFrequency(){
      function() {
 	
             if (listWatchItemId.length > 0) {
-                console.log("prices have been updated at "+ new Date());
                 updateItemPrices();    
             }
 
