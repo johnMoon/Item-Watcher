@@ -5,6 +5,8 @@
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src= "mainWindowSearch.js" ></script>
+		
+	
 		   <script type="text/javascript"
     src="https://www.google.com/jsapi?autoload={%20&#39;modules&#39;:[{%20&#39;name&#39;:&#39;visualization&#39;,%20&#39;version&#39;:&#39;1&#39;,%20&#39;packages&#39;:[&#39;corechart&#39;]%20}]%20}"></script>
 		
@@ -44,9 +46,9 @@
 			
 
 			
-					<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
-					<form> 
-					<select id="frequency-changer" onchange= "changeFrequency()" >
+					
+					<form style="display:inline-block;"class="form-control""> 
+					<select  id="frequency-changer" onchange= "changeFrequency()"  >
 						<option value = "5000">5 sec</option>
 						<option value = "10000">10 sec</option>
 						<option value = "20000">20 sec</option>
@@ -55,14 +57,15 @@
 					</select>
 		
 					</form>
-					<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
+					<button id="open-subwindow" class= "btn btn-primary btn-lg outline" onclick="openSubWindow();" >Open Sub-Window</button>
+					<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
 				</div>
 				
 			
 				
-				<div id= "watchlist-container">
+				<div id= "watchlist-container"style= "font-family: myFirstFont;">
 				
-					<div id = "testItem" class= "testItem">
+					<div id = "testItem" class= "testItem"style= "font-family: myFirstFont;">
 			
 					</div>
 				</div>

@@ -11,6 +11,7 @@ height: 100%;
 width: 100%;
 
 
+
 }
 
 .resizeGrip {
@@ -114,16 +115,19 @@ white-space: nowrap;
 
 .mainWindow-item-cell {
 
-border:1px solid #000;
-width:300px;
-margin:1px;
+border: 1px solid #e4e4e4;
+width: 300px;
+margin: 1px;
 display: inline-block;
+border-radius: 4px;
+box-shadow: 0 0 6px #ccc;
+
 }
 
 .buy-sell{
 height:1px;
-width:100px;
-
+width:110px;
+	
 
 }
 
@@ -136,16 +140,19 @@ display:inline-block;
 }
 
 .buy-sell-prices{
-margin-left:20px;
+margin-left:10px;
 display:inline-block;
 
 
 }
 /*test Item*/
 #watchlist-container{
-
+border: 1px solid #e4e4e4;
+/*padding: 20px;*/
+border-radius: 2px;
+box-shadow: 0 0 6px #ccc;
 	
-    border: red solid 1px;
+   /* border: red solid 1px;*/
     overflow-y: auto;
     height: 300px;
 
@@ -160,8 +167,11 @@ padding: 10px;
 
 }
 @font-face {
-   font-family: myFirstFont;
-    src: "http://www.fontspace...k/foglihtenno01";
+   font-family: 'myFirstFont';
+   src:local('GWTwoFont.ttf');
+	    font-weight: bold;
+		font-style: normal;
+		
 }
 
 /*item border*/
@@ -215,3 +225,86 @@ color:#ffa405;}
 color:#fb3e8d;}
 .legendary{
 color:#4C139D;}
+/**************************
+  DEFAULT BOOTSTRAP STYLES
+**************************/
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 10px 16px;
+}
+  
+.btn-lg {
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+
+/***********************
+  OUTLINE BUTTONS
+************************/
+
+.btn.outline {
+    background: none;
+    padding: 4px 6px;
+}
+.btn-primary.outline {
+    border: 2px solid #e4e4e4;
+    color: #e4e4e4;
+}
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+    color: #cdcdcd;
+    border-color: #cdcdcd;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+    border-color: #b6b6b6;
+    color: #b6b6b6;
+    box-shadow: none;
+}
+
+/***********************
+  CUSTON BTN VALUES
+************************/
+
+.btn {
+    padding: 4px 6px;
+    border: 0 none;
+    /*font-weight: 100;*/
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
