@@ -478,7 +478,7 @@ function resizeListener() {
 $(function(){
    resizeListener();
 
-$(".imageButton").mouseup(function(){
+$(".blur").mouseup(function(){
 	console.log("blur")
    $(this).blur();
 });
