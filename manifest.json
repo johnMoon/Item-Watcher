@@ -2,10 +2,10 @@
 	"manifest_version":1,
 	"type":"WebApp",
 	"meta":{
-		"name":"Demo App",
+		"name":"GW2 TP Watcher",
 		"version":"1.0.0",
 		"minimum-overwolf-version":"0.77.10",
-		"author":"Developer Name",
+		"author":"David Dang and John Moon",
 		"icon":"IconMouseOver.png",
 		"icon_gray":"IconMouseNormal.png",
 		"description":"Demo App"
@@ -17,17 +17,16 @@
 					"file":"Files/index.html",
 					"transparent":false,
 					"resizable":true,
-					"size":{"width":400, "height":300},
-					"min_size":{"width":400, "height":300},
-					"max_size":{"width":800, "height":600}
+					"size":{"width":368, "height":340},
+					"min_size":{"width":368, "height":340}
+		
 				},
 			"SubWindow":{
 					"file":"Files/searchWindow.html",
 					"transparent":false,
 					"resizable":true,
-					"size":{"width":400, "height":300},
-					"min_size":{"width":400, "height":300},
-					"max_size":{"width":800, "height":600}
+					"size":{"width":368, "height":368},
+					"min_size":{"width":368, "height":368}
 				}
 		}
 	}

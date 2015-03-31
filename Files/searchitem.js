@@ -273,7 +273,6 @@ update text
 function disablePagination() {
         $('#prevButton').prop('disabled', true);
         $('#pageNumber').prop('disabled', true);
-
         $('#nextButton').prop('disabled', true);
 
 }
@@ -380,7 +379,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	$(img).attr('height', "32").attr('width', "32");
 	$(img).addClass("item-img");
 	//add border around an image
-	$(img).addClass(rarity.toLowerCase()+"-border");
+	$(img).addClass(rarity.toLowerCase());
 	onImageFail(img);
 	
 	
@@ -394,7 +393,6 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	
 	span.addClass("item-name" );
-	span.addClass(rarity.toLowerCase());
 	var button = $(document.createElement('button')).text("+");
 	button.addClass( "right-button" );
 	button.click(
