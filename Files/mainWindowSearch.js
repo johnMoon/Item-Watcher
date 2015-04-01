@@ -39,7 +39,7 @@ var chartOptions = {
 		strokeWidth : 1,
 
 	},
-	'width' : 170,
+	'width' : 150,
 	'height' : 40,
 	hAxis : {
 		textPosition : 'none',
@@ -69,7 +69,7 @@ var chartOptions = {
 	chartArea : {
 		left : 3,
 		top : 2,
-		width : 166,
+		width : 146,
 		height : 36,
 
 	}
@@ -250,7 +250,9 @@ function createPriceElement(itemId, buySell){
 	
 	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon");
 	
-	$(goldImage, silverImage, copperImage).attr('height', "11").attr('width', "11");
+	$(goldImage).attr('height', "11").attr('width', "11");
+	$(silverImage).attr('height', "11").attr('width', "11");
+	$(copperImage).attr('height', "11").attr('width', "11");
 	$(goldImage, silverImage).hide();
 	buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
 
