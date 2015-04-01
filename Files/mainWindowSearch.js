@@ -184,7 +184,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	var iconImg = $(document.createElement('img'));
 	$(iconImg).attr('src', image).attr('height', "32").attr('width', "32");
-	$(iconImg).addClass(rarity.toLowerCase() + "-border item-img");
+	$(iconImg).addClass(rarity.toLowerCase() + " item-img");
 
 	var itemName = $(document.createElement('p')).text(name);
 	itemName.addClass('item-name');
@@ -222,7 +222,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
 
 
-	$(result).appendTo("#testItem");
+	$(result).appendTo("#watchlist-container");
 
 }
 
