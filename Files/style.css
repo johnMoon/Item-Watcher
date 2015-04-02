@@ -6,6 +6,7 @@
 body {
     height: 100%;
     width: 100%;
+	background-color:#808080 !important;
 }
 #content {
     position: absolute;
@@ -69,7 +70,7 @@ body {
 .right-button {
     vertical-align: middle;
 }
-.searchButton {
+.search-Button {
     height: 20px;
     width: 20px;
 }
@@ -90,7 +91,7 @@ body {
 }
 .buy-sell {
     height: 1px;
-    width: 110px;
+    width: 130px;
 }
 .graph-buysell {
     width: 300px;
@@ -101,6 +102,13 @@ body {
     margin-left: 10px;
     display: inline-block;
 }
+
+.price-Image{
+height: 11px;
+width:11px;
+
+}
+
 /*test Item*/
 
 #watchlist-container {
@@ -151,9 +159,93 @@ body {
     color: #4C139D;
 }
 
+
 /**
 Altered Bootstrap
 */
 .no-margin {
   margin:0;
+}
+
+/***********************
+  OUTLINE BUTTONS
+************************/
+
+.btnModified.outline {
+    background: none;
+    padding: 4px 6px;
+}
+.btnModified-primary.outline {
+    border: 2px solid #e4e4e4;
+    color: #e4e4e4;
+}
+.btnModified-primary.outline:hover,
+.btnModified-primary.outline:focus,
+.btnModified-primary.outline:active,
+.btnModified-primary.outline.active,
+.open > .dropdown-toggle.btnModified-primary {
+    color: #cdcdcd;
+    border-color: #cdcdcd;
+}
+.btnModified-primary.outline:active,
+.btnModified-primary.outline.active {
+    border-color: #b6b6b6;
+    color: #b6b6b6;
+    box-shadow: none;
+}
+/***********************
+  CUSTON BTN VALUES
+************************/
+
+.btnModified {
+    padding: 4px 6px;
+    border: 0 none;
+    /*font-weight: 100;*/
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.btnModified:focus,
+.btnModified:active:focus,
+.btnModified.active:focus {
+    outline: 0 none;
+}
+
+.btnModifed-lg {
+padding: 10px 16px;
+font-size: 12px;
+line-height: 1.3333333;
+border-radius: 6px;}
+/*charts*/
+
+.chart-div {
+    padding: 0px;
+    display: inline-block;
+    height: 40px;
+    width: 150px;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(228, 228, 228, 228.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(245, 245, 246, 228.4);
+}
+#frequency-changer{
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+ 
 }
