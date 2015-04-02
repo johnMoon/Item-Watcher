@@ -235,9 +235,66 @@ border-radius: 6px;}
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(245, 245, 246, 228.4);
 }
-#frequency-changer{
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+
+
+
  
+label.frequency-changer {
+    position: relative;
+    display: inline-block;
 }
+
+ .frequency-changer select {
+        display: inline-block;
+        border: 2px solid #bbb;
+        padding: 4px 3px 3px 5px;
+        margin: 0;
+        font: inherit;
+        outline:none; /* remove focus ring from Webkit */
+        line-height: 1.2;
+        background: #f8f8f8;
+        
+        -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
+        
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }
+
+    /* for Webkit's CSS-only solution */
+    @media screen and (-webkit-min-device-pixel-ratio:0) { 
+       .frequency-changer select {
+            padding-right:30px;    
+        }
+    }
+    
+    /* Since we removed the default focus styles, we have to add our own */
+    .frequency-changer select:focus {
+        -webkit-box-shadow: 0 0 3px 1px #cdcdcd;
+        -moz-box-shadow: 0 0 3px 1px #cdcdcd;
+        box-shadow: 0 0 3px 1px #cdcdcd;
+    }
+    
+    /* Select arrow styling */
+    .frequency-changer:after {
+        content: "▼";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 60%;
+        line-height: 30px;
+        padding: 0 7px;
+        background: #bbb;
+        color: white;
+        
+        pointer-events:none;
+        
+        -webkit-border-radius: 0 6px 6px 0;
+        -moz-border-radius: 0 6px 6px 0;
+        border-radius: 0 6px 6px 0;
+    }
+    
+    .no-pointer-events .frequency-changer:after {
+        content: none;
+    }

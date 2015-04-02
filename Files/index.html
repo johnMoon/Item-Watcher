@@ -57,21 +57,22 @@
 				<div id = "header">
 					
 			
-
+					<button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Items</button>
+					
 			
 					
-					<form style="display:inline-block;" > 
-					<select class="form-control" id="frequency-changer" onchange= "changeFrequency()">
+				
+						<label class= "frequency-changer">Frequency
+					<select class="custom-select" id="frequency-changer" onchange= "changeFrequency()">
 						<option value = "5000">5 sec</option>
 						<option value = "10000">10 sec</option>
 						<option value = "20000">20 sec</option>
 						<option value = "30000">30 sec</option>
 						<option value = "60000">60 sec</option>
 					</select>
-		
-					</form>
-					<button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Watch-Items</button>
+					</label>
 					<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
+				
 				</div>
 
 				
