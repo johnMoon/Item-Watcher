@@ -159,6 +159,14 @@ width:11px;
     color: #4C139D;
 }
 
+
+/**
+Altered Bootstrap
+*/
+.no-margin {
+  margin:0;
+}
+
 /***********************
   OUTLINE BUTTONS
 ************************/
