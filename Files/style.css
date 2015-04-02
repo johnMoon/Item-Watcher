@@ -278,9 +278,9 @@ label.frequency-changer {
     
     /* Since we removed the default focus styles, we have to add our own */
     .frequency-changer select:focus {
-        -webkit-box-shadow: 0 0 3px 1px #cdcdcd;
-        -moz-box-shadow: 0 0 3px 1px #cdcdcd;
-        box-shadow: 0 0 3px 1px #cdcdcd;
+        -webkit-box-shadow: 0 0 1px 1px #cdcdcd;
+        -moz-box-shadow: 0 0 1px 1px #cdcdcd;
+        box-shadow: 0 0 1px 1px #cdcdcd;
     }
     
     /* Select arrow styling */
@@ -306,3 +306,6 @@ label.frequency-changer {
     .no-pointer-events .frequency-changer:after {
         content: none;
     }
+	
+	
+	
