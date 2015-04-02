@@ -8,7 +8,7 @@
 		"author":"David Dang and John Moon",
 		"icon":"appIcon2.png",
 		"icon_gray":"appIcon.png",
-		"description":"Demo App"
+		"description":"GW2 TP Watcher keeps tracks of the item prices for you while you can enjoy playing. Add your favourite items and watch when the prices are just right to buy and sell. Prices are taken from the official GW2 API."
 	},
 	"data": {
 		"start_window":"MainWindow",
