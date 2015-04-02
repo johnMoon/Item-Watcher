@@ -56,12 +56,15 @@
 
 				<div id = "header">
 					
-			
+			 <div class="col-xs-7" >
 					<button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Items</button>
 					
 			
-					
-				
+					<button id = "refresh-button"  type = "image"class= "glyphicon glyphicon-refresh cbtn btn-default blur"  onclick = "updateItemPrices()" alt = "Refresh" ></button>
+					</div>
+				<div class="col-xs-5 ">
+  	<div class="pull-right">
+
 					<label class= " frequency-changer">
 					<select class="custom-select" id="frequency-changer" onchange= "changeFrequency()">
 						<option value = "5000">5 sec</option>
@@ -71,10 +74,12 @@
 						<option value = "60000">60 sec</option>
 					</select>
 					</label>
-					<button id = "refresh-button"  type = "image"class= "glyphicon glyphicon-refresh cbtn btn-default blur"  onclick = "updateItemPrices()" alt = "Refresh" ></button>
+					
 				
 				</div>
-
+				</div>
+				</div>
+			
 				
 			
 				
