@@ -6,8 +6,8 @@
 		"version":"1.0.0",
 		"minimum-overwolf-version":"0.77.10",
 		"author":"David Dang and John Moon",
-		"icon":"IconMouseOver.png",
-		"icon_gray":"IconMouseNormal.png",
+		"icon":"appIcon2.png",
+		"icon_gray":"appIcon.png",
 		"description":"Demo App"
 	},
 	"data": {

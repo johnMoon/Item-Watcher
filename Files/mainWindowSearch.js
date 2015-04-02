@@ -245,14 +245,18 @@ function createPriceElement(itemId, buySell){
 	$(buyCopper).attr("id", itemId + "-"+buySell+"Copper");
 
 	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-"+buySell+"GoldIcon");
-
+		
 	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-"+buySell+"SilverIcon");
-	
+		
 	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon");
+		
 	
-	$(goldImage).attr('height', "11").attr('width', "11");
-	$(silverImage).attr('height', "11").attr('width', "11");
-	$(copperImage).attr('height', "11").attr('width', "11");
+	
+	$([goldImage, silverImage, copperImage]).each(function(i,value) {
+    value.addClass("price-Image");
+});
+	
+
 	$(goldImage, silverImage).hide();
 	buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
 

@@ -4,6 +4,10 @@
 		<link rel="stylesheet" href="style.css" />
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		
 	
 		    <script type="text/javascript"
@@ -56,8 +60,8 @@
 
 			
 					
-					<form style="display:inline-block;"class="form-control"> 
-					<select  id="frequency-changer" onchange= "changeFrequency()"  >
+					<form style="display:inline-block;" > 
+					<select class="form-control" id="frequency-changer" onchange= "changeFrequency()">
 						<option value = "5000">5 sec</option>
 						<option value = "10000">10 sec</option>
 						<option value = "20000">20 sec</option>
@@ -66,7 +70,7 @@
 					</select>
 		
 					</form>
-					<button id="open-subwindow" class= "btn btn-primary btn-lg outline" onclick="openSubWindow();" >Add Watch-Items</button>
+					<button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Watch-Items</button>
 					<input type= "image" src= "image/refresh.png"  onclick = "updateItemPrices()" alt = "Refresh" width = "20" height = "18">
 				</div>
 
