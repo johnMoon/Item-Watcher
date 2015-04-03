@@ -99,7 +99,8 @@ body {
     display: inline-block;
 }
 .buy-sell-prices {
-    margin-left: 10px;
+	
+
     display: inline-block;
 }
 
@@ -245,9 +246,6 @@ border-radius: 6px;}
 }
 
 
-label{
-font-weight: 0 !important;
-}
  
 label.frequency-changer {
     position: relative;
@@ -315,5 +313,5 @@ label.frequency-changer {
 	margin-right:-15px;
 	
 	}
-	
+
 	
