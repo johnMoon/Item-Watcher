@@ -326,7 +326,10 @@ function removeItem(itemId) {
 	listWatchItemId.splice(index, 1);
 	saveItemListState();
 	$(".mainWindow-item-cell").remove("#window-item-cell-" + itemId);
-
+	if (listWatchItemId.length==0) {
+	
+		$("#no-watch-item").show();
+	}
 }
 
 // persistences
@@ -343,7 +346,11 @@ function reloadItemListState() {
 	if (listWatchItemId && listWatchItemId.length>0) {
 		// there was item list before
 		updateItemData(listWatchItemId);
+	} else {
+		// show no watch item message
+		$("#no-watch-item").show();
 	}
+	
 }
 
 function onStorageEvent(storageEvent) {
@@ -365,6 +372,9 @@ function onStorageEvent(storageEvent) {
 
 		// done with the event
 		window.localStorage.removeItem(storageEvent.key);
+
+		// show no watch item message
+		$("#no-watch-item").hide();
 
 	}
 
