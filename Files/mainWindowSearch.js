@@ -193,7 +193,9 @@ function createWatchItem(itemId, name, rarity, image, level) {
 		spanLevel.addClass("item-level");
 		itemName.append($(spanLevel));
 	}
-	var removeButton = $(document.createElement('button')).text("X");
+	
+	
+	var removeButton = $(document.createElement('button')).addClass("glyphicon" ).addClass("glyphicon-remove");
 	removeButton.click(
 		function () {
 		removeItem(itemId);
@@ -209,7 +211,8 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	priceContainer.append(chartDiv);
 
 	var priceDiv = $(document.createElement('div'));
-	priceDiv.addClass('buy-sell-prices');
+	priceDiv.addClass('buy-sell-prices ');
+	
 
 	var buyElem =createPriceElement(itemId, "buy");
 	var sellElem = createPriceElement(itemId, "sell");
@@ -231,8 +234,12 @@ function createPriceElement(itemId, buySell){
 	if (buySell == "buy"){
 		label= "Buy:"
 	}
+	var pullRightPrices = $(document.createElement('div')).addClass('pull-right');
+
 	var buyElem = $(document.createElement('div')).text(label);
+
 	buyElem.addClass('buy-sell');
+	
 
 	var buyGold = $(document.createElement('span'));
 	$(buyGold).attr("id", itemId + "-"+buySell+"Gold");
@@ -256,11 +263,13 @@ function createPriceElement(itemId, buySell){
     value.addClass("price-Image");
 });
 	
-
+	
 	$(goldImage, silverImage).hide();
+	
 	buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
-
-	return buyElem;
+//buyElem.append(pullRightPrices);
+	pullRightPrices.append(buyElem);
+	return pullRightPrices;
 }
 
 // check if there are any existing watched items
