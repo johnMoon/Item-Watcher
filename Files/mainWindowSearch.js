@@ -231,7 +231,7 @@ function createPriceElement(itemId, buySell){
 	if (buySell == "buy"){
 		label= "Buy:"
 	}
-	var buyElem = $(document.createElement('p')).text(label);
+	var buyElem = $(document.createElement('div')).text(label);
 	buyElem.addClass('buy-sell');
 
 	var buyGold = $(document.createElement('span'));
