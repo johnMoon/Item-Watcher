@@ -237,9 +237,8 @@ function createPriceElement(itemId, buySell){
 	var pullRightPrices = $(document.createElement('div')).addClass('pull-right');
 
 	var buyElem = $(document.createElement('div')).text(label);
-
 	buyElem.addClass('buy-sell');
-	
+	buyElem.append(pullRightPrices);
 
 	var buyGold = $(document.createElement('span'));
 	$(buyGold).attr("id", itemId + "-"+buySell+"Gold");
@@ -266,10 +265,10 @@ function createPriceElement(itemId, buySell){
 	
 	$(goldImage, silverImage).hide();
 	
-	buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
-//buyElem.append(pullRightPrices);
-	pullRightPrices.append(buyElem);
-	return pullRightPrices;
+	//buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
+	pullRightPrices.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
+	//pullRightPrices.append(buyElem);
+	return buyElem;
 }
 
 // check if there are any existing watched items
