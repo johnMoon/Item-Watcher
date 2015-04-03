@@ -30,9 +30,7 @@ body {
 .watch-close {
     vertical-align: top;
 }
-.buysell {
-    width: 30px;
-}
+
 .price {
     width: 100px;
     text-align: right;

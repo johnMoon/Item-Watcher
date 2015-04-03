@@ -331,9 +331,9 @@ function saveItemListState() {
 function reloadItemListState() {
 	console.log("Attempting to reload previous list state");
 	var previousItemList = window.localStorage.getItem("item-list-state");
-	if (previousItemList) {
-		// there was item list before
 		listWatchItemId = JSON.parse(previousItemList);
+	if (listWatchItemId && listWatchItemId.length>0) {
+		// there was item list before
 		updateItemData(listWatchItemId);
 	}
 }
