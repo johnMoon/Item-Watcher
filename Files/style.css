@@ -245,7 +245,9 @@ border-radius: 6px;}
 }
 
 
-
+label{
+font-weight: 0 !important;
+}
  
 label.frequency-changer {
     position: relative;
@@ -261,6 +263,7 @@ label.frequency-changer {
         outline:none; /* remove focus ring from Webkit */
         line-height: 1.2;
         background: #f8f8f8;
+		font-size: 12px;
         
         -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
         
@@ -272,7 +275,7 @@ label.frequency-changer {
     /* for Webkit's CSS-only solution */
     @media screen and (-webkit-min-device-pixel-ratio:0) { 
        .frequency-changer select {
-            padding-right:30px;    
+            padding-right: 25px;   
         }
     }
     
