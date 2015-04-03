@@ -1,96 +1,49 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head> 
-		<link rel="stylesheet" href="style.css" />
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-		
-	
-		    <script type="text/javascript"
-          src="https://www.google.com/jsapi?autoload={
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript"
+            src="https://www.google.com/jsapi?autoload={
             'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
+            'name':'visualization',
+            'version':'1',
+            'packages':['corechart']
             }]
-          }"></script>
-		  
-		  
-		<script src= "mainWindowSearch.js" ></script>
 
-		
-		<script>
-		
-			
-			function openSubWindow(){
-				//alert("the subwindow will only be visible inside a game");
-				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
-					if (result.status == "success"){
-						overwolf.windows.restore(result.window.id, function(result){
-								console.log(result);
-						});
-					}
-				});
-			};
-
-			
-			
-
-
-
-			
-			
-		</script>
-		<title>TP Watcher</title>
-	</head>
-
-	<body id= "bodyDiv"  onresize= "resizeListener()">
-	
-	
-		
-		<div id = "watchListContents">
-
-				<div id = "header" class = "row">
-					
-			 <div class="col-xs-7" >
-					<button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Items</button>
-					
-			
-					
-					</div>
-				<div class="col-xs-5 ">
-				
-  	<div class="pull-right">
-		<button id = "refresh-button"  type = "image"class= "glyphicon glyphicon-refresh cbtn btn-default blur"  onclick = "updateItemPrices()" alt = "Refresh" ></button>
-					<label class= " frequency-changer">
-					
-					<select class="custom-select" id="frequency-changer" onchange= "changeFrequency()">
-						<option value = "5000">5 sec</option>
-						<option value = "10000">10 sec</option>
-						<option value = "20000">20 sec</option>
-						<option value = "30000">30 sec</option>
-						<option value = "60000">60 sec</option>
-					</select>
-					</label>
-					
-				
-				</div>
-				</div>
-				</div>
-			
-				
-			
-				
-				<div id= "watchlist-container">
-				
-					
-				</div>
-		</div>
-
-	
-	</body>
+            }"></script>
+        <script src= "mainWindowSearch.js" ></script>
+        <title>TP Watcher</title>
+    </head>
+    <body id= "bodyDiv"  onresize= "resizeListener()">
+        <div id = "watchListContents">
+            <div id = "header" class="row">
+                <div class="col-xs-7" >
+                    <button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Items</button>
+                </div>
+                <div class="col-xs-5 ">
+                    <div class="pull-right">
+                        <button id = "refresh-button"  type = "image"class= "glyphicon glyphicon-refresh cbtn btn-default blur"  onclick = "updateItemPrices()" alt = "Refresh" ></button>
+                        <label class= " frequency-changer">
+                            <select class="custom-select" id="frequency-changer" onchange= "changeFrequency()">
+                                <option value = "5000">5 sec</option>
+                                <option value = "10000">10 sec</option>
+                                <option value = "20000">20 sec</option>
+                                <option value = "30000">30 sec</option>
+                                <option value = "60000">60 sec</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id= "watchlist-container">
+                <span id="no-watch-item" >You have not items watched! Press the Add Item button to search for your items.</span>
+            </div >
+        </div>
+    </body>
 </html>

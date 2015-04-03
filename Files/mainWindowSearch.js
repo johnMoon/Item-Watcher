@@ -6,7 +6,7 @@ function openSubWindow() {
 	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
 		if (result.status == "success") {
 			overwolf.windows.restore(result.window.id, function (result) {
-				console.log(result);
+
 			});
 		}
 	});
@@ -234,8 +234,9 @@ function createPriceElement(itemId, buySell){
 	if (buySell == "buy"){
 		label= "Buy:"
 	}
-	var buyElem = $(document.createElement('p')).text(label);
 	var pullRightPrices = $(document.createElement('div')).addClass('pull-right');
+
+	var buyElem = $(document.createElement('div')).text(label);
 
 	buyElem.addClass('buy-sell');
 	
