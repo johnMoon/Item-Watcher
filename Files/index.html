@@ -23,28 +23,7 @@
 		<script src= "mainWindowSearch.js" ></script>
 
 		
-		<script>
-		
-			
-			function openSubWindow(){
-				//alert("the subwindow will only be visible inside a game");
-				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
-					if (result.status == "success"){
-						overwolf.windows.restore(result.window.id, function(result){
-								console.log(result);
-						});
-					}
-				});
-			};
 
-			
-			
-
-
-
-			
-			
-		</script>
 		<title>TP Watcher</title>
 	</head>
 
@@ -54,7 +33,7 @@
 		
 		<div id = "watchListContents">
 
-				<div id = "header">
+				<div id = "header" class="row">
 					
 			 <div class="col-xs-7" >
 					<button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Items</button>

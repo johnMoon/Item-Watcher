@@ -6,7 +6,7 @@ function openSubWindow() {
 	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
 		if (result.status == "success") {
 			overwolf.windows.restore(result.window.id, function (result) {
-				console.log(result);
+
 			});
 		}
 	});
