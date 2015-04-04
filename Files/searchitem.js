@@ -394,7 +394,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	span.addClass("item-name" );
 	var button = $(document.createElement('button')).text("+");
-	button.addClass( "right-button" );
+	button.addClass( "right-button btn btn-default blur" );
 	button.click(
 		function() {
 			addItem(itemId,imageSrc, itemName, rarity, level);
