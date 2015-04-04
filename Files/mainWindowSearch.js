@@ -195,7 +195,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	}
 	
 	
-	var removeButton = $(document.createElement('button')).addClass("glyphicon" ).addClass("glyphicon-remove");
+	var removeButton = $(document.createElement('button')).addClass("glyphicon" ).addClass("glyphicon-remove btnModified btnModified-primary btnModifed-lg outline");
 	removeButton.click(
 		function () {
 		removeItem(itemId);
