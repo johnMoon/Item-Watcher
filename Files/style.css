@@ -70,8 +70,8 @@ font-weight: bold !important;
 }
 .right-button {
     vertical-align: middle;
-	padding-right: 9px ;
-    padding-left: 10px  ;
+	padding-right: 7px !important;
+padding-left: 7px !important;
 	margin-bottom: 3px;
 
 }
