@@ -402,13 +402,19 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	
 	span.addClass("item-name" );
+
 	var button = $(document.createElement('button'));
 	button.addClass( "right-button  glyphicon glyphicon-plus btnModified btnModified-primary btnModifed-lg outline " );
+
 	button.click(
 		function() {
 			addItem(itemId,imageSrc, itemName, rarity, level);
 		}
 		);
+	button.mouseup(function() {
+  $( this ).blur();
+});	
+		
 	var result = $(li).append($(img));
 	result = $(li).append($(span));
 	result = $(li).append($(button));
@@ -417,12 +423,12 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 }
 
 function addSpinner(){
-	        $("#searchButton").addClass('active');
+	        $("#cog-spinner").addClass('active');
 
 	
 }
 function removeSpinner(){
-	        $("#searchButton").removeClass('active');
+	        $("#cog-spinner").removeClass('active');
 
 	
 }
@@ -487,7 +493,9 @@ function resizeListener() {
 	var content = $("#content");
 	var searchHeader = $("#search-header");
 	var resultContainer = $("#result-container");
-	resultContainer.height(content.height() - searchHeader.height() );
+	var footerContainer = $("#search-footer");
+	var margin = 20;
+	resultContainer.height(content.height() - searchHeader.height()- footerContainer.height() - margin);
 	
 }
 
@@ -498,11 +506,6 @@ function resizeListener() {
 
 $(function(){
    resizeListener();
-
-$(".blur").mouseup(function(){
-	console.log("blur")
-   $(this).blur();
-});
 
 // any data hide alerts will hide instead of remove itself
     $("#notificationButton").on("click", function(){
