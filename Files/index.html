@@ -23,13 +23,13 @@
     <body id= "bodyDiv"  onresize= "resizeListener()">
         <div id = "watchListContents">
             <div id = "header" class="row">
-                <div class="col-xs-7" >
+                <div class="col-xs-4" >
                     <button id="open-subwindow" class= "btnModified btnModified-primary btnModifed-lg outline" onclick="openSubWindow();" >Add Items</button>
                 </div>
-                <div class="col-xs-5 ">
+                <div class="col-xs-8 ">
                     <div class="pull-right">
-                        <button id = "refresh-button"  type = "image"class= "glyphicon glyphicon-refresh btnModified btnModified-primary btnModifed-lg outline "  onclick = "updateItemPrices()" alt = "Refresh" ></button>
-                        <label class= " frequency-changer">
+                        
+                        <label class= " frequency-changer">Refresh:
                             <select class="custom-select" id="frequency-changer" onchange= "changeFrequency()">
                                 <option value = "5000">5 sec</option>
                                 <option value = "10000">10 sec</option>
@@ -38,6 +38,7 @@
                                 <option value = "60000">60 sec</option>
                             </select>
                         </label>
+						<button id = "refresh-button"  type = "image"class= "glyphicon glyphicon-refresh btnModified btnModified-primary btnModifed-lg outline "  onclick = "updateItemPrices()" alt = "Refresh" ></button>
                     </div>
                 </div>
             </div>
