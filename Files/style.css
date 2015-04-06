@@ -17,6 +17,25 @@ font-weight: bold !important;
     left: 10px;
     right: 10px;
 }
+#open-subwindow{
+margin-top: 2px;
+
+
+}
+#pageNumber{
+background-color:#e4e4e4;
+border-color: #e4e4e4;
+color: #808080;
+}
+
+#nextButton{
+color: #808080;
+
+}
+#prevButton{
+
+color: #808080;
+}
 .watch-header {
     border-top: 1px solid #000;
     border-left: 1px solid #000;
@@ -78,8 +97,10 @@ font-weight: bold !important;
 }
 .right-button {
     vertical-align: middle;
-	padding-right: 11px;
-padding-left: 10px;
+	padding-right: 7px !important;
+padding-left: 7px !important;
+	margin-bottom: 3px;
+
 }
 .search-Button {
     height: 20px;

@@ -239,7 +239,9 @@ function handleNewMappedResults(searchTerm, pageNumber){
 		requestedPage=currentPage ;
 	
 		}
+
 		removeSpinner();
+
 		enablePagination();
 		updatePageNumber()
 		tempIds = [];
@@ -400,8 +402,10 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	
 	span.addClass("item-name" );
-	var button = $(document.createElement('button')).text("+");
-	button.addClass( "right-button btn btn-default" );
+
+	var button = $(document.createElement('button'));
+	button.addClass( "right-button  glyphicon glyphicon-plus btnModified btnModified-primary btnModifed-lg outline " );
+
 	button.click(
 		function() {
 			addItem(itemId,imageSrc, itemName, rarity, level);
