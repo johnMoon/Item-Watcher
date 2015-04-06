@@ -35,7 +35,8 @@ function search() {
 	searchTerm =encodeURIComponent(searchTerm);
 	// check is this is a new search term is the same as the loaded or loading on
 	if (searchTerm == currentSearchTerm) {
-	document.getElementById('searchButton').click();
+
+		//document.getElementById('searchButton').click();
 		// check if it is the same page
 		if (currentPage == requestedPage){
 			// either its being loaded or is loaded already
@@ -57,6 +58,7 @@ function search() {
 
 	$('#resultList').empty();// new search, remove old data
 	disablePagination(); // reset pagination ui elements to first page
+	addSpinner();
 	getSearchPage(searchTerm, requestedPage);
 
 	
@@ -79,6 +81,7 @@ function getSearchPage(searchTerm, pageNumber){
 	
 
 	if( searchTerm ) { // if not empty or null
+		addSpinner();
 		var mapping = checkPreMapped(pageNumber);
 		if (mapping){
 			console.log("Mapping has been found");
@@ -88,6 +91,7 @@ function getSearchPage(searchTerm, pageNumber){
 		else{
 			// perform mapping for requested page
 			console.log("No mapping");
+			
 			queryCalculateItemMap(searchTerm,pageNumber);
 		}
 	
@@ -201,6 +205,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 				// this page only contained invalid results
 				console.log("This page only contained invalid results", currentPage, searchTerm);
 				parsedPage =currentPage;
+		
 				queryCalculateItemMap(searchTerm, pageNumber)
 
 			});
@@ -235,7 +240,8 @@ function handleNewMappedResults(searchTerm, pageNumber){
 		requestedPage=currentPage ;
 	
 		}
-		document.getElementById('searchButton').click();
+		//document.getElementById('searchButton').click();
+		removeSpinner();
 		enablePagination();
 		updatePageNumber()
 		tempIds = [];
@@ -264,6 +270,7 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 			return;
 		}
 		createSearchItems(data, false);
+		removeSpinner();
 		updatePageNumber();
 	});
 }
@@ -409,11 +416,17 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 
 }
 
-$(function(){
-    $('a, button').click(function() {
-        $(this).toggleClass('active');
-    });
-});
+function addSpinner(){
+	        $("#searchButton").addClass('active');
+
+	
+}
+function removeSpinner(){
+	        $("#searchButton").removeClass('active');
+
+	
+}
+
 
 function addItem(itemId,imageSrc, itemName, rarity, level) {
 
