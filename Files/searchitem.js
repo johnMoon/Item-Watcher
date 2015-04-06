@@ -35,7 +35,7 @@ function search() {
 	searchTerm =encodeURIComponent(searchTerm);
 	// check is this is a new search term is the same as the loaded or loading on
 	if (searchTerm == currentSearchTerm) {
-	document.getElementById('searchButton').click();
+	//document.getElementById('searchButton').click();
 		// check if it is the same page
 		if (currentPage == requestedPage){
 			// either its being loaded or is loaded already
@@ -235,7 +235,7 @@ function handleNewMappedResults(searchTerm, pageNumber){
 		requestedPage=currentPage ;
 	
 		}
-		document.getElementById('searchButton').click();
+		//document.getElementById('searchButton').click();
 		enablePagination();
 		updatePageNumber()
 		tempIds = [];
@@ -395,8 +395,8 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	
 	span.addClass("item-name" );
-	var button = $(document.createElement('button')).text("+");
-	button.addClass( "right-button btn btn-default blur" );
+	var button = $(document.createElement('button'));
+	button.addClass( "right-button  glyphicon glyphicon-plus btnModified btnModified-primary btnModifed-lg outline " );
 	button.click(
 		function() {
 			addItem(itemId,imageSrc, itemName, rarity, level);

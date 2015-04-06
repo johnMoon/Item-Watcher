@@ -70,8 +70,10 @@ font-weight: bold !important;
 }
 .right-button {
     vertical-align: middle;
-	padding-right: 11px;
-padding-left: 10px;
+	padding-right: 9px ;
+    padding-left: 10px  ;
+	margin-bottom: 3px;
+
 }
 .search-Button {
     height: 20px;
