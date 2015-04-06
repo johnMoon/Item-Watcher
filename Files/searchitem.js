@@ -36,7 +36,6 @@ function search() {
 	// check is this is a new search term is the same as the loaded or loading on
 	if (searchTerm == currentSearchTerm) {
 
-		//document.getElementById('searchButton').click();
 		// check if it is the same page
 		if (currentPage == requestedPage){
 			// either its being loaded or is loaded already
@@ -240,7 +239,6 @@ function handleNewMappedResults(searchTerm, pageNumber){
 		requestedPage=currentPage ;
 	
 		}
-		//document.getElementById('searchButton').click();
 		removeSpinner();
 		enablePagination();
 		updatePageNumber()
@@ -403,12 +401,16 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 	
 	span.addClass("item-name" );
 	var button = $(document.createElement('button')).text("+");
-	button.addClass( "right-button btn btn-default blur" );
+	button.addClass( "right-button btn btn-default" );
 	button.click(
 		function() {
 			addItem(itemId,imageSrc, itemName, rarity, level);
 		}
 		);
+	button.mouseup(function() {
+  $( this ).blur();
+});	
+		
 	var result = $(li).append($(img));
 	result = $(li).append($(span));
 	result = $(li).append($(button));
@@ -417,12 +419,12 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level){
 }
 
 function addSpinner(){
-	        $("#searchButton").addClass('active');
+	        $("#cog-spinner").addClass('active');
 
 	
 }
 function removeSpinner(){
-	        $("#searchButton").removeClass('active');
+	        $("#cog-spinner").removeClass('active');
 
 	
 }
@@ -487,7 +489,9 @@ function resizeListener() {
 	var content = $("#content");
 	var searchHeader = $("#search-header");
 	var resultContainer = $("#result-container");
-	resultContainer.height(content.height() - searchHeader.height() );
+	var footerContainer = $("#search-footer");
+	var margin = 20;
+	resultContainer.height(content.height() - searchHeader.height()- footerContainer.height() - margin);
 	
 }
 
@@ -498,11 +502,6 @@ function resizeListener() {
 
 $(function(){
    resizeListener();
-
-$(".blur").mouseup(function(){
-	console.log("blur")
-   $(this).blur();
-});
 
 // any data hide alerts will hide instead of remove itself
     $("#notificationButton").on("click", function(){

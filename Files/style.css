@@ -49,6 +49,14 @@ font-weight: bold !important;
     border-radius: 4px;
     box-shadow: 0 0 6px #ccc;
 }
+
+.page-footer{
+	height:34px;
+}
+.spinner-margin{
+	padding-top:3px;
+	padding-bottom:3px;
+}
 .none-list {
     list-style-type: none;
     padding-left: 0;
@@ -83,6 +91,8 @@ padding-left: 10px;
     border: 1px solid #e4e4e4;
     border-radius: 2px;
     box-shadow: 0 0 6px #ccc;
+	margin-top:10px;
+	margin-bottom:10px;
 }
 .mainWindow-item-cell {
     border: 1px solid #e4e4e4;
@@ -317,44 +327,22 @@ label.frequency-changer {
 	margin-right:-15px;
 	
 	}
-button.glyphicon{
-
-line-height:inherit;
-}
+	
+	.fa-spin { -webkit-filter: blur(0); }
 	
 	
 .spinner {
-  display: inline-block;
   opacity: 0;
-  width: 0;
+  max-width: 0;
 
-  -webkit-transition: opacity 0.25s, width 0.25s;
-  -moz-transition: opacity 0.25s, width 0.25s;
-  -o-transition: opacity 0.25s, width 0.25s;
-  transition: opacity 0.25s, width 0.25s;
+  -webkit-transition: opacity 0.25s, max-width 0.45s; 
+  -moz-transition: opacity 0.25s, max-width 0.45s;
+  -o-transition: opacity 0.25s, max-width 0.45s;
+  transition: opacity 0.25s, max-width 0.45s; 
 }
 
-.has-spinner.active {
-  cursor:progress;
-}
 
-.has-spinner.active .spinner {
+.spinner.active {
   opacity: 1;
-
-  width: 20px; /* More than it will ever come, notice that this affects on animation duration */
-/* This doesn't work, just fix for unkown width elements */
-}
-.glyphicon-refresh-animate {
-    /*-webkit-animation: spin 1s infinite linear;*/
-    -webkit-animation: spin2 1s infinite linear;
-}
-
-@-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg);}
-     to { -webkit-transform: rotate(360deg);}
-}
-
-@keyframes spin {
-    from { transform: scale(1) rotate(0deg);}
-    to { transform: scale(1) rotate(360deg);}
+  max-width: 50px; 
 }
