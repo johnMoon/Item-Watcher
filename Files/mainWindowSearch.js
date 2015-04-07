@@ -34,9 +34,9 @@ var maxDataPoints = 20;
 var chartOptions = {
 
 	backgroundColor : {
-		fill : '#E4E4E4',
-		stroke : '#4322c0',
-		strokeWidth : 1,
+		fill : '#CCCCCC',
+		stroke : '#e4e4e4',
+		strokeWidth : 5,
 
 	},
 	'width' : 150,
