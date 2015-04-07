@@ -63,6 +63,7 @@ function search() {
 	
 }
 
+
 /**
 Use this for all search
 checks the page array to see if it has already calculated which raw search pages map to the results page
@@ -77,7 +78,26 @@ that page is not possible(no items left), dont change page name
 function getSearchPage(searchTerm, pageNumber){
 	// BUG! there are some (4) items that have / in them. currently search apis cant handle this.
 	// wait for gw2 official api
+		$.ajax({
+  type: 'GET',
+  url: spidySearchUrl+searchTerm,
+ 
+  error: function(xhr, textStatus, errorThrown) {
+  console.log(textStatus);
+  console.log(errorThrown);
+  if(textStatus == "error"){
+
+    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
 	
+	 $("#notificationItemName").css('color',"red");
+	$("#notificationAlert").show();}
+	
+	removeSpinner();
+  }
+
+  
+
+});
 
 	if( searchTerm ) { // if not empty or null
 		addSpinner();
@@ -125,6 +145,8 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 		return;
 	}
 	var spidy = spidySearchUrl+searchTerm+"/"+currentPage+"?"+callbackParam;
+
+
 	$.getJSON(spidy).done(function (data) {
 		// Need to handle request failures and timeouts
 
@@ -525,8 +547,10 @@ function onStorageEvent(storageEvent){
 	if (storageEvent.key.indexOf("item-exists") !=-1) {
 
 		console.log("item exists!" ,storageEvent);
-		$("#notificationItemName").text(storageEvent.newValue);
+		 $("#notificationItemName").css('color',"black");
+		$("#notificationItemName").text("Item "+storageEvent.newValue + " is already watched");
 		$("#notificationAlert").show();
+		
 		resizeListener();
 		// done with the event
 		window.localStorage.removeItem(storageEvent.key);
