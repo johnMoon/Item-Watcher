@@ -78,26 +78,7 @@ that page is not possible(no items left), dont change page name
 function getSearchPage(searchTerm, pageNumber){
 	// BUG! there are some (4) items that have / in them. currently search apis cant handle this.
 	// wait for gw2 official api
-		$.ajax({
-  type: 'GET',
-  url: spidySearchUrl+searchTerm,
- 
-  error: function(xhr, textStatus, errorThrown) {
-  console.log(textStatus);
-  console.log(errorThrown);
-  if(textStatus == "error"){
 
-    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
-	
-	 $("#notificationItemName").css('color',"red");
-	$("#notificationAlert").show();}
-	
-	removeSpinner();
-  }
-
-  
-
-});
 
 	if( searchTerm ) { // if not empty or null
 		addSpinner();
@@ -144,9 +125,47 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 		handleNewMappedResults(searchTerm,pageNumber);
 		return;
 	}
-	var spidy = spidySearchUrl+searchTerm+"/"+currentPage+"?"+callbackParam;
+	var spidy = spidySearchUrl+searchTerm+"/"+currentPage;//+"?"+callbackParam;
 
+/*		$.ajax({
+  type: 'GET',
+  url: spidySearchUrl+searchTerm,
+ 
+  error: function(xhr, textStatus, errorThrown) {
+  console.log(textStatus);
+  console.log(errorThrown);
+  if(textStatus == "error"){
 
+    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
+	
+	 $("#notificationItemName").css('color',"red");
+	$("#notificationAlert").show();}
+	
+	removeSpinner();
+  }});*/
+	/*$.ajaxSetup({
+	url: spidySearchUrl+searchTerm,
+    timeout: 5000,
+    error:function(xhr, textStatus, errorThrown) {
+  console.log(textStatus);
+  console.log(errorThrown);
+   pageArray = [];
+ requestedPage= 1; // page wants to be on
+ currentPage= 1; // page user is currenty viewing
+ parsedPage =0; // the highest search result page that has be parsed
+ lastPage = 1; // the max page number for the search. parse page should not go beyond this
+ currentSearchTerm= ""; 
+  if(textStatus == "error" || textStatus == "timeout"){
+
+    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
+	
+	 $("#notificationItemName").css('color',"red");
+	$("#notificationAlert").show();}
+	
+	removeSpinner();
+	}
+});*/
+	
 	$.getJSON(spidy).done(function (data) {
 		// Need to handle request failures and timeouts
 
@@ -209,7 +228,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 							
 							
 		         		
-				});
+				})
 				
 			if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 				// the search term or page got switch while this was being loaded
@@ -231,10 +250,30 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 
 			});
 
-	}); 
+	}) .fail (function(xhr, textStatus, errorThrown) {
+  console.log(textStatus);
+  console.log(errorThrown);
+  if(textStatus == "error"){
+    pageArray = [];
+ requestedPage= 1; // page wants to be on
+ currentPage= 1; // page user is currenty viewing
+ parsedPage =0; // the highest search result page that has be parsed
+ lastPage = 1; // the max page number for the search. parse page should not go beyond this
+ 
+
+    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
+	
+	 $("#notificationItemName").css('color',"red");
+	$("#notificationAlert").show();}
+	
+	removeSpinner();
+	});
 	
 
 }
+
+
+
 
 function handleNewMappedResults(searchTerm, pageNumber){
 		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
