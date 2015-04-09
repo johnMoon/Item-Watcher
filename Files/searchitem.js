@@ -251,8 +251,8 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			});
 
 	}) .fail (function(xhr, textStatus, errorThrown) {
-  console.log(textStatus);
-  console.log(errorThrown);
+  console.debug(textStatus);
+  console.debug(errorThrown);
   if(textStatus == "error"){
     pageArray = [];
  requestedPage= 1; // page wants to be on
