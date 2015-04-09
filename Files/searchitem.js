@@ -39,7 +39,7 @@ function search() {
 		// check if it is the same page
 		if (currentPage == requestedPage){
 			// either its being loaded or is loaded already
-			console.log("search is the same " + searchTerm, currentSearchTerm,currentPage, requestedPage);
+		
 
 			return;
 		}
@@ -84,23 +84,23 @@ function getSearchPage(searchTerm, pageNumber){
 		addSpinner();
 		var mapping = checkPreMapped(pageNumber);
 		if (mapping){
-			console.log("Mapping has been found");
+		
 			queryCleanItemIds(searchTerm,pageNumber, mapping);
 			currentPage = pageNumber;
 		}
 		else{
 			// perform mapping for requested page
-			console.log("No mapping");
+			
 			
 			queryCalculateItemMap(searchTerm,pageNumber);
 		}
 	
 		//refresh pagination number
-		//
+	
 	
 	} else {
 			requestedPage = currentPage;
-			console.log("search term is empty");
+			
 	}
 
 
@@ -127,44 +127,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 	}
 	var spidy = spidySearchUrl+searchTerm+"/"+currentPage;//+"?"+callbackParam;
 
-/*		$.ajax({
-  type: 'GET',
-  url: spidySearchUrl+searchTerm,
- 
-  error: function(xhr, textStatus, errorThrown) {
-  console.log(textStatus);
-  console.log(errorThrown);
-  if(textStatus == "error"){
 
-    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
-	
-	 $("#notificationItemName").css('color',"red");
-	$("#notificationAlert").show();}
-	
-	removeSpinner();
-  }});*/
-	/*$.ajaxSetup({
-	url: spidySearchUrl+searchTerm,
-    timeout: 5000,
-    error:function(xhr, textStatus, errorThrown) {
-  console.log(textStatus);
-  console.log(errorThrown);
-   pageArray = [];
- requestedPage= 1; // page wants to be on
- currentPage= 1; // page user is currenty viewing
- parsedPage =0; // the highest search result page that has be parsed
- lastPage = 1; // the max page number for the search. parse page should not go beyond this
- currentSearchTerm= ""; 
-  if(textStatus == "error" || textStatus == "timeout"){
-
-    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
-	
-	 $("#notificationItemName").css('color',"red");
-	$("#notificationAlert").show();}
-	
-	removeSpinner();
-	}
-});*/
 	
 	$.getJSON(spidy).done(function (data) {
 		// Need to handle request failures and timeouts
@@ -174,10 +137,8 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 		lastPage =  data.last_page;
 		itemTotal =  data.total;
 
-		console.log(itemCount, itemTotal, lastPage);
 		
-
-
+		
 
 		
 		var rawItems=[];
@@ -194,7 +155,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 						};
 		});
 
-		console.log(rawItems);
+		
 
 		//TODO
 		//note that this only works if there is atleast one valid item, HANDLE if all are invalid! valid = [json] not valid is json
@@ -218,7 +179,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			
 	         $.each(data, function(i, item) {
 				if(!item){
-					console.log("invalid item", item);
+					console.debug("invalid item", item);
 				}
 				
 						localIds.push(item.id);
@@ -232,7 +193,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 				
 			if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 				// the search term or page got switch while this was being loaded
-							console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
+						
 
 				return;
 			}
@@ -243,31 +204,31 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			 queryCalculateItemMap(searchTerm, pageNumber)
 			})  .fail(function() {
 				// this page only contained invalid results
-				console.log("This page only contained invalid results", currentPage, searchTerm);
+				
 				parsedPage =currentPage;
 		
 				queryCalculateItemMap(searchTerm, pageNumber)
 
 			});
 
-	}) .fail (function(xhr, textStatus, errorThrown) {
-  console.debug(textStatus);
-  console.debug(errorThrown);
-  if(textStatus == "error"){
-    pageArray = [];
- requestedPage= 1; // page wants to be on
- currentPage= 1; // page user is currenty viewing
- parsedPage =0; // the highest search result page that has be parsed
- lastPage = 1; // the max page number for the search. parse page should not go beyond this
+	}).fail (function(xhr, textStatus, errorThrown) {
+ 
+			if(textStatus == "error"){
+				// make global variables to default
+				pageArray = [];
+				requestedPage= 1; 
+				currentPage= 1; 
+				parsedPage =0; 
+				lastPage = 1; 
  
 
-    $("#notificationItemName").text("The server is down at the moment. Please try again later.");
+				$("#notificationItemName").text("The server is down at the moment. Please try again later.");
 	
-	 $("#notificationItemName").css('color',"red");
-	$("#notificationAlert").show();}
+				$("#notificationItemName").css('color',"red");
+				$("#notificationAlert").show();}
 	
-	removeSpinner();
-	});
+				removeSpinner();
+			});
 	
 
 }
@@ -278,18 +239,18 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 function handleNewMappedResults(searchTerm, pageNumber){
 		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 			// the search term or page got switch while this was being loaded
-			console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
+			
 
 			return;
 		}
 		if (tempIds.length >0){
-			console.log("a new page mappinig as been found " + pageNumber, tempIds);
+			
 
 			createSearchItems(tempItemObjs,true);	
 			pageArray[pageNumber] = tempIds;
 			currentPage = requestedPage;
 		} else {
-			console.log("There are no more tradeabled items, and all have been parsed");
+			
 			// do nothing?
 			// print out to user that there are no more items
 			// unless its the first page, then we print out error 
@@ -316,7 +277,7 @@ assumes that the given id array contains validated ids
 query office api
 **/
 function queryCleanItemIds(searchTerm, pageNumber, mapping){
-	console.log("queryCleanItemIds ", mapping);
+	
 
 	searchItemIDs = encodeURIComponent(mapping.join());
 	var names = gw2ItemUrl + searchItemIDs;
@@ -326,7 +287,7 @@ function queryCleanItemIds(searchTerm, pageNumber, mapping){
 		
 		if (!(searchTerm==currentSearchTerm&& pageNumber==requestedPage)){
 			// the search term or page got switch while this was being loaded
-						console.log("search was changed " + searchTerm, currentSearchTerm,pageNumber, requestedPage);
+						
 
 			return;
 		}
@@ -370,7 +331,7 @@ if the next page produces pages with no valid results check the next page
 update pagination variables and parsed pages	
 **/
 function nextPage(){
-	console.log("next page button is pressed");
+	
 
 
 		// check if it is the same page
@@ -378,7 +339,7 @@ function nextPage(){
 		// this means its currently being loaded
 		// it will be gaurteed that the search term is the same since
 		// pagination is be disabled when a search term is search for the first time
-		console.log("change paged as already been requested " + currentSearchTerm,currentPage, requestedPage);
+		
 
 		return;
 	}
@@ -406,13 +367,13 @@ dont allow user to go below page 1
 update pagination variables
 **/
 function prevPage(){
-	console.log("previous page button is pressed");
+	
 		// check if it is the same page
 	if (currentPage != requestedPage){
 		// this means its currently being loaded
 		// it will be gaurteed that the search term is the same since
 		// pagination is be disabled when a search term is search for the first time
-		console.log("change paged as already been requested " + currentSearchTerm,currentPage, requestedPage);
+	
 
 		return;
 	}
@@ -532,7 +493,7 @@ switch(rarityID) {
         return "legendary";
         break;
     default:
-    	console.log("Unknown rarityID "  + rarityID);
+    	console.debug("Unknown rarityID "  + rarityID);
      	return "";
 }
 
@@ -582,10 +543,10 @@ $(function(){
 function onStorageEvent(storageEvent){
 	
 	
-	console.log("onStorageEvent" ,storageEvent);
+	
 	if (storageEvent.key.indexOf("item-exists") !=-1) {
 
-		console.log("item exists!" ,storageEvent);
+		
 		 $("#notificationItemName").css('color',"black");
 		$("#notificationItemName").text("Item "+storageEvent.newValue + " is already watched");
 		$("#notificationAlert").show();

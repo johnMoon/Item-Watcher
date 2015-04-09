@@ -91,7 +91,7 @@ function addDataPoint(itemId, buy, sell) {
 	data.addRow([currentDate.getTime(), buy, sell]);
 	chart.draw(data, chartOptions);
 }
-////////////
+///////////
 
 
 // should only need to run once per new watched item and if obj isnt passed ie on reload
@@ -195,7 +195,8 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	}
 	
 	
-	var removeButton = $(document.createElement('button')).addClass("glyphicon" ).addClass("glyphicon-remove btnModified btnModified-primary btnModifed-lg outline");
+	var removeButton = $(document.createElement('button'));
+		removeButton.addClass("glyphicon glyphicon-remove btnModified btnModified-primary btnModifed-lg outline");
 	removeButton.click(
 		function () {
 		removeItem(itemId);
@@ -260,14 +261,14 @@ function createPriceElement(itemId, buySell){
 	
 	$([goldImage, silverImage, copperImage]).each(function(i,value) {
     value.addClass("price-Image");
-});
+	});
 	
 	
 	$(goldImage, silverImage).hide();
 	
-	//buyElem.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
+	
 	pullRightPrices.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
-	//pullRightPrices.append(buyElem);
+	
 	return buyElem;
 }
 
@@ -340,7 +341,7 @@ function saveItemListState() {
 }
 
 function reloadItemListState() {
-	console.log("Attempting to reload previous list state");
+	
 	var previousItemList = window.localStorage.getItem("item-list-state");
 		listWatchItemId = JSON.parse(previousItemList);
 	if (listWatchItemId && listWatchItemId.length>0) {
