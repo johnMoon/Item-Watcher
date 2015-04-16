@@ -6,8 +6,8 @@
 		"version":"1.0.0",
 		"minimum-overwolf-version":"0.77.10",
 		"author":"David Dang and John Moon",
-		"icon":"app_color.png",
-		"icon_gray":"appl_gray.png",
+		"icon":"IconMouseOver.png",
+		"icon_gray":"IconMouseNormal.png",
 		"description":"GW2 TP Watcher keeps tracks of the item prices for you while you can enjoy playing. Add your favourite items and watch when the prices are just right to buy and sell. Prices are taken from the official GW2 API."
 	},
 	"data": {

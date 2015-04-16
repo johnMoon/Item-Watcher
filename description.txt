@@ -1,0 +1,4 @@
+Use TP-Watcher to watch items in trading post. You can set how frequent your items will be watched by the app. Items will be graphed based on their sell-price and buy-price. Use this tool to see how frequent the price is changing over time!
+
+
+
