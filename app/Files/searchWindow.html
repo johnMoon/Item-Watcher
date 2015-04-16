@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+      <!-- Latest compiled and minified JavaScript -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="style.css" />
+      <script src="searchitem.js"></script>
+      <title>GW2 TP Watcher: Search </title>
+   </head>
+   <body onresize="resizeListener()">
+      <div id="content" >
+         <div id="search-header">
+            <div id="notificationAlert" class="alert alert-info alert-dismissible" role="alert" style="display: none">
+               <button id="notificationButton"  type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong id="notificationItemName"></strong> 
+					<Strong id = "notificationError"></Strong>
+            </div>
+            <div class="row">
+               <div class="col-xs-12">
+                  <div  class="input-group">
+                     <input  id="input" type="text" class="form-control" placeholder="Item..." onkeypress="searchKeyPress(event)">
+                     <span class="input-group-btn">
+                     <button   id="searchButton"  onclick="search()" class="btn btn-default " onmouseup="blur()" type="button">
+                     Search</button>
+                     </span>
+                  </div>
+               </div>
+            </div>
+            <!-- /.row -->
+         </div>
+         <div  id ="result-container" class="resultContainer" >
+            <ul id="resultList"  class="none-list">
+            </ul> 
+         </div>
+		 <div id="search-footer" >
+			<div class="row"  >
+				<div class="col-xs-10 page-footer">
+					 <nav>
+						<ul class="pagination no-margin">
+						   <li>
+							  <a href="#" aria-label="Previous" id="prevButton"  onclick="prevPage()" onmouseup="blur()">
+							  <span aria-hidden="true">&laquo;</span>
+							  </a>
+						   </li>
+						   <li class="active"><a id="pageNumber" href="#">1</a></li>
+						   <li>
+							  <a href="#" aria-label="Next" id="nextButton"   onclick="nextPage()" onmouseup="blur()">
+							  <span aria-hidden="true">&raquo;</span>
+							  </a>
+						   </li>
+						</ul>
+					 </nav>
+				</div>
+				<div class="col-xs-2">
+				<div id="cog-spinner" class="   spinner-margin spinner pull-right">
+					<i class="fa fa-cog fa-2x fa-spin "></i>
+				</div>
+				</div>
+			</div>
+		</div>
+      </div>
+   </body>
+</html>
