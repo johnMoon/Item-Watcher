@@ -110,28 +110,35 @@ function updateItemData(searchItemIDs) {
 }
 
 function parseObjsAndUpdate(itemObj) {
+	itemIds = [];
 	$.each(itemObj, function (i, item) {
 
 		var itemName = item.name;
 		var img = item.icon;
 		var itemId = item.id;
+		itemIds.push(itemId);
 		var rarity = item.rarity;
 		var level = item.level;
 		createWatchItem(itemId, itemName, rarity, img, level);
 	});
 
-	updateItemPrices();
+	// should only update the items added in
+	updateItemPrices(itemIds);
 }
 
 // Update data assumes that there is at least one item already
 // item id are stored in array and are valid tp
 // only update prices
-function updateItemPrices() {
+function updateItemPrices(itemIds) {
+
+	if (typeof itemIds === 'undefined') {
+		itemIds = listWatchItemId; 
+	}
 
 	// note use the ids param
 	//defensive
-	if (listWatchItemId.length > 0) {
-		var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + listWatchItemId.join();
+	if (itemIds.length > 0) {
+		var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
 
 		$.getJSON(prices).done(function (data) {
 
@@ -308,7 +315,7 @@ function changeFrequency() {
 			function () {
 
 			if (listWatchItemId.length > 0) {
-				updateItemPrices();
+				updateItemPrices(listWatchItemId);
 			}
 
 		}, newFrequency);
@@ -324,7 +331,8 @@ function saveFrequency() {
 function removeItem(itemId) {
 
 	var index = listWatchItemId.indexOf(itemId);
-	listWatchItemId.splice(index, 1);
+	listWatchItemId.splice(index, 1);	
+	delete listCharts[itemId];
 	saveItemListState();
 	$(".mainWindow-item-cell").remove("#window-item-cell-" + itemId);
 	if (listWatchItemId.length==0) {
@@ -343,10 +351,11 @@ function saveItemListState() {
 function reloadItemListState() {
 	
 	var previousItemList = window.localStorage.getItem("item-list-state");
-		listWatchItemId = JSON.parse(previousItemList);
-	if (listWatchItemId && listWatchItemId.length>0) {
+		tempListWatchItemId = JSON.parse(previousItemList);
+	if (tempListWatchItemId && tempListWatchItemId.length>0) {
 		// there was item list before
-		updateItemData(listWatchItemId);
+		listWatchItemId =tempListWatchItemId;
+		updateItemData(tempListWatchItemId);
 	} else {
 		// show no watch item message
 		$("#no-watch-item").show();
