@@ -1,5 +1,6 @@
-var listWatchItemId = [];
-var listCharts = {};
+var listWatchItemId = []; 
+var itemIdOptions=[]; // indexed by item, contains options
+var listCharts = [];
 var newFrequency;
 
 function openSubWindow() {
@@ -333,6 +334,9 @@ function removeItem(itemId) {
 	var index = listWatchItemId.indexOf(itemId);
 	listWatchItemId.splice(index, 1);	
 	delete listCharts[itemId];
+	
+	delete itemIdOptions[itemId];	
+	
 	saveItemListState();
 	$(".mainWindow-item-cell").remove("#window-item-cell-" + itemId);
 	if (listWatchItemId.length==0) {
@@ -345,21 +349,57 @@ function removeItem(itemId) {
 function saveItemListState() {
 
 	window.localStorage.setItem("item-list-state", JSON.stringify(listWatchItemId));
+	// prevent saving lots of nulls;
+	var optionHolder = [];
+	
+	for (var i=0; i< listWatchItemId.length; i++) {
+		var item = listWatchItemId[i];
+		optionHolder.push({id:item, options:itemIdOptions[item]});
+
+	}
+	
+	window.localStorage.setItem("item-options-state", JSON.stringify(optionHolder));
 
 }
 
 function reloadItemListState() {
 	
 	var previousItemList = window.localStorage.getItem("item-list-state");
-		tempListWatchItemId = JSON.parse(previousItemList);
+	var tempListWatchItemId = JSON.parse(previousItemList);
 	if (tempListWatchItemId && tempListWatchItemId.length>0) {
 		// there was item list before
 		listWatchItemId =tempListWatchItemId;
+		
+		var previousItemOptions = window.localStorage.getItem("item-options-state");
+		var tempItemOptions = JSON.parse(previousItemOptions);
+
+		if (tempItemOptions && tempItemOptions.length>0) {
+				// there was item list before
+				for (var i = 0; i < tempItemOptions.length; i++ ) {
+					var id = tempItemOptions[i].id;
+					var options = tempItemOptions[i].options;
+					itemIdOptions[id] = options;
+				}
+				
+				
+		} 	
+		
+		// add any missing (update)
+		for (var i=0; i< listWatchItemId.length; i++) {
+			var item = listWatchItemId[i];
+			if (!itemIdOptions[item]){
+				//TODO - default
+				itemIdOptions[item] = { historical:true,  stock:true};
+			}
+		}
+		
 		updateItemData(tempListWatchItemId);
 	} else {
 		// show no watch item message
 		$("#no-watch-item").show();
 	}
+	
+
 	
 }
 
@@ -371,6 +411,8 @@ function onStorageEvent(storageEvent) {
 		var newId = obj.id;
 		if (newId && $.inArray(newId, listWatchItemId) == -1) {
 			listWatchItemId.push(newId);
+			itemIdOptions[newId] = { historical:true,  stock:true}; // TODO
+			
 			saveItemListState();
 
 			parseObjsAndUpdate([obj])
