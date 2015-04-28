@@ -40,7 +40,7 @@ var chartOptions = {
 		strokeWidth : 5,
 
 	},
-	'width' : 150,
+	'width' : 296,
 	'height' : 40,
 	hAxis : {
 		textPosition : 'none',
@@ -68,9 +68,9 @@ var chartOptions = {
 		trigger : 'none'
 	},
 	chartArea : {
-		left : 3,
+		left : 2,
 		top : 2,
-		width : 146,
+		width : 292,
 		height : 36,
 
 	}
@@ -211,16 +211,19 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	});
 
 	var priceContainer = $(document.createElement('div'));
-	priceContainer.addClass('graph-buysell');
+	priceContainer.addClass('container-fluid');
+	
+	var graphContainer = $(document.createElement('div'));
+	graphContainer.addClass('graph-buysell');
 
 	var chartDiv = $(document.createElement('div'));
 	chartDiv.addClass("chart-div");
 	drawChart($(chartDiv)[0], itemId);
 
-	priceContainer.append(chartDiv);
+	graphContainer.append(chartDiv);
 
 	var priceDiv = $(document.createElement('div'));
-	priceDiv.addClass('buy-sell-prices ');
+	priceDiv.addClass('row');
 	
 
 	var buyElem =createPriceElement(itemId, "buy");
@@ -231,7 +234,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	priceContainer.append(priceDiv);
 
-	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
+	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer,graphContainer);	
 
 
 	$(result).appendTo("#watchlist-container");
@@ -246,7 +249,7 @@ function createPriceElement(itemId, buySell){
 	var pullRightPrices = $(document.createElement('div')).addClass('pull-right');
 
 	var buyElem = $(document.createElement('div')).text(label);
-	buyElem.addClass('buy-sell');
+	buyElem.addClass('buy-sell col-xs-6');
 	buyElem.append(pullRightPrices);
 
 	var buyGold = $(document.createElement('span'));
