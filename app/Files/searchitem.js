@@ -210,7 +210,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 				queryCalculateItemMap(searchTerm, pageNumber)
 
 			});
-
+		//handles when API call fails
 	}).fail (function(xhr, textStatus, errorThrown) {
  
 			if(textStatus == "error"){

@@ -91,7 +91,7 @@ function addDataPoint(itemId, buy, sell) {
 	data.addRow([currentDate.getTime(), buy, sell]);
 	chart.draw(data, chartOptions);
 }
-///////////
+
 
 
 // should only need to run once per new watched item and if obj isnt passed ie on reload
