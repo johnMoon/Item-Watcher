@@ -1,5 +1,6 @@
-var listWatchItemId = [];
-var listCharts = {};
+var listWatchItemId = []; 
+var itemIdOptions=[]; // indexed by item, contains options
+var listCharts = [];
 var newFrequency;
 
 function openSubWindow() {
@@ -39,7 +40,7 @@ var chartOptions = {
 		strokeWidth : 5,
 
 	},
-	'width' : 150,
+	'width' : 296,
 	'height' : 40,
 	hAxis : {
 		textPosition : 'none',
@@ -67,9 +68,9 @@ var chartOptions = {
 		trigger : 'none'
 	},
 	chartArea : {
-		left : 3,
+		left : 2,
 		top : 2,
-		width : 146,
+		width : 292,
 		height : 36,
 
 	}
@@ -110,28 +111,35 @@ function updateItemData(searchItemIDs) {
 }
 
 function parseObjsAndUpdate(itemObj) {
+	itemIds = [];
 	$.each(itemObj, function (i, item) {
 
 		var itemName = item.name;
 		var img = item.icon;
 		var itemId = item.id;
+		itemIds.push(itemId);
 		var rarity = item.rarity;
 		var level = item.level;
 		createWatchItem(itemId, itemName, rarity, img, level);
 	});
 
-	updateItemPrices();
+	// should only update the items added in
+	updateItemPrices(itemIds);
 }
 
 // Update data assumes that there is at least one item already
 // item id are stored in array and are valid tp
 // only update prices
-function updateItemPrices() {
+function updateItemPrices(itemIds) {
+
+	if (typeof itemIds === 'undefined') {
+		itemIds = listWatchItemId; 
+	}
 
 	// note use the ids param
 	//defensive
-	if (listWatchItemId.length > 0) {
-		var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + listWatchItemId.join();
+	if (itemIds.length > 0) {
+		var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
 
 		$.getJSON(prices).done(function (data) {
 
@@ -203,16 +211,19 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	});
 
 	var priceContainer = $(document.createElement('div'));
-	priceContainer.addClass('graph-buysell');
+	priceContainer.addClass('container-fluid');
+	
+	var graphContainer = $(document.createElement('div'));
+	graphContainer.addClass('graph-buysell');
 
 	var chartDiv = $(document.createElement('div'));
 	chartDiv.addClass("chart-div");
 	drawChart($(chartDiv)[0], itemId);
 
-	priceContainer.append(chartDiv);
+	graphContainer.append(chartDiv);
 
 	var priceDiv = $(document.createElement('div'));
-	priceDiv.addClass('buy-sell-prices ');
+	priceDiv.addClass('row');
 	
 
 	var buyElem =createPriceElement(itemId, "buy");
@@ -223,7 +234,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	priceContainer.append(priceDiv);
 
-	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
+	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer,graphContainer);	
 
 
 	$(result).appendTo("#watchlist-container");
@@ -238,7 +249,7 @@ function createPriceElement(itemId, buySell){
 	var pullRightPrices = $(document.createElement('div')).addClass('pull-right');
 
 	var buyElem = $(document.createElement('div')).text(label);
-	buyElem.addClass('buy-sell');
+	buyElem.addClass('buy-sell col-xs-6');
 	buyElem.append(pullRightPrices);
 
 	var buyGold = $(document.createElement('span'));
@@ -308,7 +319,7 @@ function changeFrequency() {
 			function () {
 
 			if (listWatchItemId.length > 0) {
-				updateItemPrices();
+				updateItemPrices(listWatchItemId);
 			}
 
 		}, newFrequency);
@@ -324,7 +335,11 @@ function saveFrequency() {
 function removeItem(itemId) {
 
 	var index = listWatchItemId.indexOf(itemId);
-	listWatchItemId.splice(index, 1);
+	listWatchItemId.splice(index, 1);	
+	delete listCharts[itemId];
+	
+	delete itemIdOptions[itemId];	
+	
 	saveItemListState();
 	$(".mainWindow-item-cell").remove("#window-item-cell-" + itemId);
 	if (listWatchItemId.length==0) {
@@ -337,20 +352,57 @@ function removeItem(itemId) {
 function saveItemListState() {
 
 	window.localStorage.setItem("item-list-state", JSON.stringify(listWatchItemId));
+	// prevent saving lots of nulls;
+	var optionHolder = [];
+	
+	for (var i=0; i< listWatchItemId.length; i++) {
+		var item = listWatchItemId[i];
+		optionHolder.push({id:item, options:itemIdOptions[item]});
+
+	}
+	
+	window.localStorage.setItem("item-options-state", JSON.stringify(optionHolder));
 
 }
 
 function reloadItemListState() {
 	
 	var previousItemList = window.localStorage.getItem("item-list-state");
-		listWatchItemId = JSON.parse(previousItemList);
-	if (listWatchItemId && listWatchItemId.length>0) {
+	var tempListWatchItemId = JSON.parse(previousItemList);
+	if (tempListWatchItemId && tempListWatchItemId.length>0) {
 		// there was item list before
-		updateItemData(listWatchItemId);
+		listWatchItemId =tempListWatchItemId;
+		
+		var previousItemOptions = window.localStorage.getItem("item-options-state");
+		var tempItemOptions = JSON.parse(previousItemOptions);
+
+		if (tempItemOptions && tempItemOptions.length>0) {
+				// there was item list before
+				for (var i = 0; i < tempItemOptions.length; i++ ) {
+					var id = tempItemOptions[i].id;
+					var options = tempItemOptions[i].options;
+					itemIdOptions[id] = options;
+				}
+				
+				
+		} 	
+		
+		// add any missing (update)
+		for (var i=0; i< listWatchItemId.length; i++) {
+			var item = listWatchItemId[i];
+			if (!itemIdOptions[item]){
+				//TODO - default
+				itemIdOptions[item] = { historical:true,  stock:true};
+			}
+		}
+		
+		updateItemData(tempListWatchItemId);
 	} else {
 		// show no watch item message
 		$("#no-watch-item").show();
 	}
+	
+
 	
 }
 
@@ -362,6 +414,8 @@ function onStorageEvent(storageEvent) {
 		var newId = obj.id;
 		if (newId && $.inArray(newId, listWatchItemId) == -1) {
 			listWatchItemId.push(newId);
+			itemIdOptions[newId] = { historical:true,  stock:true}; // TODO
+			
 			saveItemListState();
 
 			parseObjsAndUpdate([obj])
