@@ -222,9 +222,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
         removeSpinner();
     });
 
-
 }
-
 
 
 

@@ -99,7 +99,7 @@ function addHistDataPoint(itemId, buy, sell) {
 	data.addRow([currentDate.getTime(), buy, sell]);
 	chart.draw(data, chartHistOptions);
 }
-///////////
+
 
 ///////////////// Supply charts
 
