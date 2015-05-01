@@ -83,6 +83,23 @@ color: #808080;
 	margin-bottom: 3px;
 
 }
+/*Panel */
+
+.panel{
+	overflow-y: auto;
+    height: 100x;
+    border: 1px solid #e4e4e4;
+    border-radius: 2px;
+    box-shadow: 0 0 6px #ccc;
+	margin-top:10px;
+	margin-bottom:10px;
+	background-color: #808080 !important;
+
+}
+
+
+
+
 /*  remove?*/
 .resultContainer {
     overflow-y: auto;
@@ -147,28 +164,28 @@ color: #808080;
 /*item color*/
 
 .junk {
-    color: #AAA;
+    color: #AAA !important;
 }
 .basic {
-    color: #000;
+    color: #000 !important;
 }
 .fine {
-    color: #62A4DA;
+    color: #62A4DA !important;
 }
 .masterwork {
-    color: #1a9306;
+    color: #1a9306 !important;
 }
 .rare {
-    color: #fcd00b;
+    color: #fcd00b !important;
 }
 .exotic {
-    color: #ffa405;
+    color: #ffa405 !important;
 }
 .ascended {
-    color: #fb3e8d;
+    color: #fb3e8d !important;
 }
 .legendary {
-    color: #4C139D;
+    color: #4C139D !important;
 }
 
 

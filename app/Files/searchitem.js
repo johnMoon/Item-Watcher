@@ -20,7 +20,14 @@ $.getJSON(validTpIdsQuery).done(function(data) {
 
 	// TODO figure out what to do for this case
 	isReady = true;
-
+	
+	 $("#deatailSearchButton").click(function(){
+	
+	 $("#checkboxPanel").fadeToggle();
+	 resizeListener();
+  
+  });
+ 
 });
 
 
@@ -511,7 +518,7 @@ function resizeListener() {
     var searchHeader = $("#search-header");
     var resultContainer = $("#result-container");
     var footerContainer = $("#search-footer");
-    var margin = 20;
+    var margin = 40;
     resultContainer.height(content.height() - searchHeader.height() - footerContainer.height() - margin);
 
 }
