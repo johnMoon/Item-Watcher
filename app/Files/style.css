@@ -246,10 +246,9 @@ line-height: 1.3333333;
 border-radius: 6px;}
 
 .chart-div {
-    padding: 0px;
+    padding: 1px 0px  !important;
     display: inline-block;
-    height: 40px;
-    width: 150px;
+
 	vertical-align: middle;
 
 }

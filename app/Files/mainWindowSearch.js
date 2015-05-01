@@ -1,6 +1,7 @@
 var listWatchItemId = []; 
 var itemIdOptions=[]; // indexed by item, contains options
-var listCharts = [];
+var listHistCharts = [];
+var listSupplyCharts = [];
 var newFrequency;
 
 function openSubWindow() {
@@ -16,23 +17,23 @@ function openSubWindow() {
 //////////// CHARTING
 
 
-function drawChart(chartDiv, itemId) {
+function drawHistChart(chartDiv, itemId) {
 
 	var data = new google.visualization.DataTable();
 	data.addColumn('number', 'X');
 	data.addColumn('number', 'Buy');
 	data.addColumn('number', 'Sell');
 	var chart = new google.visualization.LineChart(chartDiv);
-	listCharts[itemId] = {
+	listHistCharts[itemId] = {
 		chart : chart,
 		data : data
 	};
-	chart.draw(data, chartOptions);
+	chart.draw(data, chartHistOptions);
 
 }
-var maxDataPoints = 20;
+var maxHistDataPoints = 20;
 
-var chartOptions = {
+var chartHistOptions = {
 
 	backgroundColor : {
 		fill : '#CCCCCC',
@@ -40,7 +41,7 @@ var chartOptions = {
 		strokeWidth : 5,
 
 	},
-	'width' : 296,
+	'width' : 298,
 	'height' : 40,
 	hAxis : {
 		textPosition : 'none',
@@ -70,28 +71,177 @@ var chartOptions = {
 	chartArea : {
 		left : 2,
 		top : 2,
-		width : 292,
+		width : 294,
 		height : 36,
 
 	}
 
 };
 
-function addDataPoint(itemId, buy, sell) {
-	var chartObj = listCharts[itemId];
+function addHistDataPoint(itemId, buy, sell) {
+	var chartObj = listHistCharts[itemId];
 	var chart = chartObj["chart"];
 	var data = chartObj["data"];
 	var currentDate = new Date();
 	var dataNum = data.getNumberOfRows();
 	if (data.getNumberOfRows() == 0) {
 		// hack to get a line always
-		data.addRow([currentDate.getTime() - 1, buy, sell]);
-	} else if (dataNum >= maxDataPoints) {
+		
+		for (var i=0;i<maxHistDataPoints;i++){
+			
+			data.addRow([currentDate.getTime() - (newFrequency *(maxHistDataPoints-i)), buy, sell]);
+		}
+		
+	
+	} else if (dataNum >= maxHistDataPoints) {
 		data.removeRow(0);
 	}
 	data.addRow([currentDate.getTime(), buy, sell]);
-	chart.draw(data, chartOptions);
+	chart.draw(data, chartHistOptions);
 }
+
+
+///////////////// Supply charts
+
+
+function drawSupplyChart(chartDiv, itemId){
+
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Bucket');
+    data.addColumn('number', 'Price');
+    data.addColumn({type: 'string', role: 'tooltip'});
+    data.addColumn('number', 'Orders');
+    data.addColumn({type: 'string', role: 'tooltip'});   
+    data.addColumn('number', 'Gap');
+    data.addColumn({type: 'number', role: 'interval'});
+    data.addColumn({type: 'number', role: 'interval'});
+    data.addColumn({type: 'string', role: 'tooltip'});
+    var chart = new google.visualization.ComboChart(chartDiv);
+	listSupplyCharts[itemId] = {
+		chart : chart,
+		data : data
+	};
+    chart.draw(data, chartSupplyOptions);
+}
+
+
+var chartSupplyOptions = {
+       
+        backgroundColor: {
+            fill: '#CCCCCC',
+            stroke: '#e4e4e4',
+            strokeWidth: 5,
+        },
+            'width': 298,
+            'height': 50,
+        // adding vAxis and hAxis like the other chart causes inverted chart area?
+		
+        chartArea: {
+            left: 2,
+            top: 2,
+            width: 294,
+            height: 46,
+
+        },
+        seriesType: "steppedArea", // or bar charts ?
+        series: {
+            0: {
+                type: "line",
+                targetAxisIndex: 1,
+                pointSize: 5
+            },
+            1:{
+               // color:'#E7711B' // orange
+            },
+       
+           2: {
+                type: "line",
+                targetAxisIndex: 1,
+               lineWidth:0,
+               intervals:{barWidth:'1'}
+
+            }
+        },
+        bar: {
+            groupWidth: '100%' // removes spacing
+        }
+    };
+
+	
+function getPriceTooltipString(price, order){
+	// TODO condense stock (100m+)
+	return 'Price: '+price +"\nOrders: " +order;
+}
+
+function getFlipTooltipString(profit){
+	return 'Flip Profit: '+profit;
+}
+	
+	
+function updateSupplyChart(itemId, dataObj){
+	    var chartObj = listSupplyCharts[itemId];
+	var chart = chartObj["chart"];
+	var data = chartObj["data"];
+		
+		
+	// 	delete old data
+	data.removeRows(0, data.getNumberOfRows());
+	
+	// These are array
+	// Atleast 5, sorted by best prices
+	// best for sell is lowest to highest
+	// best for buy is highest to lowest (ie people are buying it for ...)
+	var sellOffers = dataObj["sell"];
+	var buyOffers = dataObj["buy"];
+		
+	loadOfferRows(data, buyOffers, true);
+	//TODO load flip into data	
+	
+	if (sellOffers.length >0 && buyOffers.length >0) {
+				// change color base on flip price
+
+		var flipProfit = calculateFlipProfit();
+		changeFlipColor(flipProfit);
+
+	// TODO add flip 
+	}	
+
+	loadOfferRows(data, sellOffers, false);
+	
+	chart.draw(data, chartSupplyOptions);
+
+}	
+
+function loadOfferRows(dataArray, offers, isBuy){
+	var rowsToAdd=[];
+	var label =  ((isBuy) ? "b" : "s");
+	for (var i=0; i< offers.length; i++) {
+		var num = ((isBuy) ? offers.length-i -1: i);
+		var price = offers[i]["price"];
+		var stocks = offers[i]["stock"];
+		var tooltip = getPriceTooltipString(price, stocks);
+		rowsToAdd[num]=( [label+i, price, tooltip, stocks, tooltip, null,null,null,null])
+		
+	}	
+	dataArray.addRows(rowsToAdd)
+}
+
+function calculateFlipProfit(sellBuy, buyOffer){
+	// TODO
+	return 0;
+}
+
+function changeFlipColor(flipProfit){
+	if (flipProfit>0){
+		chartSupplyOptions["series"][2]["color"] = 'green';
+
+	} else {
+		chartSupplyOptions["series"][2]["color"] = 'red';
+
+	}
+}
+/////////////////
 
 
 
@@ -149,7 +299,7 @@ function updateItemPrices(itemIds) {
 				var buys = item.buys.unit_price;
 				var itemId = item.id;
 
-				addDataPoint(itemId, buys, sells);
+				addHistDataPoint(itemId, buys, sells);
 
 				updatePriceHelper(itemId, buys, "buy");
 				updatePriceHelper(itemId, sells, "sell");
@@ -214,14 +364,20 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	priceContainer.addClass('container-fluid');
 	
 	var graphContainer = $(document.createElement('div'));
-	graphContainer.addClass('graph-buysell');
+	graphContainer.addClass('graph-buysell row');
 
-	var chartDiv = $(document.createElement('div'));
-	chartDiv.addClass("chart-div");
-	drawChart($(chartDiv)[0], itemId);
+	var histChartDiv = $(document.createElement('div'));
+	histChartDiv.addClass("chart-div col-xs-12");
+	drawHistChart($(histChartDiv)[0], itemId);
 
-	graphContainer.append(chartDiv);
+	graphContainer.append(histChartDiv);
 
+	var supplyChartDiv = $(document.createElement('div'));
+	supplyChartDiv.addClass("chart-div col-xs-12");
+	drawSupplyChart($(supplyChartDiv)[0], itemId);
+
+	graphContainer.append(supplyChartDiv);
+	
 	var priceDiv = $(document.createElement('div'));
 	priceDiv.addClass('row');
 	
@@ -232,9 +388,9 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	
 
 
-	priceContainer.append(priceDiv);
+	priceContainer.append(priceDiv,graphContainer);
 
-	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer,graphContainer);	
+	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
 
 
 	$(result).appendTo("#watchlist-container");
@@ -336,7 +492,7 @@ function removeItem(itemId) {
 
 	var index = listWatchItemId.indexOf(itemId);
 	listWatchItemId.splice(index, 1);	
-	delete listCharts[itemId];
+	delete listHistCharts[itemId];
 	
 	delete itemIdOptions[itemId];	
 	
