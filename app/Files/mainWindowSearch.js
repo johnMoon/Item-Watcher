@@ -112,7 +112,11 @@ function drawSupplyChart(chartDiv, itemId){
     data.addColumn('number', 'Price');
     data.addColumn({type: 'string', role: 'tooltip'});
     data.addColumn('number', 'Orders');
-    data.addColumn({type: 'string', role: 'tooltip'});   
+    data.addColumn({type: 'string', role: 'tooltip'});  
+    data.addColumn('number', 'Price');
+    data.addColumn({type: 'string', role: 'tooltip'});
+    data.addColumn('number', 'Orders');
+    data.addColumn({type: 'string', role: 'tooltip'});  	
     data.addColumn('number', 'Gap');
     data.addColumn({type: 'number', role: 'interval'});
     data.addColumn({type: 'number', role: 'interval'});
@@ -149,19 +153,30 @@ var chartSupplyOptions = {
             0: {
                 type: "line",
                 targetAxisIndex: 1,
-                pointSize: 5
+                pointSize: 5,
+				 color: '#3366cc' //blue
             },
-            1:{
-               // color:'#E7711B' // orange
+			     1:{
+               color:'#F0A000' // orange
+            },
+			  2: {
+                type: "line",
+                targetAxisIndex: 1,
+                pointSize: 5,
+				 color: '#dc3912' // red 
+            },
+            3:{
+               color:'#F0A000' // orange
             },
        
-           2: {
+           4: {
                 type: "line",
                 targetAxisIndex: 1,
                lineWidth:0,
                intervals:{barWidth:'1'}
 
-            }
+            },
+			
         },
         bar: {
             groupWidth: '100%' // removes spacing
@@ -169,17 +184,18 @@ var chartSupplyOptions = {
     };
 
 	
-function getPriceTooltipString(price, order){
+function getPriceTooltipString(price, order, isBuy){
 	// TODO condense stock (100m+)
-	return 'Price: '+price +"\nOrders: " +order;
+	var priceLabel = ((isBuy) ? "Buy: " : "Sell: ");
+	return priceLabel+price +"\nOrders: " +order;
 }
 
 function getFlipTooltipString(profit){
 	return 'Flip Profit: '+profit;
 }
 	
-	
-function updateSupplyChart(itemId, dataObj){
+// note that these offers are array of offer objs!	
+function updateSupplyChart(itemId, buyOffers, sellOffers){
 	    var chartObj = listSupplyCharts[itemId];
 	var chart = chartObj["chart"];
 	var data = chartObj["data"];
@@ -188,23 +204,15 @@ function updateSupplyChart(itemId, dataObj){
 	// 	delete old data
 	data.removeRows(0, data.getNumberOfRows());
 	
-	// These are array
-	// Atleast 5, sorted by best prices
-	// best for sell is lowest to highest
-	// best for buy is highest to lowest (ie people are buying it for ...)
-	var sellOffers = dataObj["sell"];
-	var buyOffers = dataObj["buy"];
 		
 	loadOfferRows(data, buyOffers, true);
-	//TODO load flip into data	
 	
 	if (sellOffers.length >0 && buyOffers.length >0) {
 				// change color base on flip price
 
-		var flipProfit = calculateFlipProfit();
-		changeFlipColor(flipProfit);
-
-	// TODO add flip 
+	
+		
+		loadFlipRow(data, buyOffers[0]["unit_price"], sellOffers[0]["unit_price"]);
 	}	
 
 	loadOfferRows(data, sellOffers, false);
@@ -213,31 +221,52 @@ function updateSupplyChart(itemId, dataObj){
 
 }	
 
-function loadOfferRows(dataArray, offers, isBuy){
-	var rowsToAdd=[];
-	var label =  ((isBuy) ? "b" : "s");
-	for (var i=0; i< offers.length; i++) {
-		var num = ((isBuy) ? offers.length-i -1: i);
-		var price = offers[i]["price"];
-		var stocks = offers[i]["stock"];
-		var tooltip = getPriceTooltipString(price, stocks);
-		rowsToAdd[num]=( [label+i, price, tooltip, stocks, tooltip, null,null,null,null])
-		
-	}	
-	dataArray.addRows(rowsToAdd)
+function loadFlipRow(dataArray, buy, sell){
+	var flipProfit = calculateFlipProfit(buy, sell);
+	changeFlipColor(flipProfit["profit"]);
+	var tooltip = "Listing: " +flipProfit["listing"]+
+	"\nExchange: "+flipProfit["exchange"]+"\nProfit: "
+	+flipProfit["profit"];
+	var row = ['flip', null, null, null, null,null, null, null, null, (buy+sell)/2, buy,sell, tooltip];
+	dataArray.addRow(row);
 }
 
-function calculateFlipProfit(sellBuy, buyOffer){
-	// TODO
-	return 0;
+function loadOfferRows(dataArray, offers, isBuy){
+	var rowsToAdd=[];
+	var maxIndex = Math.min(3,offers.length);
+	var label =  ((isBuy) ? "b" : "s");
+	for (var i=0; i< maxIndex; i++) {
+		var num = ((isBuy) ? maxIndex-i -1: i);
+		var price = offers[i]["unit_price"];
+		var stocks = offers[i]["quantity"];
+		var tooltip = getPriceTooltipString(price, stocks, isBuy);
+		if (isBuy){
+			rowsToAdd[num]=( [label+i, price, tooltip,  stocks, tooltip, null,null,null,null,null,null,null,null]);
+		} else {
+			rowsToAdd[num]=( [label+i, null,null,null,null, price, tooltip,  stocks, tooltip, null,null,null,null]);	
+		}
+		
+
+		
+	}	
+	dataArray.addRows(rowsToAdd);
+}
+
+function calculateFlipProfit( buyOffer,sellOffer){
+	var difference = sellOffer- buyOffer;
+	var listing = Math.max(Math.round(sellOffer *0.05), 1);
+	var exchange = Math.max(Math.round(sellOffer *0.1), 1);
+	var profit = difference - listing - exchange;
+	return {listing: listing, exchange:exchange, profit: profit};
 }
 
 function changeFlipColor(flipProfit){
 	if (flipProfit>0){
-		chartSupplyOptions["series"][2]["color"] = 'green';
+		// green
+		chartSupplyOptions["series"][4]["color"] = '#109618';
 
 	} else {
-		chartSupplyOptions["series"][2]["color"] = 'red';
+		chartSupplyOptions["series"][4]["color"] = '#dc3912';
 
 	}
 }
@@ -289,7 +318,16 @@ function updateItemPrices(itemIds) {
 	// note use the ids param
 	//defensive
 	if (itemIds.length > 0) {
-		var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
+		
+		 queryHistData(itemIds);	
+		 querySupplyData(itemIds);
+	
+	}
+
+}
+
+function queryHistData(itemIds){
+	var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
 
 		$.getJSON(prices).done(function (data) {
 
@@ -306,7 +344,23 @@ function updateItemPrices(itemIds) {
 
 			});
 		});
-	}
+		
+}
+function querySupplyData(itemIds){
+	var listings = "https://api.guildwars2.com/v2/commerce/listings?ids=" + itemIds.join();
+
+		$.getJSON(listings).done(function (data) {
+
+			$.each(data, function (i, item) {
+
+				var sells = item.sells;
+				var buys = item.buys;
+				var itemId = item.id;
+				updateSupplyChart(itemId, buys, sells);
+
+
+			});
+		});
 }
 
 function updatePriceHelper(itemId, price, buySell) {
@@ -368,12 +422,16 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	var histChartDiv = $(document.createElement('div'));
 	histChartDiv.addClass("chart-div col-xs-12");
+	histChartDiv.attr('id', "hist-chart-" + itemId);
+
 	drawHistChart($(histChartDiv)[0], itemId);
 
 	graphContainer.append(histChartDiv);
 
 	var supplyChartDiv = $(document.createElement('div'));
 	supplyChartDiv.addClass("chart-div col-xs-12");
+	supplyChartDiv.attr('id', "supply-chart-" + itemId);
+
 	drawSupplyChart($(supplyChartDiv)[0], itemId);
 
 	graphContainer.append(supplyChartDiv);
@@ -493,6 +551,7 @@ function removeItem(itemId) {
 	var index = listWatchItemId.indexOf(itemId);
 	listWatchItemId.splice(index, 1);	
 	delete listHistCharts[itemId];
+	delete listSupplyCharts[itemId];
 	
 	delete itemIdOptions[itemId];	
 	
