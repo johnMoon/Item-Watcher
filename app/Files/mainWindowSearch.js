@@ -171,10 +171,9 @@ var chartSupplyOptions = {
        
            4: {
                 type: "line",
-                targetAxisIndex: 1,
-               lineWidth:0,
+                targetAxisIndex:1,
+               lineWidth:1,
                intervals:{barWidth:'1'}
-
             },
 			
         },
@@ -413,7 +412,20 @@ function createWatchItem(itemId, name, rarity, image, level) {
 		function () {
 		removeItem(itemId);
 	});
-
+	
+	var optionButton = $(document.createElement('button'));
+		optionButton.addClass("glyphicon glyphicon-triangle-bottom btnModified btnModified-primary btnModifed-lg outline no-border");
+	optionButton.click(
+		function () {
+			$('#form-'+itemId).collapse('toggle');
+			optionButton.toggleClass('glyphicon-triangle-bottom glyphicon-triangle-top');
+			optionButton.blur();
+	});
+	
+	//graph checkbox option
+	var optionContainer = createGraphCheckbox(itemId);
+	
+	
 	var priceContainer = $(document.createElement('div'));
 	priceContainer.addClass('container-fluid');
 	
@@ -448,11 +460,42 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	priceContainer.append(priceDiv,graphContainer);
 
-	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
+	var result = cellDiv.append(iconImg, itemName,optionButton,removeButton,optionContainer,priceContainer);	
 
 
 	$(result).appendTo("#watchlist-container");
 
+}
+
+function createGraphCheckbox(itemId){
+	var form = $(document.createElement('form'));
+	form.addClass('form-horizontal collapse');
+	form.prop('id','form-'+itemId);
+
+	var formGroup = $(document.createElement('div'));
+	formGroup.addClass('form-group no-margin');
+	formGroup.append(createCheckBox(itemId,0,12,"Historical Graph", itemIdOptions[itemId]["historical"]));
+	formGroup.append(createCheckBox(itemId,0,12,"Stock Graph", itemIdOptions[itemId]["stock"]));
+	formGroup.append(createCheckBox(itemId,1,11,"Rescale Bars", itemIdOptions[itemId]["rescale"]));
+	form.append(formGroup);
+	return form;
+}
+
+function createCheckBox(itemId,offset, size, text, isChecked){
+	
+	var colDiv =$(document.createElement('div'));
+	colDiv.addClass('col-xs-offset-'+offset+' col-xs-'+ size);
+	
+	var checkboxDiv = $(document.createElement('div'));
+	checkboxDiv.addClass('checkbox no-padding');
+	colDiv.append(checkboxDiv);
+	var label = $(document.createElement('label'));
+	var input = $(document.createElement('input'));
+	input.attr('type', 'checkbox');
+	input.prop('checked', isChecked);
+	label.append(input, text);
+    checkboxDiv.append(label);   
+	return colDiv;
 }
 
 function createPriceElement(itemId, buySell){
@@ -607,7 +650,7 @@ function reloadItemListState() {
 			var item = listWatchItemId[i];
 			if (!itemIdOptions[item]){
 				//TODO - default
-				itemIdOptions[item] = { historical:true,  stock:true};
+				itemIdOptions[item] = { historical:true,  stock:true, rescale:false};
 			}
 		}
 		
@@ -629,7 +672,7 @@ function onStorageEvent(storageEvent) {
 		var newId = obj.id;
 		if (newId && $.inArray(newId, listWatchItemId) == -1) {
 			listWatchItemId.push(newId);
-			itemIdOptions[newId] = { historical:true,  stock:true}; // TODO
+			itemIdOptions[newId] = { historical:true,  stock:true, rescale:false}; // TODO
 			
 			saveItemListState();
 
