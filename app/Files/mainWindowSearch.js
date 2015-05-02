@@ -111,12 +111,10 @@ function drawSupplyChart(chartDiv, itemId){
     data.addColumn('string', 'Bucket');
     data.addColumn('number', 'Price');
     data.addColumn({type: 'string', role: 'tooltip'});
+    data.addColumn({type: 'string', role: 'style'});
     data.addColumn('number', 'Orders');
     data.addColumn({type: 'string', role: 'tooltip'});  
-    data.addColumn('number', 'Price');
-    data.addColumn({type: 'string', role: 'tooltip'});
-    data.addColumn('number', 'Orders');
-    data.addColumn({type: 'string', role: 'tooltip'});  	
+
     data.addColumn('number', 'Gap');
     data.addColumn({type: 'number', role: 'interval'});
     data.addColumn({type: 'number', role: 'interval'});
@@ -142,44 +140,44 @@ var chartSupplyOptions = {
         // adding vAxis and hAxis like the other chart causes inverted chart area?
 		
         chartArea: {
-            left: 2,
+            left:2,
             top: 2,
             width: 294,
             height: 46,
 
         },
+		
+		
+		
         seriesType: "steppedArea", // or bar charts ?
         series: {
             0: {
                 type: "line",
                 targetAxisIndex: 1,
                 pointSize: 5,
-				 color: '#3366cc' //blue
             },
 			     1:{
                color:'#F0A000' // orange
             },
-			  2: {
-                type: "line",
-                targetAxisIndex: 1,
-                pointSize: 5,
-				 color: '#dc3912' // red 
-            },
-            3:{
-               color:'#F0A000' // orange
-            },
-       
-           4: {
-                type: "line",
+			  2: {// flip
+				    type: "line",
                 targetAxisIndex:1,
-               lineWidth:1,
+               lineWidth:0,
                intervals:{barWidth:'1'}
+				  
+				  
+            
             },
-			
+         
+       
+       
         },
+		
+	
         bar: {
-            groupWidth: '100%' // removes spacing
+            groupWidth: '80%' // removes spacing
         }
+		
     };
 
 	
@@ -189,9 +187,7 @@ function getPriceTooltipString(price, order, isBuy){
 	return priceLabel+price +"\nOrders: " +order;
 }
 
-function getFlipTooltipString(profit){
-	return 'Flip Profit: '+profit;
-}
+
 	
 // note that these offers are array of offer objs!	
 function updateSupplyChart(itemId, buyOffers, sellOffers){
@@ -226,7 +222,7 @@ function loadFlipRow(dataArray, buy, sell){
 	var tooltip = "Listing: " +flipProfit["listing"]+
 	"\nExchange: "+flipProfit["exchange"]+"\nProfit: "
 	+flipProfit["profit"];
-	var row = ['flip', null, null, null, null,null, null, null, null, (buy+sell)/2, buy,sell, tooltip];
+	var row = ['flip', null,null, null, null, null, (buy+sell)/2, buy,sell, tooltip];
 	dataArray.addRow(row);
 }
 
@@ -240,9 +236,9 @@ function loadOfferRows(dataArray, offers, isBuy){
 		var stocks = offers[i]["quantity"];
 		var tooltip = getPriceTooltipString(price, stocks, isBuy);
 		if (isBuy){
-			rowsToAdd[num]=( [label+i, price, tooltip,  stocks, tooltip, null,null,null,null,null,null,null,null]);
+			rowsToAdd[num]=( [label+i, price, tooltip, 'color: #3366cc',  stocks, tooltip,null,null,null,null]);
 		} else {
-			rowsToAdd[num]=( [label+i, null,null,null,null, price, tooltip,  stocks, tooltip, null,null,null,null]);	
+			rowsToAdd[num]=( [label+i,  price, tooltip, 'color: #dc3912',  stocks, tooltip, null,null,null,null]);	
 		}
 		
 
@@ -262,10 +258,10 @@ function calculateFlipProfit( buyOffer,sellOffer){
 function changeFlipColor(flipProfit){
 	if (flipProfit>0){
 		// green
-		chartSupplyOptions["series"][4]["color"] = '#109618';
+		chartSupplyOptions["series"][2]["color"] = '#109618';
 
 	} else {
-		chartSupplyOptions["series"][4]["color"] = '#dc3912';
+		chartSupplyOptions["series"][2]["color"] = '#dc3912';
 
 	}
 }
