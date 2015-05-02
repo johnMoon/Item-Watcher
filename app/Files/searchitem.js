@@ -27,7 +27,7 @@ $.getJSON(validTpIdsQuery).done(function(data) {
 	 resizeListener();
   
   });
- 
+
 });
 
 
@@ -59,6 +59,10 @@ function searchKeyPress(e) {
 
 
 // call this function only when using the search box, not for pagination
+
+//TODO: search need to check whether checkboxPanel is visible.
+//TODO: If visible, find out what checkbox are checked, and do search according to it.
+//TODO: if not visible, disable checkbox.
 function search() {
 	
     var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
@@ -180,6 +184,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 
         $.each(data.results, function(i, item) {
             if (listValidIds[item.data_id]) {
+				//put rarity options here.
                 rawItems.push(item.data_id);
                 rawObjs.push({
                     id: item.data_id,
@@ -518,12 +523,16 @@ function resizeListener() {
     var searchHeader = $("#search-header");
     var resultContainer = $("#result-container");
     var footerContainer = $("#search-footer");
+	var checkboxContainer = $("#checkboxPanel");
+	var detailButton = $("#deatailSearchButton");
     var margin = 40;
-    resultContainer.height(content.height() - searchHeader.height() - footerContainer.height() - margin);
+	
+	
+    resultContainer.height(content.height() - searchHeader.height() - footerContainer.height()  - margin);
 
 }
 
-
+$("#search-header").on("change",resizeListener());
 
 
 // resize on load!
