@@ -4,6 +4,12 @@ var listHistCharts = [];
 var listSupplyCharts = [];
 var newFrequency;
 
+
+var orangeHex ='#F0A000';
+var redHex ='#dc3912';
+var blueHex =  '#3366cc';
+var greenHex= '#109618';
+
 function openSubWindow() {
 	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
 		if (result.status == "success") {
@@ -111,8 +117,10 @@ function drawSupplyChart(chartDiv, itemId){
     data.addColumn('string', 'Bucket');
     data.addColumn('number', 'Price');
     data.addColumn({type: 'string', role: 'tooltip'});
+    data.addColumn({type: 'string', role: 'style'});
     data.addColumn('number', 'Orders');
-    data.addColumn({type: 'string', role: 'tooltip'});   
+    data.addColumn({type: 'string', role: 'tooltip'});  
+
     data.addColumn('number', 'Gap');
     data.addColumn({type: 'number', role: 'interval'});
     data.addColumn({type: 'number', role: 'interval'});
@@ -138,48 +146,57 @@ var chartSupplyOptions = {
         // adding vAxis and hAxis like the other chart causes inverted chart area?
 		
         chartArea: {
-            left: 2,
+            left:2,
             top: 2,
             width: 294,
             height: 46,
 
         },
+		
+		
+		
         seriesType: "steppedArea", // or bar charts ?
         series: {
             0: {
                 type: "line",
                 targetAxisIndex: 1,
-                pointSize: 5
+                pointSize: 5,
             },
-            1:{
-               // color:'#E7711B' // orange
+			     1:{
+               color:orangeHex // orange
             },
-       
-           2: {
-                type: "line",
-                targetAxisIndex: 1,
+			  2: {// flip
+				    type: "line",
+                targetAxisIndex:1,
                lineWidth:0,
-               intervals:{barWidth:'1'}
-
-            }
+               intervals:{barWidth:'1',lineWidth:2}
+				  
+				  
+            
+            },
+         
+       
+       
         },
+		
+	
         bar: {
-            groupWidth: '100%' // removes spacing
+            groupWidth: '80%' // removes spacing
         }
+		
     };
 
 	
-function getPriceTooltipString(price, order){
+function getPriceTooltipString(price, order, isBuy){
 	// TODO condense stock (100m+)
-	return 'Price: '+price +"\nOrders: " +order;
+	var priceLabel = ((isBuy) ? "Buy: " : "Sell: ");
+	return priceLabel+price +"\nOrders: " +order;
 }
 
-function getFlipTooltipString(profit){
-	return 'Flip Profit: '+profit;
-}
+
 	
-	
-function updateSupplyChart(itemId, dataObj){
+// note that these offers are array of offer objs!	
+function updateSupplyChart(itemId, buyOffers, sellOffers){
 	    var chartObj = listSupplyCharts[itemId];
 	var chart = chartObj["chart"];
 	var data = chartObj["data"];
@@ -187,57 +204,80 @@ function updateSupplyChart(itemId, dataObj){
 		
 	// 	delete old data
 	data.removeRows(0, data.getNumberOfRows());
-	
-	// These are array
-	// Atleast 5, sorted by best prices
-	// best for sell is lowest to highest
-	// best for buy is highest to lowest (ie people are buying it for ...)
-	var sellOffers = dataObj["sell"];
-	var buyOffers = dataObj["buy"];
+	var isRescaled = itemIdOptions[itemId]['rescale'];
 		
-	loadOfferRows(data, buyOffers, true);
-	//TODO load flip into data	
+	loadOfferRows(data, buyOffers, true, isRescaled);
 	
 	if (sellOffers.length >0 && buyOffers.length >0) {
 				// change color base on flip price
 
-		var flipProfit = calculateFlipProfit();
-		changeFlipColor(flipProfit);
-
-	// TODO add flip 
+	
+		
+		loadFlipRow(data, buyOffers[0]["unit_price"], sellOffers[0]["unit_price"]);
 	}	
 
-	loadOfferRows(data, sellOffers, false);
+	loadOfferRows(data, sellOffers, false,isRescaled);
 	
 	chart.draw(data, chartSupplyOptions);
 
 }	
 
-function loadOfferRows(dataArray, offers, isBuy){
-	var rowsToAdd=[];
-	var label =  ((isBuy) ? "b" : "s");
-	for (var i=0; i< offers.length; i++) {
-		var num = ((isBuy) ? offers.length-i -1: i);
-		var price = offers[i]["price"];
-		var stocks = offers[i]["stock"];
-		var tooltip = getPriceTooltipString(price, stocks);
-		rowsToAdd[num]=( [label+i, price, tooltip, stocks, tooltip, null,null,null,null])
-		
-	}	
-	dataArray.addRows(rowsToAdd)
+function loadFlipRow(dataArray, buy, sell){
+	var flipProfit = calculateFlipProfit(buy, sell);
+	changeFlipColor(flipProfit["profit"]);
+	var tooltip = "Listing: " +flipProfit["listing"]+
+	"\nExchange: "+flipProfit["exchange"]+"\nProfit: "
+	+flipProfit["profit"];
+	var row = ['flip', null,null, null, null, null, (buy+sell)/2, buy,sell, tooltip];
+	dataArray.addRow(row);
 }
 
-function calculateFlipProfit(sellBuy, buyOffer){
-	// TODO
-	return 0;
+function loadOfferRows(dataArray, offers, isBuy, isRescaled){
+	var rowsToAdd=[];
+	var maxIndex = Math.min(5,offers.length);
+	var label =  ((isBuy) ? "b" : "s");
+	
+	
+	
+	for (var i=0; i< maxIndex; i++) {
+		var num = ((isBuy) ? maxIndex-i -1: i);
+		var price = offers[i]["unit_price"];
+		var stocks = offers[i]["quantity"];
+		
+		// tooltip has to be generated before possible log
+		var tooltip = getPriceTooltipString(price, stocks, isBuy);
+
+		if (isRescaled){
+			stocks = Math.log(stocks+1);
+		}
+		
+		if (isBuy){
+			rowsToAdd[num]=( [label+i, price, tooltip, 'color:' + blueHex,  stocks, tooltip,null,null,null,null]);
+		} else {
+			rowsToAdd[num]=( [label+i,  price, tooltip, 'color: '+redHex,  stocks, tooltip, null,null,null,null]);	
+		}
+		
+
+		
+	}	
+	dataArray.addRows(rowsToAdd);
+}
+
+function calculateFlipProfit( buyOffer,sellOffer){
+	var difference = sellOffer- buyOffer;
+	var listing = Math.max(Math.round(sellOffer *0.05), 1);
+	var exchange = Math.max(Math.round(sellOffer *0.1), 1);
+	var profit = difference - listing - exchange;
+	return {listing: listing, exchange:exchange, profit: profit};
 }
 
 function changeFlipColor(flipProfit){
 	if (flipProfit>0){
-		chartSupplyOptions["series"][2]["color"] = 'green';
+		// green
+		chartSupplyOptions["series"][2]["color"] = greenHex;
 
 	} else {
-		chartSupplyOptions["series"][2]["color"] = 'red';
+		chartSupplyOptions["series"][2]["color"] = redHex;
 
 	}
 }
@@ -274,22 +314,42 @@ function parseObjsAndUpdate(itemObj) {
 	});
 
 	// should only update the items added in
-	updateItemPrices(itemIds);
+	updateItemPrices(itemIds, true,true);
 }
 
 // Update data assumes that there is at least one item already
 // item id are stored in array and are valid tp
 // only update prices
-function updateItemPrices(itemIds) {
+function updateItemPrices(itemIds, refreshHist, refreshSupply) {
 
 	if (typeof itemIds === 'undefined') {
 		itemIds = listWatchItemId; 
 	}
 
+	if (typeof refreshHist === 'undefined') {
+		refreshHist = true; 
+	}
+	if (typeof refreshSupply === 'undefined') {
+		refreshSupply = true; 
+	}
 	// note use the ids param
 	//defensive
 	if (itemIds.length > 0) {
-		var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
+		
+		if (refreshHist){
+			queryHistData(itemIds);	
+		}
+		if (refreshSupply){
+			querySupplyData(itemIds);	
+		}
+	
+	
+	}
+
+}
+
+function queryHistData(itemIds){
+	var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
 
 		$.getJSON(prices).done(function (data) {
 
@@ -306,7 +366,23 @@ function updateItemPrices(itemIds) {
 
 			});
 		});
-	}
+		
+}
+function querySupplyData(itemIds){
+	var listings = "https://api.guildwars2.com/v2/commerce/listings?ids=" + itemIds.join();
+
+		$.getJSON(listings).done(function (data) {
+
+			$.each(data, function (i, item) {
+
+				var sells = item.sells;
+				var buys = item.buys;
+				var itemId = item.id;
+				updateSupplyChart(itemId, buys, sells);
+
+
+			});
+		});
 }
 
 function updatePriceHelper(itemId, price, buySell) {
@@ -359,7 +435,50 @@ function createWatchItem(itemId, name, rarity, image, level) {
 		function () {
 		removeItem(itemId);
 	});
+	
+	var optionButton = $(document.createElement('button'));
+		optionButton.addClass("glyphicon glyphicon-triangle-bottom btnModified btnModified-primary btnModifed-lg outline no-border");
 
+	
+	
+	
+	//graph checkbox option
+	var optionContainer = createGraphCheckbox(itemId);
+	
+	
+	function optionToggle(button, container) {
+		container.collapse('toggle');
+
+	};
+	
+	optionButton.click(
+	function(){
+		optionToggle(optionButton, optionContainer);
+    });
+	
+	// might be costly, if too much switch from collase to display none
+	optionContainer.on('show.bs.collapse', function(){
+		optionButton.off('click');
+    });
+	optionContainer.on('shown.bs.collapse', function(e){
+		optionButton.on('click', function(){
+			optionToggle(optionButton, optionContainer);
+		});	
+		optionButton.toggleClass('glyphicon-triangle-bottom glyphicon-triangle-top');
+		optionButton.blur();
+	});
+	optionContainer.on('hide.bs.collapse', function(){
+		optionButton.off('click');
+    });
+    optionContainer.on('hidden.bs.collapse', function(){
+		optionButton.on('click', function(){
+			optionToggle(optionButton, optionContainer);
+		});
+		optionButton.toggleClass('glyphicon-triangle-bottom glyphicon-triangle-top');
+		optionButton.blur();
+    });
+	
+	
 	var priceContainer = $(document.createElement('div'));
 	priceContainer.addClass('container-fluid');
 	
@@ -368,12 +487,22 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	var histChartDiv = $(document.createElement('div'));
 	histChartDiv.addClass("chart-div col-xs-12");
+	histChartDiv.attr('id', "hist-chart-" + itemId);
+	if (!itemIdOptions[itemId]["historical"]) {
+		histChartDiv.hide();
+	}
+	
 	drawHistChart($(histChartDiv)[0], itemId);
 
 	graphContainer.append(histChartDiv);
 
 	var supplyChartDiv = $(document.createElement('div'));
 	supplyChartDiv.addClass("chart-div col-xs-12");
+	supplyChartDiv.attr('id', "supply-chart-" + itemId);
+	if (!itemIdOptions[itemId]["stock"]) {
+		supplyChartDiv.hide();
+	}
+	
 	drawSupplyChart($(supplyChartDiv)[0], itemId);
 
 	graphContainer.append(supplyChartDiv);
@@ -384,17 +513,82 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 	var buyElem =createPriceElement(itemId, "buy");
 	var sellElem = createPriceElement(itemId, "sell");
-	priceDiv.append(sellElem, buyElem);
+	priceDiv.append(buyElem, sellElem);
 	
 
 
 	priceContainer.append(priceDiv,graphContainer);
 
-	var result = cellDiv.append(iconImg, itemName,removeButton,priceContainer);	
+	var result = cellDiv.append(iconImg, itemName,optionButton,removeButton,optionContainer,priceContainer);	
 
 
 	$(result).appendTo("#watchlist-container");
 
+}
+
+function createGraphCheckbox(itemId){
+	var form = $(document.createElement('form'));
+	form.addClass('form-horizontal collapse');
+	form.prop('id','form-'+itemId);
+
+	var formGroup = $(document.createElement('div'));
+	formGroup.addClass('form-group no-margin');
+	formGroup.append(createCheckBox(itemId,0,12,"Historical Graph", "historical"));
+	formGroup.append(createCheckBox(itemId,0,12,"Stock Graph", "stock"));
+	formGroup.append(createCheckBox(itemId,1,11,"Rescale Bars", "rescale"));
+	form.append(formGroup);
+	return form;
+}
+
+function createCheckBox(itemId,offset, size, text, optionId){
+	var isChecked = itemIdOptions[itemId][optionId];
+	var colDiv =$(document.createElement('div'));
+	colDiv.addClass('col-xs-offset-'+offset+' col-xs-'+ size);
+	
+	var checkboxDiv = $(document.createElement('div'));
+	checkboxDiv.addClass('checkbox no-padding');
+	colDiv.append(checkboxDiv);
+	var label = $(document.createElement('label'));
+	var input = $(document.createElement('input'));
+	
+	
+	input.attr('type', 'checkbox');
+	input.prop('checked', isChecked);
+	
+	input.change(function () {
+		
+		// apply changes
+		
+		// save changes to local storage
+	
+		var checkEvent =input.is(':checked');
+		itemIdOptions[itemId][optionId]= checkEvent;
+		saveItemOptions();
+		if (optionId ==="historical"){
+
+			if (checkEvent){
+				$('#hist-chart-'+itemId).show();
+			} else {
+				$('#hist-chart-'+itemId).hide();
+			}
+			
+			
+		} else if (optionId ==="stock"){
+			if (checkEvent){
+				$('#supply-chart-'+itemId).show();
+			} else {
+				$('#supply-chart-'+itemId).hide();
+			}
+		} else if (optionId ==="rescale"){
+			// redraw particular graph
+			updateItemPrices([itemId] ,false,true);
+		}
+		
+	});
+	
+	label.append(input, text);
+    checkboxDiv.append(label);   
+	return colDiv;
 }
 
 function createPriceElement(itemId, buySell){
@@ -475,7 +669,7 @@ function changeFrequency() {
 			function () {
 
 			if (listWatchItemId.length > 0) {
-				updateItemPrices(listWatchItemId);
+				updateItemPrices(listWatchItemId, true,true);
 			}
 
 		}, newFrequency);
@@ -493,10 +687,11 @@ function removeItem(itemId) {
 	var index = listWatchItemId.indexOf(itemId);
 	listWatchItemId.splice(index, 1);	
 	delete listHistCharts[itemId];
+	delete listSupplyCharts[itemId];
 	
 	delete itemIdOptions[itemId];	
 	
-	saveItemListState();
+	saveItems();
 	$(".mainWindow-item-cell").remove("#window-item-cell-" + itemId);
 	if (listWatchItemId.length==0) {
 	
@@ -505,12 +700,22 @@ function removeItem(itemId) {
 }
 
 // persistences
-function saveItemListState() {
+function saveItems() {
 
-	window.localStorage.setItem("item-list-state", JSON.stringify(listWatchItemId));
-	// prevent saving lots of nulls;
-	var optionHolder = [];
+	saveItemList();
+	saveItemOptions();
 	
+
+}
+
+function saveItemList(){
+	window.localStorage.setItem("item-list-state", JSON.stringify(listWatchItemId));
+}
+
+function saveItemOptions(){
+	var optionHolder = [];
+		// prevent saving lots of nulls;
+
 	for (var i=0; i< listWatchItemId.length; i++) {
 		var item = listWatchItemId[i];
 		optionHolder.push({id:item, options:itemIdOptions[item]});
@@ -518,7 +723,6 @@ function saveItemListState() {
 	}
 	
 	window.localStorage.setItem("item-options-state", JSON.stringify(optionHolder));
-
 }
 
 function reloadItemListState() {
@@ -547,8 +751,7 @@ function reloadItemListState() {
 		for (var i=0; i< listWatchItemId.length; i++) {
 			var item = listWatchItemId[i];
 			if (!itemIdOptions[item]){
-				//TODO - default
-				itemIdOptions[item] = { historical:true,  stock:true};
+				itemIdOptions[item] =defaultItemOptions();
 			}
 		}
 		
@@ -562,6 +765,11 @@ function reloadItemListState() {
 	
 }
 
+function defaultItemOptions(){
+	
+	return { historical:true,  stock:false, rescale:false};
+}
+
 function onStorageEvent(storageEvent) {
 
 	if (storageEvent.key.indexOf("add-item-") != -1) {
@@ -570,9 +778,9 @@ function onStorageEvent(storageEvent) {
 		var newId = obj.id;
 		if (newId && $.inArray(newId, listWatchItemId) == -1) {
 			listWatchItemId.push(newId);
-			itemIdOptions[newId] = { historical:true,  stock:true}; // TODO
+			itemIdOptions[newId] = defaultItemOptions(); 
 			
-			saveItemListState();
+			saveItems();
 
 			parseObjsAndUpdate([obj])
 
