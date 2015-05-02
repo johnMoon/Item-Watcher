@@ -117,6 +117,7 @@ color: #808080;
     display: inline-block;
     border-radius: 4px;
     box-shadow: 0 0 6px #ccc;
+	vertical-align:top;
 }
 .buy-sell {
     /*
