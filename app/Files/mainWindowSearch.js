@@ -556,7 +556,6 @@ function createCheckBox(itemId,offset, size, text, optionId){
 	input.prop('checked', isChecked);
 	
 	input.change(function () {
-		console.log("checkbox changed");
 		
 		// apply changes
 		
