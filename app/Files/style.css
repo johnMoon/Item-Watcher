@@ -130,8 +130,7 @@ color: #808080;
 
 .graph-buysell {
     width: 300px;
-    margin: 1px;
-    display: inline-block;
+    margin: 1px 0px ;
 }
 .buy-sell-prices {
 	
