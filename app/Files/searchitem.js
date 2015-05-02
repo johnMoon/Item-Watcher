@@ -1,4 +1,4 @@
-// CONSTANTS
+
 var gw2ItemUrl = "https://api.guildwars2.com/v2/items?ids=";
 var gw2TpUrl = "https://api.guildwars2.com/v2/commerce/prices?ids=";
 var callbackParam = "callback=?";
@@ -21,19 +21,43 @@ $.getJSON(validTpIdsQuery).done(function(data) {
 	// TODO figure out what to do for this case
 	isReady = true;
 	
-	 $("#deatailSearchButton").click(function(){
+	 $("#detailSearchButton").click(function(){
 	
-	 $("#checkboxPanel").fadeToggle();
+	// calls resizeListener when toggle is finished;
+	 $("#checkboxPanel").fadeToggle(400,"swing",function(){
+		if($("#search-header").height() == 34){
+
+		resizeListener();
+			}
+	 
+	 });
 	 resizeListener();
   
   });
+  
+  
+//ask David
+if(document.getElementById("checkboxAll").checked == true) {
+		$('input:checkbox').each(function(){
+			this.checked = true;
+		});
+		
+	$('#checkboxAll').removeAttr('checked');
+	
+	
+	};
+
+
+	
+
+
 
 });
 
 
-//
 
 
+  
 
 // for each page(index), contain the known mapping of items
 var pageArray = [];
@@ -185,6 +209,50 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
         $.each(data.results, function(i, item) {
             if (listValidIds[item.data_id]) {
 				//put rarity options here.
+			
+			
+			
+			
+			if($("#checkboxPanel").is(':visible') == true){			
+				var itemRarity = getColorClass(item.rarity);
+				console.debug(itemRarity);
+			if($('#rarityFilter input:checkbox:checked').length > 0){	
+				$('#rarityFilter input:checkbox:checked').each(function(){
+				//	console.debug( "this rarity val =" + $(this).val());
+						if(itemRarity == $(this).val()){
+						
+							rawItems.push(item.data_id);
+							rawObjs.push({
+								id: item.data_id,
+								icon: item.img,
+								name: item.name,
+								rarity: item.rarity,
+								level: item.restriction_level
+											});
+				
+						
+													}		
+					
+											
+				
+				});
+					
+					
+					
+					
+				
+				
+				
+				
+			
+			
+				
+			
+			}}else{
+				
+				
+				
+				
                 rawItems.push(item.data_id);
                 rawObjs.push({
                     id: item.data_id,
@@ -196,7 +264,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 
 
 
-            }
+            }}
 
         });
 
@@ -524,15 +592,18 @@ function resizeListener() {
     var resultContainer = $("#result-container");
     var footerContainer = $("#search-footer");
 	var checkboxContainer = $("#checkboxPanel");
-	var detailButton = $("#deatailSearchButton");
+	var detailButton = $("#detailSearchButton");
     var margin = 40;
 	
 	
     resultContainer.height(content.height() - searchHeader.height() - footerContainer.height()  - margin);
+	
+	
+	
 
 }
 
-$("#search-header").on("change",resizeListener());
+
 
 
 // resize on load!
