@@ -752,8 +752,7 @@ function reloadItemListState() {
 		for (var i=0; i< listWatchItemId.length; i++) {
 			var item = listWatchItemId[i];
 			if (!itemIdOptions[item]){
-				//TODO - default
-				itemIdOptions[item] = { historical:true,  stock:true, rescale:false};
+				itemIdOptions[item] =defaultItemOptions();
 			}
 		}
 		
@@ -767,6 +766,11 @@ function reloadItemListState() {
 	
 }
 
+function defaultItemOptions(){
+	
+	return { historical:true,  stock:false, rescale:false};
+}
+
 function onStorageEvent(storageEvent) {
 
 	if (storageEvent.key.indexOf("add-item-") != -1) {
@@ -775,7 +779,7 @@ function onStorageEvent(storageEvent) {
 		var newId = obj.id;
 		if (newId && $.inArray(newId, listWatchItemId) == -1) {
 			listWatchItemId.push(newId);
-			itemIdOptions[newId] = { historical:true,  stock:true, rescale:false}; // TODO
+			itemIdOptions[newId] = defaultItemOptions(); 
 			
 			saveItems();
 
