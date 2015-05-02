@@ -326,6 +326,12 @@ function updateItemPrices(itemIds, refreshHist, refreshSupply) {
 		itemIds = listWatchItemId; 
 	}
 
+	if (typeof refreshHist === 'undefined') {
+		refreshHist = true; 
+	}
+	if (typeof refreshSupply === 'undefined') {
+		refreshSupply = true; 
+	}
 	// note use the ids param
 	//defensive
 	if (itemIds.length > 0) {
