@@ -12,20 +12,21 @@ var listValidIds = [];
 var isReady = false;
 
 $.getJSON(validTpIdsQuery).done(function(data) {
+	
 
-
+	
     $.each(data, function(i, item) {
         listValidIds[item] = true;
     });
 
-	// TODO figure out what to do for this case
 	isReady = true;
+	removeSpinner();
 	
 	 $("#deatailSearchButton").click(function(){
 	
 	 $("#checkboxPanel").fadeToggle();
 	 resizeListener();
-  
+	
   });
  
 });
@@ -60,7 +61,10 @@ function searchKeyPress(e) {
 
 // call this function only when using the search box, not for pagination
 function search() {
-	
+	if (!isReady) {
+		// im not ready yet
+		return;
+	}
     var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
     requestedPage = 1;
     searchTerm = encodeURIComponent(searchTerm);
@@ -536,7 +540,12 @@ $(function() {
         $("#notificationAlert").hide();
         resizeListener();
     });
-
+	// check if loading all tp items are done
+	// if not then spin and lock search
+	if (!isReady) {
+		addSpinner();
+		
+	}
 
 });
 
