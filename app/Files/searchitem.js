@@ -21,6 +21,19 @@ $.getJSON(validTpIdsQuery).done(function(data) {
 	// TODO figure out what to do for this case
 	isReady = true;
 	
+
+  
+  
+
+
+	
+
+
+
+});
+
+$(document).ready(function(){
+	
 	 $("#detailSearchButton").click(function(){
 	
 	// calls resizeListener when toggle is finished;
@@ -34,25 +47,30 @@ $.getJSON(validTpIdsQuery).done(function(data) {
 	 resizeListener();
   
   });
-  
-  
-//ask David
-if(document.getElementById("checkboxAll").checked == true) {
+  	
+	
+$('#checkboxAll').click(function(event){
+	if(this.checked){
 		$('input:checkbox').each(function(){
-			this.checked = true;
+			$(this).prop('checked',true);
 		});
 		
-	$('#checkboxAll').removeAttr('checked');
+	}else{
+	$('input:checkbox').each(function(){
+			$(this).prop('checked',false);
 	
-	
-	};
-
-
-	
-
+	})}
 
 
 });
+
+
+
+	
+	
+	
+});
+
 
 
 
@@ -210,7 +228,9 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
             if (listValidIds[item.data_id]) {
 				//put rarity options here.
 			
-			
+			//TODO: save filter right after search
+			//check if the filters have changed
+			//if they have. research
 			
 			
 			if($("#checkboxPanel").is(':visible') == true){			
@@ -248,7 +268,21 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			
 				
 			
-			}}else{
+			}else{
+				
+							rawItems.push(item.data_id);
+							rawObjs.push({
+								id: item.data_id,
+								icon: item.img,
+								name: item.name,
+								rarity: item.rarity,
+								level: item.restriction_level
+											});
+			}
+			
+			
+			
+			}else{
 				
 				
 				
