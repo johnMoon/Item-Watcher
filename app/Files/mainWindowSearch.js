@@ -652,14 +652,15 @@ function createPriceElement(itemId, buySell){
 // then turn on timer
 
 $(document).ready(function () {
-	var frequency;
 	var prevFrequency = window.localStorage.getItem("frequency");
 	if (prevFrequency) {
 		// there was item list before
+			var frequency;
+
 		frequency = JSON.parse(prevFrequency);
-		document.getElementById("frequency-changer").value = localStorage['frequency'];
+		document.getElementById("frequency-changer").value = frequency;
 	} else {
-		frequency = document.getElementById("frequency-changer").value;
+		document.getElementById("frequency-changer").value =10000;
 	}
 	changeFrequency();
 
