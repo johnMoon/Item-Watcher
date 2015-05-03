@@ -18,7 +18,21 @@ function openSubWindow() {
 			});
 		}
 	});
+	$("#open-subwindow").blur();
 };
+
+function openHelpPage() {
+	overwolf.windows.obtainDeclaredWindow("HelpWindow", function (result) {
+		if (result.status == "success") {
+			overwolf.windows.restore(result.window.id, function (result) {
+
+			});
+		}
+	});
+	$("#help-button").blur();
+};
+
+
 
 //////////// CHARTING
 
@@ -216,7 +230,7 @@ function updateSupplyChart(itemId, buyOffers, sellOffers){
 		loadFlipRow(data, buyOffers[0]["unit_price"], sellOffers[0]["unit_price"]);
 	}	
 
-	loadOfferRows(data, sellOffers, false,isRescaled);
+	loadOfferRows(data,sellOffers,false,isRescaled);
 	
 	chart.draw(data, chartSupplyOptions);
 
@@ -225,8 +239,8 @@ function updateSupplyChart(itemId, buyOffers, sellOffers){
 function loadFlipRow(dataArray, buy, sell){
 	var flipProfit = calculateFlipProfit(buy, sell);
 	changeFlipColor(flipProfit["profit"]);
-	var tooltip = "Listing: " +flipProfit["listing"]+
-	"\nExchange: "+flipProfit["exchange"]+"\nProfit: "
+	var tooltip = "Listing Fee: " +flipProfit["listing"]+
+	"\nExchange Fee: "+flipProfit["exchange"]+"\nProfit: "
 	+flipProfit["profit"];
 	var row = ['flip', null,null, null, null, null, (buy+sell)/2, buy,sell, tooltip];
 	dataArray.addRow(row);
@@ -321,7 +335,7 @@ function parseObjsAndUpdate(itemObj) {
 // item id are stored in array and are valid tp
 // only update prices
 function updateItemPrices(itemIds, refreshHist, refreshSupply) {
-
+	$("#refresh-button").blur();
 	if (typeof itemIds === 'undefined') {
 		itemIds = listWatchItemId; 
 	}
@@ -437,7 +451,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	});
 	
 	var optionButton = $(document.createElement('button'));
-		optionButton.addClass("glyphicon glyphicon-triangle-bottom btnModified btnModified-primary btnModifed-lg outline no-border");
+		optionButton.addClass("glyphicon glyphicon-triangle-bottom btnModified btnModified-primary btnModifed-lg outline no-border ");
 
 	
 	
