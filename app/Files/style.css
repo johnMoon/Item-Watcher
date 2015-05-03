@@ -110,6 +110,7 @@ color: #808080;
 	margin-bottom:10px;
 }
 
+
 .helpContainer {
     overflow-y: auto;
     height: 100%;
@@ -379,3 +380,19 @@ label.frequency-changer {
 .gi-3x{font-size: 3em;}
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
+
+.searchItemName{
+	display: inline-block;
+    width: 234px;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+
+
+}
+
+.noWrap{
+	white-space: nowrap;
+
+}
+

@@ -1,4 +1,4 @@
-// CONSTANTS
+
 var gw2ItemUrl = "https://api.guildwars2.com/v2/items?ids=";
 var gw2TpUrl = "https://api.guildwars2.com/v2/commerce/prices?ids=";
 var callbackParam = "callback=?";
@@ -8,9 +8,18 @@ var spidySearchUrl = "http://www.gw2spidy.com/api/v0.9/json/item-search/";
 var validTpIdsQuery = "https://api.guildwars2.com/v2/commerce/prices";
 
 var listValidIds = [];
+
+var rarityChecked = [];
 //
 var isReady = false;
 
+var isLoading = false;
+
+var isFilterVisible = false;
+
+var ischeckboxChecked = false;
+
+var listCheckbox = [];
 $.getJSON(validTpIdsQuery).done(function(data) {
 	
 
@@ -22,19 +31,53 @@ $.getJSON(validTpIdsQuery).done(function(data) {
 	isReady = true;
 	removeSpinner();
 	
-	 $("#deatailSearchButton").click(function(){
+
+  
+  
+
+
 	
-	 $("#checkboxPanel").fadeToggle();
-	 resizeListener();
-	
-  });
+
+
 
 });
 
+$(document).ready(function(){
+	
+	 $("#detailSearchButton").click(function(){
+	
+	// calls resizeListener when toggle is finished;
+	 $("#checkboxPanel").fadeToggle(400,"swing",function(){
+		
+		if($("#checkboxPanel").is(":visible")){
+		$("#detailSearchButton").html("Disable Filter");
+		}else{
+		$("#detailSearchButton").html("Enable Filter");
+		}
 
-//
+		resizeListener();
+			
+			
+			
+	 
+	 });
+	 resizeListener();
+	
+  });
+  	
 
 
+
+	
+	
+	
+});
+
+
+
+
+
+  
 
 // for each page(index), contain the known mapping of items
 var pageArray = [];
@@ -65,25 +108,29 @@ function searchKeyPress(e) {
 //TODO: If visible, find out what checkbox are checked, and do search according to it.
 //TODO: if not visible, disable checkbox.
 function search() {
+
 	if (!isReady) {
 		// im not ready yet
 		return;
 	}
+
+	
+	
+	
+	if(isLoading){
+return;
+}
+
+ isFilterVisible = $("#checkboxPanel").is(':visible'); 
+ ischeckboxChecked =($('#rarityFilter input:checkbox:checked').length > 0);
+ listCheckbox = $('#rarityFilter input:checkbox:checked');
+ 
+	
     var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
     requestedPage = 1;
     searchTerm = encodeURIComponent(searchTerm);
     // check is this is a new search term is the same as the loaded or loading on
-    if (searchTerm == currentSearchTerm) {
 
-        // check if it is the same page
-        if (currentPage == requestedPage) {
-            // either its being loaded or is loaded already
-
-
-            return;
-        }
-
-    }
 
     currentSearchTerm = searchTerm;
     pageArray = [];
@@ -189,6 +236,67 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
         $.each(data.results, function(i, item) {
             if (listValidIds[item.data_id]) {
 				//put rarity options here.
+			
+			//TODO: save filter right after search
+			//check if the filters have changed
+			//if they have. research
+			
+			
+			if(isFilterVisible ){			
+				var itemRarity = getColorClass(item.rarity);
+				
+			if(ischeckboxChecked){	
+				listCheckbox.each(function(){
+				
+				
+						if(itemRarity == $(this).val()){
+						
+							rawItems.push(item.data_id);
+							rawObjs.push({
+								id: item.data_id,
+								icon: item.img,
+								name: item.name,
+								rarity: item.rarity,
+								level: item.restriction_level
+											});
+				
+						
+													}		
+					
+											
+				
+				});
+					
+					
+					
+					
+				
+				
+				
+				
+			
+			
+				
+			
+			}else{
+				
+							rawItems.push(item.data_id);
+							rawObjs.push({
+								id: item.data_id,
+								icon: item.img,
+								name: item.name,
+								rarity: item.rarity,
+								level: item.restriction_level
+											});
+			}
+			
+			
+			
+			}else{
+				
+				
+				
+				
                 rawItems.push(item.data_id);
                 rawObjs.push({
                     id: item.data_id,
@@ -200,12 +308,12 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 
 
 
-            }
+            }}
 
         });
 
 
-        if (!(searchTerm == currentSearchTerm && pageNumber == requestedPage)) {
+        if ( !(searchTerm == currentSearchTerm && pageNumber == requestedPage)) {
             // the search term or page got switch while this was being loaded
 
 
@@ -339,7 +447,9 @@ update pagination variables and parsed pages
 function nextPage() {
 
 
-
+if(isLoading){
+return;
+}
     // check if it is the same page
     if (currentPage != requestedPage) {
         // this means its currently being loaded
@@ -374,6 +484,10 @@ update pagination variables
 **/
 function prevPage() {
 
+
+if(isLoading){
+return;
+}
     // check if it is the same page
     if (currentPage != requestedPage) {
         // this means its currently being loaded
@@ -429,7 +543,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level) {
     }
 
 
-    span.addClass("item-name");
+    span.addClass("searchItemName");
 
     var button = $(document.createElement('button'));
     button.addClass("right-button  glyphicon glyphicon-plus btnModified btnModified-primary btnModifed-lg outline ");
@@ -452,13 +566,15 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level) {
 
 function addSpinner() {
     $("#cog-spinner").addClass('active');
+		isLoading = true;
 
 
 }
 
+
 function removeSpinner() {
     $("#cog-spinner").removeClass('active');
-
+	isLoading = false;
 
 }
 
@@ -528,15 +644,18 @@ function resizeListener() {
     var resultContainer = $("#result-container");
     var footerContainer = $("#search-footer");
 	var checkboxContainer = $("#checkboxPanel");
-	var detailButton = $("#deatailSearchButton");
+	var detailButton = $("#detailSearchButton");
     var margin = 40;
 	
 	
     resultContainer.height(content.height() - searchHeader.height() - footerContainer.height()  - margin);
+	
+	
+	
 
 }
 
-$("#search-header").on("change",resizeListener());
+
 
 
 // resize on load!
