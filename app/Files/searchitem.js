@@ -8,9 +8,18 @@ var spidySearchUrl = "http://www.gw2spidy.com/api/v0.9/json/item-search/";
 var validTpIdsQuery = "https://api.guildwars2.com/v2/commerce/prices";
 
 var listValidIds = [];
+
+var rarityChecked = [];
 //
 var isReady = false;
 
+var isLoading = false;
+
+var isFilterVisible = false;
+
+var ischeckboxChecked = false;
+
+var listCheckbox = [];
 $.getJSON(validTpIdsQuery).done(function(data) {
 
 
@@ -38,31 +47,23 @@ $(document).ready(function(){
 	
 	// calls resizeListener when toggle is finished;
 	 $("#checkboxPanel").fadeToggle(400,"swing",function(){
-		if($("#search-header").height() == 34){
+		
+		if($("#checkboxPanel").is(":visible")){
+		$("#detailSearchButton").html("Disable Filter");
+		}else{
+		$("#detailSearchButton").html("Enable Filter");
+		}
 
 		resizeListener();
-			}
+			
+			
+			
 	 
 	 });
 	 resizeListener();
   
   });
   	
-	
-$('#checkboxAll').click(function(event){
-	if(this.checked){
-		$('input:checkbox').each(function(){
-			$(this).prop('checked',true);
-		});
-		
-	}else{
-	$('input:checkbox').each(function(){
-			$(this).prop('checked',false);
-	
-	})}
-
-
-});
 
 
 
@@ -107,21 +108,22 @@ function searchKeyPress(e) {
 //TODO: if not visible, disable checkbox.
 function search() {
 	
+	
+	
+	if(isLoading){
+return;
+}
+
+ isFilterVisible = $("#checkboxPanel").is(':visible'); 
+ ischeckboxChecked =($('#rarityFilter input:checkbox:checked').length > 0);
+ listCheckbox = $('#rarityFilter input:checkbox:checked');
+ 
+	
     var searchTerm = document.getElementById('input').value.replace("/", " ").trim();
     requestedPage = 1;
     searchTerm = encodeURIComponent(searchTerm);
     // check is this is a new search term is the same as the loaded or loading on
-    if (searchTerm == currentSearchTerm) {
 
-        // check if it is the same page
-        if (currentPage == requestedPage) {
-            // either its being loaded or is loaded already
-
-
-            return;
-        }
-
-    }
 
     currentSearchTerm = searchTerm;
     pageArray = [];
@@ -233,12 +235,13 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
 			//if they have. research
 			
 			
-			if($("#checkboxPanel").is(':visible') == true){			
+			if(isFilterVisible ){			
 				var itemRarity = getColorClass(item.rarity);
-				console.debug(itemRarity);
-			if($('#rarityFilter input:checkbox:checked').length > 0){	
-				$('#rarityFilter input:checkbox:checked').each(function(){
-				//	console.debug( "this rarity val =" + $(this).val());
+				
+			if(ischeckboxChecked){	
+				listCheckbox.each(function(){
+				
+				
 						if(itemRarity == $(this).val()){
 						
 							rawItems.push(item.data_id);
@@ -303,7 +306,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
         });
 
 
-        if (!(searchTerm == currentSearchTerm && pageNumber == requestedPage)) {
+        if ( !(searchTerm == currentSearchTerm && pageNumber == requestedPage)) {
             // the search term or page got switch while this was being loaded
 
 
@@ -437,7 +440,9 @@ update pagination variables and parsed pages
 function nextPage() {
 
 
-
+if(isLoading){
+return;
+}
     // check if it is the same page
     if (currentPage != requestedPage) {
         // this means its currently being loaded
@@ -472,6 +477,10 @@ update pagination variables
 **/
 function prevPage() {
 
+
+if(isLoading){
+return;
+}
     // check if it is the same page
     if (currentPage != requestedPage) {
         // this means its currently being loaded
@@ -527,7 +536,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level) {
     }
 
 
-    span.addClass("item-name");
+    span.addClass("searchItemName");
 
     var button = $(document.createElement('button'));
     button.addClass("right-button  glyphicon glyphicon-plus btnModified btnModified-primary btnModifed-lg outline ");
@@ -550,13 +559,15 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level) {
 
 function addSpinner() {
     $("#cog-spinner").addClass('active');
+		isLoading = true;
 
 
 }
 
+
 function removeSpinner() {
     $("#cog-spinner").removeClass('active');
-
+	isLoading = false;
 
 }
 
