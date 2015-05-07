@@ -1,9 +1,3 @@
----------------------SHORT---------------------------
-
-GW2 TP Watcher keeps tracks of the item prices for you while you can enjoy playing. Add your favourite items and watch when the prices are just right to buy and sell.
-
----------------------LONG----------------------------
-
 GW2 TP Watcher keeps tracks of the item prices for you while you can enjoy playing. Add your favourite items and watch when the prices are just right to buy and sell. Your items will be saved automatically and will be loaded when you start the app.
 
 Instructions:<br>

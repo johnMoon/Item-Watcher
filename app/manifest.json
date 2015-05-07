@@ -10,6 +10,8 @@
 		"icon_gray":"IconMouseNormal.png",
 		"description":"GW2 TP Watcher keeps tracks of the item prices for you while you can enjoy playing. Add your favourite items and watch when the prices are just right to buy and sell. Prices are taken from the official GW2 API."
 	},
+	"permissions": [],
+	"dependencies":[],
 	"data": {
 		"start_window":"MainWindow",
 		"windows":{
@@ -32,8 +34,8 @@
 					"file":"Files/helpWindow.html",
 					"transparent":false,
 					"resizable":true,
-					"size":{"width":368, "height":368},
-					"min_size":{"width":368, "height":368}
+					"size":{"width":800, "height":600},
+					"min_size":{"width":800, "height":600}
 				}
 		}
 	}
