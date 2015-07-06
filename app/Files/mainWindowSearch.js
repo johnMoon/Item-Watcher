@@ -11,7 +11,7 @@ var blueHex =  '#3366cc';
 var greenHex= '#109618';
 
 function openSubWindow() {
-	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
+	overwolf.windows.obtainDeclaredWindow("WatchWindow", function (result) {
 		if (result.status == "success") {
 			overwolf.windows.restore(result.window.id, function (result) {
 

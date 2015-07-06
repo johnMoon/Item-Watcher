@@ -1,0 +1,242 @@
+﻿@font-face {
+    font-family: 'Menomonia';
+    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.eot');
+    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.eot?#iefix') format('embedded-opentype'),
+         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff') format('woff'),
+         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.ttf') format('truetype'),
+         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.svg#MenomoniaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Menomonia';
+    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.eot');
+    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.eot?#iefix') format('embedded-opentype'),
+         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.woff') format('woff'),
+         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.ttf') format('truetype'),
+         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.svg#MenomoniaRegular') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+html {
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+	background: rgba(26, 33, 32, 0.8);
+	color:white;
+	font-family: 'Menomonia';
+
+}
+
+.resizeGrip {
+
+	position: absolute;
+}
+
+ /* index is needed to not affect the resize bars */
+.menu-header{
+position: absolute;
+	top:0px;
+	left:0px;
+	right: 0px;
+	height:20px;
+	background: rgba(26, 33, 32, 1);
+	border-width:2px;
+	border-bottom-color:#706860;
+	border-bottom-style: solid;
+	z-index:-1;
+}
+
+.move-container {
+	position: absolute;
+	top:5px;
+	left: 5px;
+	right: 5px;
+	height:15px;
+
+}
+
+#content {
+	position: absolute;
+	top:26px;
+	left: 5px;
+	right: 5px;
+	bottom:5px;
+
+}
+
+#resizeGripTop {
+	height: 5px;
+	top: 0;
+	left: 5px;
+	right: 5px;
+	cursor: ns-resize;
+}
+
+#resizeGripBottom {
+	height: 5px;
+	bottom: 0;
+	left: 5px;
+	right: 5px;
+	cursor: ns-resize;
+}
+
+#resizeGripLeft {
+	width: 5px;
+	left: 0;
+	top: 5px;
+	bottom: 5px;
+	cursor: ew-resize;
+}
+
+#resizeGripRight {
+	width: 5px;
+	right: 0;
+	top: 5px;
+	bottom: 5px;
+	cursor: ew-resize;
+}
+
+#resizeGripTopLeft {
+	width: 5px;
+	height: 5px;
+	top: 0;
+	left: 0;
+	cursor: nwse-resize;
+}
+
+#resizeGripBottomLeft {
+	width: 5px;
+	height: 5px;
+	bottom: 0;
+	left: 0;
+	cursor: nesw-resize;
+}
+
+#resizeGripTopRight {
+	width: 5px;
+	height: 5px;
+	top: 0;
+	right: 0;
+	cursor: nesw-resize;
+}
+
+#resizeGripBottomRight {
+	width: 5px;
+	height: 5px;
+	bottom: 0;
+	right: 0;
+	cursor: nwse-resize;
+}
+
+
+.menu-icon {
+	color: #737059;
+	-webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-color: #060607;
+}
+
+.menu-button {
+background-color:transparent;
+border-color: transparent;
+width:20px;
+height:15px;
+border: 0px;
+padding:0px;
+position:fixed;
+z-index: 3;
+}
+
+
+
+.close-button {
+
+top: 5px;
+right:5px;
+}
+
+/*since X icon is smaller than the others*/
+.close-icon {
+position: relative;
+bottom: 1px;
+}
+
+.add-button {
+
+top: 4px;
+right:45px;
+}
+
+.option-button {
+
+top: 4px;
+right:25px;
+}
+
+.menu-button :hover{
+	color: #DFDBAD;
+
+}
+
+.menu-button:focus {
+
+    outline: none ;
+}
+
+
+/* watch list css */
+
+.watch-list {
+	overflow-y: auto;
+}
+
+
+/*  scroll bars*/
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+ 
+ /* background of scroll bar*/
+::-webkit-scrollbar-track {
+    background-image: url("image/scroll_bar_track.png");
+	 background-position:50%;
+}
+ 
+::-webkit-scrollbar-thumb {
+ background-image: url("image/scroll_bar_thumb.png");
+ background-repeat:no-repeat;
+ background-position:50%;
+ background-color: #737059;
+border: 1px solid #060607;
+}
+::-webkit-scrollbar-thumb:hover {
+ 
+ background-color: #DFDBAD;
+}
+
+::-webkit-scrollbar-button       {
+	width:12px;
+	height:12px;
+	background-color:#020302;
+	 background-position:50%;
+
+}
+
+
+
+::-webkit-scrollbar-button:vertical:decrement      {
+	 background-image: url("image/scroll_bar_button_up.png");
+}
+::-webkit-scrollbar-button:vertical:decrement:hover      {
+	 background-image: url("image/scroll_bar_button_up_hover.png");
+}
+::-webkit-scrollbar-button:vertical:increment      {
+	 background-image: url("image/scroll_bar_button_down.png");
+}
+::-webkit-scrollbar-button:vertical:increment:hover      {
+	 background-image: url("image/scroll_bar_button_down_hover.png");
+}

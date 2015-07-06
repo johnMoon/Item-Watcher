@@ -36,6 +36,13 @@
 					"resizable":true,
 					"size":{"width":800, "height":600},
 					"min_size":{"width":800, "height":600}
+				},
+			"WatchWindow":{
+					"file":"Files/watchWindow.html",
+					"transparent":true,
+					"resizable":true,
+					"size":{"width":368, "height":340},
+					"min_size":{"width":368, "height":196}
 				}
 		}
 	}
