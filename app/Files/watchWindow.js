@@ -47,12 +47,11 @@ var maxHistDataPoints = 20;
 var chartHistOptions = {
 
 	backgroundColor : {
-		fill : '#CCCCCC',
-		stroke : '#e4e4e4',
-		strokeWidth : 5,
+		fill : 'transparent',
+
 
 	},
-	'width' : 298,
+	'width' : 300,
 	'height' : 40,
 	hAxis : {
 		textPosition : 'none',
@@ -82,7 +81,7 @@ var chartHistOptions = {
 	chartArea : {
 		left : 2,
 		top : 2,
-		width : 294,
+		width : 296,
 		height : 36,
 
 	}
@@ -142,18 +141,24 @@ function drawSupplyChart(chartDiv, itemId){
 var chartSupplyOptions = {
        
         backgroundColor: {
-            fill: '#CCCCCC',
-            stroke: '#e4e4e4',
-            strokeWidth: 5,
+            fill: 'transparent',
+           
         },
-            'width': 298,
+		
+		vAxis: {
+			gridlines: {
+				color: 'transparent'
+			}
+		},
+		
+            'width': 300,
             'height': 50,
         // adding vAxis and hAxis like the other chart causes inverted chart area?
 		
         chartArea: {
             left:2,
             top: 2,
-            width: 294,
+            width: 296,
             height: 46,
 
         },
@@ -365,8 +370,7 @@ function queryHistData(itemIds){
 				var itemId = item.id;
 
 				
-				// TODO disable
-				//addHistDataPoint(itemId, buys, sells);
+				addHistDataPoint(itemId, buys, sells);
 
 				updatePriceHelper(itemId, buys, "buy");
 				updatePriceHelper(itemId, sells, "sell");
@@ -385,8 +389,7 @@ function querySupplyData(itemIds){
 				var sells = item.sells;
 				var buys = item.buys;
 				var itemId = item.id;
-				//TODO disable
-				//updateSupplyChart(itemId, buys, sells);
+				updateSupplyChart(itemId, buys, sells);
 
 
 			});
@@ -461,7 +464,6 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	
 	
 	function optionToggle(button, container) {
-		//container.collapse('toggle');
 		container.fadeToggle(200, 'linear');
 		optionIcon.toggleClass('fa-caret-down fa-caret-up');
 	};
@@ -476,32 +478,32 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	var priceContainer = $(document.createElement('div'));
 	
 	var graphContainer = $(document.createElement('div'));
-	graphContainer.addClass('graph-buysell row');
+	graphContainer.addClass('graph-buysell');
 
 	var histChartDiv = $(document.createElement('div'));
-	histChartDiv.addClass("chart-div col-xs-12");
+	histChartDiv.addClass("chart-div");
 	histChartDiv.attr('id', "hist-chart-" + itemId);
 	if (!itemIdOptions[itemId]["historical"]) {
 		histChartDiv.hide();
 	}
 	
-	//drawHistChart($(histChartDiv)[0], itemId);
+	drawHistChart($(histChartDiv)[0], itemId);
 
 	graphContainer.append(histChartDiv);
 
 	var supplyChartDiv = $(document.createElement('div'));
-	supplyChartDiv.addClass("chart-div col-xs-12");
+	supplyChartDiv.addClass("chart-div ");
 	supplyChartDiv.attr('id', "supply-chart-" + itemId);
 	if (!itemIdOptions[itemId]["stock"]) {
 		supplyChartDiv.hide();
 	}
 	
-	//drawSupplyChart($(supplyChartDiv)[0], itemId);
+	drawSupplyChart($(supplyChartDiv)[0], itemId);
 
 	graphContainer.append(supplyChartDiv);
 	
 	var priceDiv = $(document.createElement('div'));
-	priceDiv.addClass('row');
+	
 	
 
 	var buyElem =createPriceElement(itemId, "buy");
@@ -608,16 +610,14 @@ function createPriceElement(itemId, buySell){
 	var buyCopper = $(document.createElement('span')).text("0");
 	$(buyCopper).attr("id", itemId + "-"+buySell+"Copper");
 
-	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-"+buySell+"GoldIcon").addClass('coin-align');
+	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-"+buySell+"GoldIcon");
 		
-	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-"+buySell+"SilverIcon").addClass('coin-align');
+	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-"+buySell+"SilverIcon");
 		
-	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon").addClass('coin-align');
-		
-	
+	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon");	
 	
 	$([goldImage, silverImage, copperImage]).each(function(i,value) {
-    value.addClass("price-Image");
+		value.addClass("coin-align");
 	});
 	
 	
