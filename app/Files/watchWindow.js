@@ -527,15 +527,19 @@ function createCheckBox(itemId, isSubBox, text, optionId){
 	var isChecked = itemIdOptions[itemId][optionId];
 	
 	var checkboxDiv = $(document.createElement('div'));
+	checkboxDiv.addClass('checkbox-div');
 	if (isSubBox) {
 		checkboxDiv.addClass('sub-checkbox');
 
 	}
 	var label = $(document.createElement('label'));
 	var input = $(document.createElement('input'));
+	var span = $(document.createElement('span'));
 	
+	label.attr('for', itemId+"-"+optionId+"-cb");
 	
 	input.attr('type', 'checkbox');
+	input.attr('id', itemId+"-"+optionId+"-cb");
 	input.prop('checked', isChecked);
 	input.change(function () {
 		
@@ -568,8 +572,8 @@ function createCheckBox(itemId, isSubBox, text, optionId){
 		
 	});
 	
-	label.append(input, text);
-    checkboxDiv.append(label);   
+	label.append(span , text);
+    checkboxDiv.append(input,label);   
 	return checkboxDiv;
 }
 

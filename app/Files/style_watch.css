@@ -329,9 +329,7 @@ border: 1px solid #060607;
     outline: none;
 }
 
-.sub-checkbox {
-	margin-left:20px;
-}
+
 
 .buy-sell{
 width:140px;
@@ -347,6 +345,38 @@ display:inline-block;
 	border-width:2px;
 	border-top-color:#818282;
 	border-top-style: dashed;
+}
+
+
+/* check box */
+
+.checkbox-div { 
+	margin: 2px;
+}
+
+input[type="checkbox"] {
+    display:none;
+}
+
+
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background:url("image/cb-uncheck.png")  no-repeat;
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+    background:url("image/cb-checked.png")  no-repeat;
+}
+input[type="checkbox"] + label span:hover  {
+    background:url("image/cb-uncheck-hover.png") no-repeat;
+}
+input[type="checkbox"]:checked + label span:hover {
+    background:url("image/cb-checked-hover.png")  no-repeat;
+}
+.sub-checkbox {
+	margin-left:20px;
 }
 
 
