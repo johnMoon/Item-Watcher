@@ -3,82 +3,28 @@
 	<head> 
 		<link rel="stylesheet" href="style_watch.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		
+		
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<title>Demo app</title>
-		<script>
-			function dragResize(edge){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragResize(result.window.id, edge);
-					}
-				});
-			};
-			
-			function dragMove(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-						overwolf.windows.dragMove(result.window.id);
-					}
-				});
-			};
-			
-			function closeWindow(){
-				overwolf.windows.getCurrentWindow(function(result){
-					if (result.status=="success"){
-				
-						overwolf.windows.close(result.window.id);
-					}
-				});
-			};
-			
-			function openSubWindow(){
-				alert("the subwindow will only be visible inside a game");
-				overwolf.windows.obtainDeclaredWindow("SubWindow", function(result){
-					if (result.status == "success"){
-						overwolf.windows.restore(result.window.id, function(result){
-								console.log(result);
-						});
-					}
-				});
-			};
-			
-			function takeScreenshot(){
-				overwolf.media.takeScreenshot(function(result){
-					if (result.status == "success"){
-						var img = document.getElementById("screenshot");
-						img.src = result.url;
-						img.onload = function() {
-							overwolf.media.shareImage(img, "Screen Shot");
-						};
-					}
-				});
-			};
-			
-			function returnFalse(){
-				return false;
-			};
-			
-			function runTeamSpeak(){
-				overwolf.extensions.launch("lafgmhfbkjljkgoggomibmhlpijaofafbdhpjgif");
-			};
-			
-			function stopEvent(ev) {
+		<title>GW2 TP Watcher</title>
+		
+		 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-			  // this ought to keep t-daddy from getting the click.
-			  ev.stopPropagation();
-			};
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+            'name':'visualization',
+            'version':'1',
+            'packages':['corechart']
+            }]
 
-		function load() {
-				ignoreMouseEvent("close");
-				ignoreMouseEvent("add");
-				ignoreMouseEvent("option");
-			};
-		function ignoreMouseEvent(id) {
-			elem = document.getElementById(id);
-			elem.addEventListener("mousedown", stopEvent, false);
-		};	
+            }"></script>
 			
-		</script>
+			<!-- remember to combine these two before releasing-->
+		<script src="windowControl.js"></script>
+		<script src="watchWindow.js"></script>
+		
 	</head>
 
 	<body  onload="load();">
@@ -94,26 +40,19 @@
 		<div id="menu-header" class="menu-header">
 			<div id="move-container" class="move-container" onmousedown="dragMove();">
 			
-				<button id="close" class="menu-button close-button "  onclick="closeWindow();">
-					<i class="fa fa-times fa-lg menu-icon close-icon"></i>
+				<button id="close" class="icon-button close-button "  onclick="closeWindow();">
+					<i class="fa fa-times fa-lg icon close-icon"></i>
 				</button>
-				<button id="option" class="menu-button option-button"   onclick="closeWindow();">
-						<i class="fa fa-cog fa-lg menu-icon"></i>
+				<button id="option" class="icon-button option-button"   onclick="closeWindow();">
+						<i class="fa fa-cog fa-lg icon"></i>
 				</button>
-				<button id="add" class="menu-button add-button"   onclick="closeWindow();">
-						<i class="fa fa-plus fa-lg menu-icon"></i>
+				<button id="add" class="icon-button add-button"   onclick="closeWindow();">
+						<i class="fa fa-plus fa-lg icon"></i>
 				</button>
 			
 			</div>
 		</div>
-		<div id="content" class="watch-list" >
-				<h1>Hello, world!</h1>
-				<p>You can drag from anywhere you want, and resize from the edges.</p>
-				
-				<button id="run-teamspeak" onclick="runTeamSpeak();">Run TeamSpeak</button>
-				<button onclick="takeScreenshot();">Take Screenshot</button>
-				<button id="open-subwindow" onclick="openSubWindow();">Open Sub-Window</button>
-				<img id="screenshot" width="300px"></img>
+		<div id="watchlist-container" class="watch-list" >
 		</div>
 				
 			

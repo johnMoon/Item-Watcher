@@ -25,9 +25,15 @@ html {
 	height: 100%;
 	width: 100%;
 	background: rgba(26, 33, 32, 0.8);
-	color:white;
-	font-family: 'Menomonia';
 
+
+
+}
+	
+body {
+	color:white;
+	font-family: 'Trebuchet MS','Menomonia' ;
+	font-size: 13px;
 }
 
 .resizeGrip {
@@ -42,7 +48,7 @@ position: absolute;
 	left:0px;
 	right: 0px;
 	height:20px;
-	background: rgba(26, 33, 32, 1);
+	background: #101010;
 	border-width:2px;
 	border-bottom-color:#706860;
 	border-bottom-style: solid;
@@ -58,7 +64,7 @@ position: absolute;
 
 }
 
-#content {
+#watchlist-container {
 	position: absolute;
 	top:26px;
 	left: 5px;
@@ -132,26 +138,33 @@ position: absolute;
 }
 
 
-.menu-icon {
-	color: #737059;
+.icon {
+
+	color: #DED7AD;
 	-webkit-text-stroke-width: 0.2px;
-    -webkit-text-stroke-color: #060607;
+	-webkit-text-stroke-color: #8F896F;
 }
 
-.menu-button {
-background-color:transparent;
-border-color: transparent;
-width:20px;
-height:15px;
-border: 0px;
-padding:0px;
-position:fixed;
-z-index: 3;
+
+.icon-button {
+	background-color:transparent;
+	border-color: transparent;
+	width:20px;
+	height:15px;
+	border: 0px;
+	padding:0px;
 }
 
+.icon-button:hover .icon{
+	color: #F7F7F7;
+}
+.icon-button:focus {
+    outline: none ;
+}
 
 
 .close-button {
+	position:fixed;
 
 top: 5px;
 right:5px;
@@ -159,37 +172,33 @@ right:5px;
 
 /*since X icon is smaller than the others*/
 .close-icon {
+
 position: relative;
 bottom: 1px;
 }
 
 .add-button {
+	position:fixed;
 
 top: 4px;
 right:45px;
 }
 
 .option-button {
+	position:fixed;
 
 top: 4px;
 right:25px;
 }
 
-.menu-button :hover{
-	color: #DFDBAD;
 
-}
 
-.menu-button:focus {
-
-    outline: none ;
-}
 
 
 /* watch list css */
 
 .watch-list {
-	overflow-y: auto;
+	overflow-y: scroll;
 }
 
 
@@ -210,12 +219,12 @@ right:25px;
  background-image: url("image/scroll_bar_thumb.png");
  background-repeat:no-repeat;
  background-position:50%;
- background-color: #737059;
+ background-color: #C0BA94;
 border: 1px solid #060607;
 }
 ::-webkit-scrollbar-thumb:hover {
  
- background-color: #DFDBAD;
+ background-color: #E0DCB7;
 }
 
 ::-webkit-scrollbar-button       {
@@ -239,4 +248,104 @@ border: 1px solid #060607;
 }
 ::-webkit-scrollbar-button:vertical:increment:hover      {
 	 background-image: url("image/scroll_bar_button_down_hover.png");
+}
+
+
+
+
+/* item cell*/
+
+.mainWindow-item-cell {
+    border: 1px solid #e4e4e4;
+    width: 300px;
+    display: inline-block;
+	margin-bottom:-1px;
+	margin-right:-1px;
+	vertical-align:top;
+	position: relative;
+}
+
+.item-img {
+    vertical-align: middle;
+	border-width: 3px;
+	border-style: solid;
+}
+.item-name {
+    display: inline-block;
+    width: 218px;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+}
+.item-level {
+    white-space: nowrap;
+}
+.item-remove {
+	position:absolute;
+	top:2px;
+	right:2px;
+}
+
+.item-option {
+	position:absolute;
+	top:18px;
+	right:2px;
+}
+
+
+.item-button {
+	background-color:transparent;
+	border-color: transparent;
+	width:15px;
+	height:15px;
+	border: 0px;
+	padding:0px;
+}
+
+.item-button:hover .icon{
+	color:#F7F7F7;
+}
+
+.item-button:focus {
+    outline: none;
+}
+
+.sub-checkbox {
+	margin-left:20px;
+}
+
+.buy-sell{
+width:140px;
+display:inline-block;
+}
+
+.coin-align {
+	vertical-align: middle;
+}
+
+/*item color*/
+
+.junk {
+    color: #AAA ;
+}
+.basic {
+    color: #000 ;
+}
+.fine {
+    color: #62A4DA ;
+}
+.masterwork {
+    color: #1a9306 ;
+}
+.rare {
+    color: #fcd00b ;
+}
+.exotic {
+    color: #ffa405 ;
+}
+.ascended {
+    color: #fb3e8d ;
+}
+.legendary {
+    color: #4C139D ;
 }

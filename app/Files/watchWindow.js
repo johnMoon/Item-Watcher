@@ -1,4 +1,4 @@
-var listWatchItemId = []; 
+﻿var listWatchItemId = []; 
 var itemIdOptions=[]; // indexed by item, contains options
 var listHistCharts = [];
 var listSupplyCharts = [];
@@ -10,19 +10,10 @@ var redHex ='#dc3912';
 var blueHex =  '#3366cc';
 var greenHex= '#109618';
 
-function openSubWindow() {
-	overwolf.windows.obtainDeclaredWindow("WatchWindow", function (result) {
-		if (result.status == "success") {
-			overwolf.windows.restore(result.window.id, function (result) {
 
-			});
-		}
-	});
-	$("#open-subwindow").blur();
-};
 
 function openHelpPage() {
-	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
+	overwolf.windows.obtainDeclaredWindow("HelpWindow", function (result) {
 		if (result.status == "success") {
 			overwolf.windows.restore(result.window.id, function (result) {
 
@@ -373,7 +364,9 @@ function queryHistData(itemIds){
 				var buys = item.buys.unit_price;
 				var itemId = item.id;
 
-				addHistDataPoint(itemId, buys, sells);
+				
+				// TODO disable
+				//addHistDataPoint(itemId, buys, sells);
 
 				updatePriceHelper(itemId, buys, "buy");
 				updatePriceHelper(itemId, sells, "sell");
@@ -392,7 +385,8 @@ function querySupplyData(itemIds){
 				var sells = item.sells;
 				var buys = item.buys;
 				var itemId = item.id;
-				updateSupplyChart(itemId, buys, sells);
+				//TODO disable
+				//updateSupplyChart(itemId, buys, sells);
 
 
 			});
@@ -444,57 +438,42 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	
 	
 	var removeButton = $(document.createElement('button'));
-		removeButton.addClass("glyphicon glyphicon-remove btnModified btnModified-primary btnModifed-lg outline");
+		removeButton.addClass("item-button item-remove");
+	
+	var removeIcon = $(document.createElement('i'));
+		removeIcon.addClass("fa fa-times  icon ");
+		removeButton.append(removeIcon);
 	removeButton.click(
 		function () {
 		removeItem(itemId);
 	});
 	
 	var optionButton = $(document.createElement('button'));
-		optionButton.addClass("glyphicon glyphicon-triangle-bottom btnModified btnModified-primary btnModifed-lg outline no-border ");
+		optionButton.addClass("item-button item-option");
 
 	
-	
+		var optionIcon = $(document.createElement('i'));
+		optionIcon.addClass("fa fa-lg fa-caret-down icon ");
+		optionButton.append(optionIcon);
 	
 	//graph checkbox option
 	var optionContainer = createGraphCheckbox(itemId);
 	
 	
 	function optionToggle(button, container) {
-		container.collapse('toggle');
-
+		//container.collapse('toggle');
+		container.fadeToggle(200, 'linear');
+		optionIcon.toggleClass('fa-caret-down fa-caret-up');
 	};
 	
 	optionButton.click(
 	function(){
 		optionToggle(optionButton, optionContainer);
     });
-	
-	// might be costly, if too much switch from collase to display none
-	optionContainer.on('show.bs.collapse', function(){
-		optionButton.off('click');
-    });
-	optionContainer.on('shown.bs.collapse', function(e){
-		optionButton.on('click', function(){
-			optionToggle(optionButton, optionContainer);
-		});	
-		optionButton.toggleClass('glyphicon-triangle-bottom glyphicon-triangle-top');
-		optionButton.blur();
-	});
-	optionContainer.on('hide.bs.collapse', function(){
-		optionButton.off('click');
-    });
-    optionContainer.on('hidden.bs.collapse', function(){
-		optionButton.on('click', function(){
-			optionToggle(optionButton, optionContainer);
-		});
-		optionButton.toggleClass('glyphicon-triangle-bottom glyphicon-triangle-top');
-		optionButton.blur();
-    });
+
 	
 	
 	var priceContainer = $(document.createElement('div'));
-	priceContainer.addClass('container-fluid');
 	
 	var graphContainer = $(document.createElement('div'));
 	graphContainer.addClass('graph-buysell row');
@@ -506,7 +485,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 		histChartDiv.hide();
 	}
 	
-	drawHistChart($(histChartDiv)[0], itemId);
+	//drawHistChart($(histChartDiv)[0], itemId);
 
 	graphContainer.append(histChartDiv);
 
@@ -517,7 +496,7 @@ function createWatchItem(itemId, name, rarity, image, level) {
 		supplyChartDiv.hide();
 	}
 	
-	drawSupplyChart($(supplyChartDiv)[0], itemId);
+	//drawSupplyChart($(supplyChartDiv)[0], itemId);
 
 	graphContainer.append(supplyChartDiv);
 	
@@ -542,26 +521,25 @@ function createWatchItem(itemId, name, rarity, image, level) {
 
 function createGraphCheckbox(itemId){
 	var form = $(document.createElement('form'));
-	form.addClass('form-horizontal collapse');
+	form.hide();
 	form.prop('id','form-'+itemId);
 
 	var formGroup = $(document.createElement('div'));
-	formGroup.addClass('form-group no-margin');
-	formGroup.append(createCheckBox(itemId,0,12,"Historical Graph", "historical"));
-	formGroup.append(createCheckBox(itemId,0,12,"Stock Graph", "stock"));
-	formGroup.append(createCheckBox(itemId,1,11,"Rescale Bars", "rescale"));
+	formGroup.append(createCheckBox(itemId,false,"Historical Graph", "historical"));
+	formGroup.append(createCheckBox(itemId,false,"Stock Graph", "stock"));
+	formGroup.append(createCheckBox(itemId,true,"Rescale Bars", "rescale"));
 	form.append(formGroup);
 	return form;
 }
 
-function createCheckBox(itemId,offset, size, text, optionId){
+function createCheckBox(itemId, isSubBox, text, optionId){
 	var isChecked = itemIdOptions[itemId][optionId];
-	var colDiv =$(document.createElement('div'));
-	colDiv.addClass('col-xs-offset-'+offset+' col-xs-'+ size);
 	
 	var checkboxDiv = $(document.createElement('div'));
-	checkboxDiv.addClass('checkbox no-padding');
-	colDiv.append(checkboxDiv);
+	if (isSubBox) {
+		checkboxDiv.addClass('sub-checkbox');
+
+	}
 	var label = $(document.createElement('label'));
 	var input = $(document.createElement('input'));
 	
@@ -602,7 +580,7 @@ function createCheckBox(itemId,offset, size, text, optionId){
 	
 	label.append(input, text);
     checkboxDiv.append(label);   
-	return colDiv;
+	return checkboxDiv;
 }
 
 function createPriceElement(itemId, buySell){
@@ -613,7 +591,11 @@ function createPriceElement(itemId, buySell){
 	var pullRightPrices = $(document.createElement('div')).addClass('pull-right');
 
 	var buyElem = $(document.createElement('div')).text(label);
-	buyElem.addClass('buy-sell col-xs-6');
+	buyElem.addClass('buy-sell');
+	if (buySell == "sell"){
+			buyElem.addClass('pull-right');
+
+	}
 	buyElem.append(pullRightPrices);
 
 	var buyGold = $(document.createElement('span'));
@@ -626,11 +608,11 @@ function createPriceElement(itemId, buySell){
 	var buyCopper = $(document.createElement('span')).text("0");
 	$(buyCopper).attr("id", itemId + "-"+buySell+"Copper");
 
-	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-"+buySell+"GoldIcon");
+	var goldImage = $(document.createElement('img')).attr('src', 'image/Gold_coin.png').attr("id", itemId + "-"+buySell+"GoldIcon").addClass('coin-align');
 		
-	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-"+buySell+"SilverIcon");
+	var silverImage = $(document.createElement('img')).attr('src', 'image/Silver_coin.png').attr("id", itemId + "-"+buySell+"SilverIcon").addClass('coin-align');
 		
-	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon");
+	var copperImage = $(document.createElement('img')).attr('src', 'image/Copper_coin.png').attr("id", itemId + "-"+buySell+"CopperIcon").addClass('coin-align');
 		
 	
 	
@@ -658,9 +640,9 @@ $(document).ready(function () {
 			var frequency;
 
 		frequency = JSON.parse(prevFrequency);
-		document.getElementById("frequency-changer").value = frequency;
+		//document.getElementById("frequency-changer").value = frequency;
 	} else {
-		document.getElementById("frequency-changer").value =10000;
+//document.getElementById("frequency-changer").value =10000;
 	}
 	changeFrequency();
 
@@ -676,7 +658,7 @@ function changeFrequency() {
 		window.clearInterval(frequencyInterval);
 	}
 
-	newFrequency = document.getElementById("frequency-changer").value;
+	newFrequency = 10000;//document.getElementById("frequency-changer").value;
 
 	saveFrequency();
 	frequencyInterval = setInterval(
@@ -825,7 +807,8 @@ function resizeListener() {
 // resize on load!
 
 $(function () {
-	resizeListener();
+	// todo decide if this is still needed
+	//resizeListener();
 });
 
 window.addEventListener('storage', onStorageEvent);

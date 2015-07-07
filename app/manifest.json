@@ -42,7 +42,7 @@
 					"transparent":true,
 					"resizable":true,
 					"size":{"width":368, "height":340},
-					"min_size":{"width":368, "height":196}
+					"min_size":{"width":328, "height":203}
 				}
 		}
 	}
