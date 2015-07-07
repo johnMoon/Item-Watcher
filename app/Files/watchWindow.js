@@ -12,17 +12,6 @@ var greenHex= '#109618';
 
 
 
-function openHelpPage() {
-	overwolf.windows.obtainDeclaredWindow("HelpWindow", function (result) {
-		if (result.status == "success") {
-			overwolf.windows.restore(result.window.id, function (result) {
-
-			});
-		}
-	});
-	$("#help-button").blur();
-};
-
 
 
 //////////// CHARTING
@@ -331,7 +320,7 @@ function parseObjsAndUpdate(itemObj) {
 // item id are stored in array and are valid tp
 // only update prices
 function updateItemPrices(itemIds, refreshHist, refreshSupply) {
-	$("#refresh-button").blur();
+
 	if (typeof itemIds === 'undefined') {
 		itemIds = listWatchItemId; 
 	}
@@ -548,7 +537,6 @@ function createCheckBox(itemId, isSubBox, text, optionId){
 	
 	input.attr('type', 'checkbox');
 	input.prop('checked', isChecked);
-	
 	input.change(function () {
 		
 		// apply changes
@@ -796,19 +784,5 @@ function onStorageEvent(storageEvent) {
 
 }
 
-function resizeListener() {
-	var content = $("#watchListContents");
-	var header = $("#header");
-	var watchListContainer = $("#watchlist-container");
-	watchListContainer.height(content.height() - header.height());
-
-}
-
-// resize on load!
-
-$(function () {
-	// todo decide if this is still needed
-	//resizeListener();
-});
 
 window.addEventListener('storage', onStorageEvent);

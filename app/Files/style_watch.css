@@ -177,18 +177,37 @@ position: relative;
 bottom: 1px;
 }
 
-.add-button {
+.minus-button {
 	position:fixed;
 
 top: 4px;
-right:45px;
+right:25px;
+}
+/*since minus is center we want it lower*/
+.minus-icon {
+
+position: relative;
+bottom: -5px;
+}
+
+.add-button {
+	position:fixed;
+
+top: 5px;
+left:5px;
+}
+.refresh-button {
+	position:fixed;
+
+top: 5px;
+left:25px;
 }
 
 .option-button {
 	position:fixed;
 
-top: 4px;
-right:25px;
+top: 5px;
+left:45px;
 }
 
 
