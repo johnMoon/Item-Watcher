@@ -3,8 +3,8 @@
 	"type":"WebApp",
 	"meta":{
 		"name":"GW2 TP Watcher",
-		"version":"1.0.0",
-		"minimum-overwolf-version":"0.77.10",
+		"version":"1.1.0",
+		"minimum-overwolf-version":"0.83.0",
 		"author":"DJ TP Watcher",
 		"icon":"IconMouseOver.png",
 		"icon_gray":"IconMouseNormal.png",
@@ -37,6 +37,13 @@
 					"size":{"width":800, "height":600},
 					"min_size":{"width":800, "height":600}
 				},
+			"OptionWindow":{
+					"file":"Files/optionWindow.html",
+					"transparent":true,
+					"resizable":false,
+					"min_size":{"width":250, "height":175},
+					"max_size":{"width":250, "height":175}
+			},	
 			"WatchWindow":{
 					"file":"Files/watchWindow.html",
 					"transparent":true,

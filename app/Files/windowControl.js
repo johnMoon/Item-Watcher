@@ -48,8 +48,17 @@ function openHelpPage() {
 			});
 		}
 	});
-	$("#help-button").blur();
 };
+function openOptionPage() {
+	overwolf.windows.obtainDeclaredWindow("OptionWindow", function (result) {
+		if (result.status == "success") {
+			overwolf.windows.restore(result.window.id, function (result) {
+
+			});
+		}
+	});
+};
+
 function openSubWindow() {
 	overwolf.windows.obtainDeclaredWindow("SubWindow", function (result) {
 		if (result.status == "success") {
@@ -58,14 +67,22 @@ function openSubWindow() {
 			});
 		}
 	});
-	$("#open-subwindow").blur();
 };
 
-		function load() {
+		function loadWatch() {
 				ignoreMouseEvent("close");
 				ignoreMouseEvent("add");
 				ignoreMouseEvent("option");
+				ignoreMouseEvent("refresh");
+				ignoreMouseEvent("min");
+				ignoreMouseEvent("question");
 			};
+			
+		function loadOption() {
+				ignoreMouseEvent("close");
+				ignoreMouseEvent("min");
+			};	
+			
 		function ignoreMouseEvent(id) {
 			elem = document.getElementById(id);
 			elem.addEventListener("mousedown", stopEvent, false);

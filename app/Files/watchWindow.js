@@ -2,7 +2,7 @@
 var itemIdOptions=[]; // indexed by item, contains options
 var listHistCharts = [];
 var listSupplyCharts = [];
-var newFrequency;
+var defaultFrequency =10000; // make sure this is the same as option/watch
 
 
 var orangeHex ='#F0A000';
@@ -11,6 +11,11 @@ var blueHex =  '#3366cc';
 var greenHex= '#109618';
 
 
+// make sure these agree with css
+var defaultR = '26';
+var defaultG = '33';
+var defaultB = '32';
+var defaultA = '0.8';
 
 
 
@@ -30,7 +35,7 @@ function drawHistChart(chartDiv, itemId) {
 	};
 	chart.draw(data, chartHistOptions);
 
-}
+};
 var maxHistDataPoints = 20;
 
 var chartHistOptions = {
@@ -88,7 +93,7 @@ function addHistDataPoint(itemId, buy, sell) {
 		
 		for (var i=0;i<maxHistDataPoints;i++){
 			
-			data.addRow([currentDate.getTime() - (newFrequency *(maxHistDataPoints-i)), buy, sell]);
+			data.addRow([currentDate.getTime() - (frequency *(maxHistDataPoints-i)), buy, sell]);
 		}
 		
 	
@@ -97,7 +102,7 @@ function addHistDataPoint(itemId, buy, sell) {
 	}
 	data.addRow([currentDate.getTime(), buy, sell]);
 	chart.draw(data, chartHistOptions);
-}
+};
 
 
 ///////////////// Supply charts
@@ -124,7 +129,7 @@ function drawSupplyChart(chartDiv, itemId){
 		data : data
 	};
     chart.draw(data, chartSupplyOptions);
-}
+};
 
 
 var chartSupplyOptions = {
@@ -178,6 +183,7 @@ var chartSupplyOptions = {
        
         },
 		
+
 	
         bar: {
             groupWidth: '80%' // removes spacing
@@ -190,7 +196,7 @@ function getPriceTooltipString(price, order, isBuy){
 	// TODO condense stock (100m+)
 	var priceLabel = ((isBuy) ? "Buy: " : "Sell: ");
 	return priceLabel+price +"\nOrders: " +order;
-}
+};
 
 
 	
@@ -219,7 +225,7 @@ function updateSupplyChart(itemId, buyOffers, sellOffers){
 	
 	chart.draw(data, chartSupplyOptions);
 
-}	
+};	
 
 function loadFlipRow(dataArray, buy, sell){
 	var flipProfit = calculateFlipProfit(buy, sell);
@@ -260,7 +266,7 @@ function loadOfferRows(dataArray, offers, isBuy, isRescaled){
 		
 	}	
 	dataArray.addRows(rowsToAdd);
-}
+};
 
 function calculateFlipProfit( buyOffer,sellOffer){
 	var difference = sellOffer- buyOffer;
@@ -268,7 +274,7 @@ function calculateFlipProfit( buyOffer,sellOffer){
 	var exchange = Math.max(Math.round(sellOffer *0.1), 1);
 	var profit = difference - listing - exchange;
 	return {listing: listing, exchange:exchange, profit: profit};
-}
+};
 
 function changeFlipColor(flipProfit){
 	if (flipProfit>0){
@@ -279,7 +285,7 @@ function changeFlipColor(flipProfit){
 		chartSupplyOptions["series"][2]["color"] = redHex;
 
 	}
-}
+};
 /////////////////
 
 
@@ -289,7 +295,6 @@ function changeFlipColor(flipProfit){
 function updateItemData(searchItemIDs) {
 	searchItemIDs = encodeURIComponent(searchItemIDs);
 	var names = "https://api.guildwars2.com/v2/items?ids=" + searchItemIDs;
-
 	// not sure if need concurncy control. REVIEW when completely merged with the search window
 	// apparently js is always single threaded
 	$.getJSON(names).done(function (data) {
@@ -297,7 +302,7 @@ function updateItemData(searchItemIDs) {
 
 	});
 
-}
+};
 
 function parseObjsAndUpdate(itemObj) {
 	itemIds = [];
@@ -314,13 +319,12 @@ function parseObjsAndUpdate(itemObj) {
 
 	// should only update the items added in
 	updateItemPrices(itemIds, true,true);
-}
+};
 
 // Update data assumes that there is at least one item already
 // item id are stored in array and are valid tp
 // only update prices
 function updateItemPrices(itemIds, refreshHist, refreshSupply) {
-
 	if (typeof itemIds === 'undefined') {
 		itemIds = listWatchItemId; 
 	}
@@ -345,7 +349,7 @@ function updateItemPrices(itemIds, refreshHist, refreshSupply) {
 	
 	}
 
-}
+};
 
 function queryHistData(itemIds){
 	var prices = "https://api.guildwars2.com/v2/commerce/prices?ids=" + itemIds.join();
@@ -367,7 +371,7 @@ function queryHistData(itemIds){
 			});
 		});
 		
-}
+};
 function querySupplyData(itemIds){
 	var listings = "https://api.guildwars2.com/v2/commerce/listings?ids=" + itemIds.join();
 
@@ -383,7 +387,7 @@ function querySupplyData(itemIds){
 
 			});
 		});
-}
+};
 
 function updatePriceHelper(itemId, price, buySell) {
 	var gold = (price - (price % 10000)) / 10000;
@@ -408,7 +412,7 @@ function updatePriceHelper(itemId, price, buySell) {
 		$("#" + itemId + "-"+buySell+"GoldIcon").hide();
 		$("#" + itemId + "-"+buySell+"SilverIcon").hide();
 	}
-}
+};
 
 function createWatchItem(itemId, name, rarity, image, level) {
 
@@ -506,9 +510,9 @@ function createWatchItem(itemId, name, rarity, image, level) {
 	var result = cellDiv.append(iconImg, itemName,optionButton,removeButton,optionContainer,priceContainer);	
 
 
-	$(result).appendTo("#watchlist-container");
+	$(result).appendTo("#main-container");
 
-}
+};
 
 function createGraphCheckbox(itemId){
 	var form = $(document.createElement('form'));
@@ -521,7 +525,7 @@ function createGraphCheckbox(itemId){
 	formGroup.append(createCheckBox(itemId,true,"Rescale Bars", "rescale"));
 	form.append(formGroup);
 	return form;
-}
+};
 
 function createCheckBox(itemId, isSubBox, text, optionId){
 	var isChecked = itemIdOptions[itemId][optionId];
@@ -575,7 +579,7 @@ function createCheckBox(itemId, isSubBox, text, optionId){
 	label.append(span , text);
     checkboxDiv.append(input,label);   
 	return checkboxDiv;
-}
+};
 
 function createPriceElement(itemId, buySell){
 	var label = "Sell:";
@@ -619,40 +623,36 @@ function createPriceElement(itemId, buySell){
 	pullRightPrices.append(buyGold, goldImage, buySilver, silverImage, buyCopper, copperImage);
 	
 	return buyElem;
-}
+};
 
 // check if there are any existing watched items
 // reload them
 // then turn on timer
 
 $(document).ready(function () {
-	var prevFrequency = window.localStorage.getItem("frequency");
-	if (prevFrequency) {
-		// there was item list before
-			var frequency;
 
-		frequency = JSON.parse(prevFrequency);
-		//document.getElementById("frequency-changer").value = frequency;
-	} else {
-//document.getElementById("frequency-changer").value =10000;
-	}
 	changeFrequency();
 
 	reloadItemListState();
-
+	reloadTransparency();
 });
 
 var frequencyInterval;
-
+var frequency ;
 function changeFrequency() {
+	frequency = defaultFrequency;
+	var f = window.localStorage.getItem("frequency");
+	if (f) {
+	
+		frequency = f;
+		
+	} 
 
 	if (frequencyInterval) {
 		window.clearInterval(frequencyInterval);
 	}
 
-	newFrequency = 10000;//document.getElementById("frequency-changer").value;
-
-	saveFrequency();
+	
 	frequencyInterval = setInterval(
 
 			function () {
@@ -661,15 +661,10 @@ function changeFrequency() {
 				updateItemPrices(listWatchItemId, true,true);
 			}
 
-		}, newFrequency);
+		}, frequency);
 
 };
 
-function saveFrequency() {
-
-	window.localStorage.setItem('frequency', newFrequency);
-
-}
 
 function removeItem(itemId) {
 
@@ -686,7 +681,7 @@ function removeItem(itemId) {
 	
 		$("#no-watch-item").show();
 	}
-}
+};
 
 // persistences
 function saveItems() {
@@ -695,11 +690,11 @@ function saveItems() {
 	saveItemOptions();
 	
 
-}
+};
 
 function saveItemList(){
 	window.localStorage.setItem("item-list-state", JSON.stringify(listWatchItemId));
-}
+};
 
 function saveItemOptions(){
 	var optionHolder = [];
@@ -712,7 +707,7 @@ function saveItemOptions(){
 	}
 	
 	window.localStorage.setItem("item-options-state", JSON.stringify(optionHolder));
-}
+};
 
 function reloadItemListState() {
 	
@@ -744,6 +739,7 @@ function reloadItemListState() {
 			}
 		}
 		
+		
 		updateItemData(tempListWatchItemId);
 	} else {
 		// show no watch item message
@@ -752,12 +748,12 @@ function reloadItemListState() {
 	
 
 	
-}
+};
 
 function defaultItemOptions(){
 	
 	return { historical:true,  stock:false, rescale:false};
-}
+};
 
 function onStorageEvent(storageEvent) {
 
@@ -784,9 +780,33 @@ function onStorageEvent(storageEvent) {
 		// show no watch item message
 		$("#no-watch-item").hide();
 
+	} else if (storageEvent.key.indexOf("transparency-alpha") != -1) {
+		
+		
+		var alpha = storageEvent.newValue;
+			var rgba = 'rgba('+defaultR+','+defaultG+','+defaultB+','+alpha+')';
+			$('body').css('background-color',rgba);
+		
+
+	} else if (storageEvent.key.indexOf("frequency") != -1) {
+		changeFrequency();
+		
 	}
 
-}
+};
 
+
+function reloadTransparency()
+{
+	
+	var trans = window.localStorage.getItem("transparency-alpha");
+	if (trans) {
+		var alpha = trans;
+		var rgba = 'rgba('+defaultR+','+defaultG+','+defaultB+','+alpha+')';
+		$('body').css('background-color',rgba); 
+	}
+	
+		
+};
 
 window.addEventListener('storage', onStorageEvent);
