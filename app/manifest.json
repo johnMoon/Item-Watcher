@@ -35,21 +35,24 @@
 					"transparent":false,
 					"resizable":true,
 					"size":{"width":800, "height":600},
-					"min_size":{"width":800, "height":600}
+					"min_size":{"width":800, "height":600},
+					"ignore_keyboard_events":true
 				},
 			"OptionWindow":{
 					"file":"Files/optionWindow.html",
 					"transparent":true,
 					"resizable":false,
 					"min_size":{"width":250, "height":175},
-					"max_size":{"width":250, "height":175}
+					"max_size":{"width":250, "height":175},
+					"ignore_keyboard_events":true
 			},	
 			"WatchWindow":{
 					"file":"Files/watchWindow.html",
 					"transparent":true,
 					"resizable":true,
 					"size":{"width":368, "height":340},
-					"min_size":{"width":328, "height":203}
+					"min_size":{"width":328, "height":203},
+					"ignore_keyboard_events":true
 				}
 		}
 	}
