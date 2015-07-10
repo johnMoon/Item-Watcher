@@ -13,7 +13,7 @@
 	"permissions": [],
 	"dependencies":[],
 	"data": {
-		"start_window":"MainWindow",
+		"start_window":"WatchWindow",
 		"windows":{
 			"MainWindow":{
 					"file":"Files/index.html",
