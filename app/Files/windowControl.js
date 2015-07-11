@@ -69,6 +69,17 @@ function openSubWindow() {
 	});
 };
 
+function openNewSubWindow(){
+	overwolf.windows.obtainDeclaredWindow("NewSubWindow", function (result) {
+		if (result.status == "success") {
+			overwolf.windows.restore(result.window.id, function (result) {
+
+			});
+		}
+	});
+	
+}
+
 		function loadWatch() {
 				ignoreMouseEvent("close");
 				ignoreMouseEvent("add");

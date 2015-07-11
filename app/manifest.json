@@ -23,6 +23,15 @@
 					"min_size":{"width":368, "height":196}
 		
 				},
+			"NewSubWindow":{
+					"file":"Files/newSearchWindow.html",
+					"transparent":true,
+					"resizable":true,
+					"size":{"width":368, "height":340},
+					"min_size":{"width":328, "height":203},
+					"ignore_keyboard_events":true
+				},	
+				
 			"SubWindow":{
 					"file":"Files/searchWindow.html",
 					"transparent":false,
