@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<link rel="stylesheet" href="style_watch.css" />
@@ -22,7 +23,7 @@
 				
 			<!-- remember to combine these two before releasing-->
 		<script src="windowControl.js"></script>
-		<script src="watchWindow.js"></script>
+		<script src="newSearchWindow.js"></script>
 	</head>
 	
 	
@@ -68,12 +69,94 @@
 			</div>
 		</div>
 		<div id="main-container" >
-			<input  id="input" type="text" class="form-control" placeholder="Item..." onkeypress="searchKeyPress(event)">
-            <button   id="searchButton"  onclick="search()" class="btn btn-default " onmouseup="blur()" type="button">
-              Search
+			<button id = "detailSearchButton"  class = "fa fa-filter  icon" style = "display:inline-block; float:right; height:21px;"></Button>			
+			<button   id="searchButton"  onclick="search()" class="fa fa-search icon" onmouseup="blur()" type="button" style = "float:right; height:21px;" >
 			</button>
-          
-		</div>
+			<div style = " overflow: hidden;" >
+			<input  id="input" type="text" class="form-control" placeholder="Item..." onkeypress="searchKeyPress(event)" style = "width:100%;">
+        </div>
+
+		<nav>
+			<ul class="pagination no-margin">
+				<li>
+					<a href="#" class = "fa-caret-left icon""aria-label="Previous" id="prevButton"  onclick="prevPage()" onmouseup="blur()">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li class="active"><a id="pageNumber" href="#">1</a></li>
+				<li>
+					<a href="#" aria-label="Next" class = "fa-caret-right icon" id="nextButton"   onclick="nextPage()" onmouseup="blur()">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>	
+		
+			<div id = "rarityFilter">
+			
+				<div class="panel" id="checkboxPanel" style = "display: none;">
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxjunk" value = "junk">
+					<label for = "checkboxjunk" >
+						<span></span>Junk
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxbasic" value = "basic" >
+					<label for = "checkboxbasic" >
+						<span></span>Basic
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxfine" value = "fine">
+					<label for = "checkboxfine" >
+						<span></span>Fine
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxmasterwork" value = "masterwork">
+					<label for = "checkboxmasterwork" >
+						<span></span>Masterwork
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxrare" value = "rare">
+					<label for = "checkboxrare" >
+						<span></span>Rare
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxexotic" value = "exotic">
+					<label for = "checkboxexotic" >
+						<span></span>Exotic
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxascended" value = "ascended">
+					<label for = "checkboxascended" >
+						<span></span>Ascended
+					</label>
+				</div>
+				<div class="checkbox-div">
+					<input type="checkbox" id="checkboxlegendary" value = "legendary">
+					<label for = "checkboxlegendary" >
+						<span></span>Legendary
+					</label>
+				</div>
+			
+				</div>
+			</div>
+			
+				<div  id ="result-container" class="resultContainer">
+				<ul id="resultList"  class="none-list" style = "padding-left:0px; ">
+				</ul> 
+			</div>	
+			
+         </div>
+			
+		
+		
+     
 				
 			
 		
