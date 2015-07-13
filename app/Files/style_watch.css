@@ -1,316 +1,242 @@
 ﻿@font-face {
     font-family: 'Menomonia';
     src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.eot');
-    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.eot?#iefix') format('embedded-opentype'),
-         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff') format('woff'),
-         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.ttf') format('truetype'),
-         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.svg#MenomoniaRegular') format('svg');
+    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.eot?#iefix') format('embedded-opentype'), url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.woff') format('woff'), url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.ttf') format('truetype'), url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia.svg#MenomoniaRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
-
 @font-face {
     font-family: 'Menomonia';
     src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.eot');
-    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.eot?#iefix') format('embedded-opentype'),
-         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.woff') format('woff'),
-         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.ttf') format('truetype'),
-         url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.svg#MenomoniaRegular') format('svg');
+    src: url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.eot?#iefix') format('embedded-opentype'), url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.woff') format('woff'), url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.ttf') format('truetype'), url('https://d1h9a8s8eodvjz.cloudfront.net/fonts/menomonia/08-02-12/font/menomonia-italic.svg#MenomoniaRegular') format('svg');
     font-weight: normal;
     font-style: italic;
 }
-
 html {
-	overflow: hidden;
-	height: 100%;
-	width: 100%;
-
-
-
-
-
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
 }
-	
 body {
-	color:white;
-	font-family: 'Trebuchet MS','Menomonia' ;
-	font-size: 13px;
-	text-shadow:
-   -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
-	 
-	 -webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--o-user-select: none;
-user-select: none;
-	 
+    color: white;
+    font-family: 'Trebuchet MS', 'Menomonia';
+    font-size: 13px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
-
-.transparent-body{
-	background-color: rgba(26, 33, 32, 0.8);
-
+.transparent-body {
+    background-color: rgba(26, 33, 32, 0.8);
 }
-
-.solid-body{
-	background-color: rgba(26, 33, 32, 1);
-
+.solid-body {
+    background-color: rgba(26, 33, 32, 1);
 }
-
 .resizeGrip {
-
-	position: absolute;
+    position: absolute;
 }
+/* index is needed to not affect the resize bars */
 
- /* index is needed to not affect the resize bars */
-.menu-header{
-position: absolute;
-	top:0px;
-	left:0px;
-	right: 0px;
-	height:20px;
-	background: #101010;
-	border-width:2px;
-	border-bottom-color:#706860;
-	border-bottom-style: solid;
-	z-index:-1;
+.menu-header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 20px;
+    background: #101010;
+    border-width: 2px;
+    border-bottom-color: #706860;
+    border-bottom-style: solid;
+    z-index: -1;
 }
-
 .move-container {
-	position: absolute;
-	top:5px;
-	left: 5px;
-	right: 5px;
-	height:15px;
-
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    height: 15px;
 }
-
 #main-container {
-	position: absolute;
-	top:26px;
-	left: 5px;
-	right: 5px;
-	bottom:5px;
-	overflow-y: auto;
+    position: absolute;
+    top: 26px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    overflow-y: auto;
 }
-
 #resizeGripTop {
-	height: 5px;
-	top: 0;
-	left: 5px;
-	right: 5px;
-	cursor: ns-resize;
+    height: 5px;
+    top: 0;
+    left: 5px;
+    right: 5px;
+    cursor: ns-resize;
 }
-
 #resizeGripBottom {
-	height: 5px;
-	bottom: 0;
-	left: 5px;
-	right: 5px;
-	cursor: ns-resize;
+    height: 5px;
+    bottom: 0;
+    left: 5px;
+    right: 5px;
+    cursor: ns-resize;
 }
-
 #resizeGripLeft {
-	width: 5px;
-	left: 0;
-	top: 5px;
-	bottom: 5px;
-	cursor: ew-resize;
+    width: 5px;
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    cursor: ew-resize;
 }
-
 #resizeGripRight {
-	width: 5px;
-	right: 0;
-	top: 5px;
-	bottom: 5px;
-	cursor: ew-resize;
+    width: 5px;
+    right: 0;
+    top: 5px;
+    bottom: 5px;
+    cursor: ew-resize;
 }
-
 #resizeGripTopLeft {
-	width: 5px;
-	height: 5px;
-	top: 0;
-	left: 0;
-	cursor: nwse-resize;
+    width: 5px;
+    height: 5px;
+    top: 0;
+    left: 0;
+    cursor: nwse-resize;
 }
-
 #resizeGripBottomLeft {
-	width: 5px;
-	height: 5px;
-	bottom: 0;
-	left: 0;
-	cursor: nesw-resize;
+    width: 5px;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    cursor: nesw-resize;
 }
-
 #resizeGripTopRight {
-	width: 5px;
-	height: 5px;
-	top: 0;
-	right: 0;
-	cursor: nesw-resize;
+    width: 5px;
+    height: 5px;
+    top: 0;
+    right: 0;
+    cursor: nesw-resize;
 }
-
 #resizeGripBottomRight {
-	width: 5px;
-	height: 5px;
-	bottom: 0;
-	right: 0;
-	cursor: nwse-resize;
+    width: 5px;
+    height: 5px;
+    bottom: 0;
+    right: 0;
+    cursor: nwse-resize;
 }
-
-
 .icon {
-
-	color: #DED7AD;
-	-webkit-text-stroke-width: 0.2px;
-	-webkit-text-stroke-color: #8F896F;
+    color: #DED7AD;
+    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-color: #8F896F;
 }
-
-
 .icon-button {
-	background-color:transparent;
-	border-color: transparent;
-	width:20px;
-	height:15px;
-	border: 0px;
-	padding:0px;
+    background-color: transparent;
+    border-color: transparent;
+    width: 20px;
+    height: 15px;
+    border: 0px;
+    padding: 0px;
 }
-
-.icon-button:hover .icon{
-	color: #F7F7F7;
+.icon-button:hover .icon {
+    color: #F7F7F7;
 }
 .icon-button:focus {
-    outline: none ;
+    outline: none;
 }
-
-
 .close-button {
-	position:fixed;
-
-top: 5px;
-right:5px;
+    position: fixed;
+    top: 5px;
+    right: 5px;
 }
-
 /*since X icon is smaller than the others*/
+
 .close-icon {
-
-position: relative;
-bottom: 1px;
+    position: relative;
+    bottom: 1px;
 }
-
 .minus-button {
-	position:fixed;
-
-top: 4px;
-right:25px;
+    position: fixed;
+    top: 4px;
+    right: 25px;
 }
 /*since minus is center we want it lower*/
+
 .minus-icon {
-
-position: relative;
-bottom: -5px;
+    position: relative;
+    bottom: -5px;
 }
-
 .add-button {
-	position:fixed;
-
-top: 5px;
-left:5px;
+    position: fixed;
+    top: 5px;
+    left: 5px;
 }
 .refresh-button {
-	position:fixed;
-
-top: 5px;
-left:25px;
+    position: fixed;
+    top: 5px;
+    left: 25px;
 }
-
 .option-button {
-	position:fixed;
-
-top: 5px;
-left:45px;
+    position: fixed;
+    top: 5px;
+    left: 45px;
 }
-
-
 .help-button {
-	position:fixed;
-
-top: 5px;
-left:65px;
+    position: fixed;
+    top: 5px;
+    left: 65px;
 }
-
-
-
-
 /*  scroll bars*/
 
 ::-webkit-scrollbar {
     width: 12px;
 }
- 
- 
- /* background of scroll bar*/
+/* background of scroll bar*/
+
 ::-webkit-scrollbar-track {
     background-image: url("image/scroll_bar_track.png");
-	 background-position:50%;
+    background-position: 50%;
 }
- 
 ::-webkit-scrollbar-thumb {
- background-image: url("image/scroll_bar_thumb.png");
- background-repeat:no-repeat;
- background-position:50%;
- background-color: #C0BA94;
-border: 1px solid #060607;
+    background-image: url("image/scroll_bar_thumb.png");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-color: #C0BA94;
+    border: 1px solid #060607;
 }
 ::-webkit-scrollbar-thumb:hover {
- 
- background-color: #E0DCB7;
+    background-color: #E0DCB7;
 }
-
-::-webkit-scrollbar-button       {
-	width:12px;
-	height:12px;
-	background-color:#020302;
-	 background-position:50%;
-
+::-webkit-scrollbar-button {
+    width: 12px;
+    height: 12px;
+    background-color: #020302;
+    background-position: 50%;
 }
-
-
-
-::-webkit-scrollbar-button:vertical:decrement      {
-	 background-image: url("image/scroll_bar_button_up.png");
+::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url("image/scroll_bar_button_up.png");
 }
-::-webkit-scrollbar-button:vertical:decrement:hover      {
-	 background-image: url("image/scroll_bar_button_up_hover.png");
+::-webkit-scrollbar-button:vertical:decrement:hover {
+    background-image: url("image/scroll_bar_button_up_hover.png");
 }
-::-webkit-scrollbar-button:vertical:increment      {
-	 background-image: url("image/scroll_bar_button_down.png");
+::-webkit-scrollbar-button:vertical:increment {
+    background-image: url("image/scroll_bar_button_down.png");
 }
-::-webkit-scrollbar-button:vertical:increment:hover      {
-	 background-image: url("image/scroll_bar_button_down_hover.png");
+::-webkit-scrollbar-button:vertical:increment:hover {
+    background-image: url("image/scroll_bar_button_down_hover.png");
 }
-
-
-
-
 /* item cell*/
 
 .mainWindow-item-cell {
     border: 2px solid #e4e4e4;
     width: 300px;
     display: inline-block;
-	margin-bottom:-2px;
-	margin-right:-2px;
-	vertical-align:top;
-	position: relative;
+    margin-bottom: -2px;
+    margin-right: -2px;
+    vertical-align: top;
+    position: relative;
 }
-
 .item-img {
     vertical-align: middle;
-	border-width: 3px;
-	border-style: solid;
+    border-width: 3px;
+    border-style: solid;
 }
 .item-name {
     display: inline-block;
@@ -323,126 +249,108 @@ border: 1px solid #060607;
     white-space: nowrap;
 }
 .item-remove {
-	position:absolute;
-	top:2px;
-	right:2px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
-
 .item-option {
-	position:absolute;
-	top:18px;
-	right:2px;
+    position: absolute;
+    top: 18px;
+    right: 2px;
 }
-
-
 .item-button {
-	background-color:transparent;
-	border-color: transparent;
-	width:15px;
-	height:15px;
-	border: 0px;
-	padding:0px;
+    background-color: transparent;
+    border-color: transparent;
+    width: 15px;
+    height: 15px;
+    border: 0px;
+    padding: 0px;
 }
-
-.item-button:hover .icon{
-	color:#F7F7F7;
+.item-button:hover .icon {
+    color: #F7F7F7;
 }
-
 .item-button:focus {
     outline: none;
 }
-
-
-
-.buy-sell{
-width:140px;
-display:inline-block;
+.buy-sell {
+    width: 140px;
+    display: inline-block;
 }
-
 .coin-align {
-	vertical-align: middle;
+    vertical-align: middle;
 }
-
 /* charts*/
+
 .chart-div {
-	border-width:2px;
-	border-top-color:#818282;
-	border-top-style: dashed;
+    border-width: 2px;
+    border-top-color: #818282;
+    border-top-style: dashed;
 }
-
 /* needed to get tooltips from google charts to look correct*/
-text{
-text-shadow:none;
-}
 
+text {
+    text-shadow: none;
+}
 /* check box */
 
-.checkbox-div { 
-	margin: 2px;
+.checkbox-div {
+    margin: 2px;
 }
-
 input[type="checkbox"] {
-    display:none;
+    display: none;
 }
-
-
 input[type="checkbox"] + label span {
-    display:inline-block;
-    width:16px;
-    height:16px;
-    background:url("image/cb-uncheck.png")  no-repeat;
-    cursor:pointer;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url("image/cb-uncheck.png") no-repeat;
+    cursor: pointer;
 }
 input[type="checkbox"]:checked + label span {
-    background:url("image/cb-checked.png")  no-repeat;
+    background: url("image/cb-checked.png") no-repeat;
 }
 input[type="checkbox"] + label:hover span {
-    background:url("image/cb-uncheck-hover.png") no-repeat;
+    background: url("image/cb-uncheck-hover.png") no-repeat;
 }
 input[type="checkbox"]:checked + label:hover span {
-    background:url("image/cb-checked-hover.png")  no-repeat;
+    background: url("image/cb-checked-hover.png") no-repeat;
 }
 .sub-checkbox {
-	margin-left:20px;
+    margin-left: 20px;
 }
-
-
 /*item color*/
 
 .junk {
-    color: #AAA ;
+    color: #AAA;
 }
 .basic {
-    color: #000 ;
+    color: #000;
 }
 .fine {
-    color: #62A4DA ;
+    color: #62A4DA;
 }
 .masterwork {
-    color: #1a9306 ;
+    color: #1a9306;
 }
 .rare {
-    color: #fcd00b ;
+    color: #fcd00b;
 }
 .exotic {
-    color: #ffa405 ;
+    color: #ffa405;
 }
 .ascended {
-    color: #fb3e8d ;
+    color: #fb3e8d;
 }
 .legendary {
-    color: #4C139D ;
+    color: #4C139D;
 }
-
-
 /* options window */
 
-input[type=range]{
+input[type=range] {
     -webkit-appearance: none;
-	width:100px;
-	margin:0px;
+    width: 100px;
+    margin: 0px;
 }
-
 input[type=range]::-webkit-slider-runnable-track {
     width: 300px;
     height: 2px;
@@ -450,80 +358,73 @@ input[type=range]::-webkit-slider-runnable-track {
     border: none;
     border-radius: 3px;
 }
-
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     height: 14px;
     width: 14px;
-
-    background: rgba(227,222,183,0.8);
+    background: rgba(227, 222, 183, 0.8);
     margin-top: -6px;
-	
-	
-	border: 1px solid rgba(156,153,139,0.8);
-
+    border: 1px solid rgba(156, 153, 139, 0.8);
 }
-
 input[type=range]:hover::-webkit-slider-thumb {
-    background:rgba(255,254,223,0.8);
- 	border: 1px solid rgba(201,196,170,0.8);
+    background: rgba(255, 254, 223, 0.8);
+    border: 1px solid rgba(201, 196, 170, 0.8);
 }
-
 input[type=range]:focus {
     outline: none;
 }
-
-
 /* drop down option */
+
 select {
-      border: 2px solid #706A61 ;       
-
-      -webkit-appearance: none;        /*Removes default chrome and safari style*/
-      -moz-appearance: none;          /* Removes Default Firefox style*/
-      background: black url('image/dropdown.png') no-repeat;         /*Adds background-image*/
-      background-position: 82px 5px;                /*Position of the background-image*/
-      width: 100px;                /*Width of select dropdown to give space for arrow image*/
-	  color: white;
-	  	font-family: 'Trebuchet MS','Menomonia' ;
-	font-size: 13px;
-	-webkit-text-stroke-width: 0.05px;
-	-webkit-text-stroke-color: grey;
-	  
+    border: 2px solid #706A61;
+    -webkit-appearance: none;
+    /*Removes default chrome and safari style*/
+    
+    -moz-appearance: none;
+    /* Removes Default Firefox style*/
+    
+    background: black url('image/dropdown.png') no-repeat;
+    /*Adds background-image*/
+    
+    background-position: 82px 5px;
+    /*Position of the background-image*/
+    
+    width: 100px;
+    /*Width of select dropdown to give space for arrow image*/
+    
+    color: white;
+    font-family: 'Trebuchet MS', 'Menomonia';
+    font-size: 13px;
+    -webkit-text-stroke-width: 0.05px;
+    -webkit-text-stroke-color: grey;
 }
-
 select:hover {
-      background: black url('image/dropdown-hover.png') no-repeat;
-      background-position: 82px 5px;                /*Position of the background-image*/
-	  }
-select:focus{
-outline:none;
+    background: black url('image/dropdown-hover.png') no-repeat;
+    background-position: 82px 5px;
+    /*Position of the background-image*/
 }
-
+select:focus {
+    outline: none;
+}
 /* option labels */
-.option-header{
-	font-size:16px;
+
+.option-header {
+    font-size: 16px;
 }
-
-.option-item{
-	margin-left:24px;
-	position:relative;
-	height: 24px;
+.option-item {
+    margin-left: 24px;
+    position: relative;
+    height: 24px;
 }
-
-.option-selector{
-	
-	position:absolute;
-	right: 8px;
-	bottom: 0px;
+.option-selector {
+    position: absolute;
+    right: 8px;
+    bottom: 0px;
 }
-
-
-.range-margin{
-bottom: 6px;
+.range-margin {
+    bottom: 6px;
 }
-.option-label{
-	position:absolute;
-	bottom: 0px;
+.option-label {
+    position: absolute;
+    bottom: 0px;
 }
-
-

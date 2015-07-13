@@ -1,62 +1,46 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head> 
-		<link rel="stylesheet" href="style_watch.css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		
-		
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<title>GW2 TP Watcher:Options</title>
-		
-		 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
- 	
-			<!-- remember to combine these two before releasing-->
-		<script src="windowControl.js"></script>
-		<script src="optionWindow.js"></script>
-		
-	</head>
-
-	<body class="solid-body"  onload="loadOption();">
-		
-	
-		<div id="menu-header" class="menu-header">
-			<div id="move-container" class="move-container" onmousedown="dragMove();">
-				Options
-				<button id="close" class="icon-button close-button "  onclick="closeWindow();">
-					<i class="fa fa-times fa-lg icon close-icon"></i>
-				</button>
-				<button id="min" class="icon-button minus-button "  onclick="minimizeWindow();">
-					<i class="fa fa-minus icon minus-icon"></i>
-				</button>
-				
-			
-			
-			</div>
-		</div>
-		<div id="main-container" >
-		<div class="option-header">Watch Window</div>
-		
-			<div class="option-item">
-				<label><span class="option-label">Transparency:</span>
-					<input class="option-selector range-margin" id="range-transparency" type="range" name="transparency" min="0.05" max="1" step="0.05"  oninput="changeTransparency(this.value)">
-				</label>
-			</div>
-			
-			<div class="option-item">
-				<label><span class="option-label">Refresh Rate:</span>
-						<select  class="option-selector"  id="frequency-changer" onchange="changeFrequency(this.value)">
-							<option value="5000">5 sec</option>
-							<option value="10000">10 sec</option>
-							<option value="20000">20 sec</option>
-							<option value="30000">30 sec</option>
-							<option value="60000">60 sec</option>
-						</select>
-				</label>
-			</div>
-		</div>
-				
-			
-		
-	</body>
+   <head>
+      <link rel="stylesheet" href="style_watch.css" />
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+      <title>GW2 TP Watcher:Options</title>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <!-- remember to combine these two before releasing-->
+      <script src="windowControl.js"></script>
+      <script src="optionWindow.js"></script>
+   </head>
+   <body class="solid-body"  onload="loadOption();">
+      <div id="menu-header" class="menu-header">
+         <div id="move-container" class="move-container" onmousedown="dragMove();">
+            Options
+            <button id="close" class="icon-button close-button "  onclick="closeWindow();">
+            <i class="fa fa-times fa-lg icon close-icon"></i>
+            </button>
+            <button id="min" class="icon-button minus-button "  onclick="minimizeWindow();">
+            <i class="fa fa-minus icon minus-icon"></i>
+            </button>
+         </div>
+      </div>
+      <div id="main-container" >
+         <div class="option-header">Watch Window</div>
+         <div class="option-item">
+            <label><span class="option-label">Transparency:</span>
+            <input class="option-selector range-margin" id="range-transparency" type="range" name="transparency" min="0.05" max="1" step="0.05"  oninput="changeTransparency(this.value)">
+            </label>
+         </div>
+         <div class="option-item">
+            <label>
+               <span class="option-label">Refresh Rate:</span>
+               <select  class="option-selector"  id="frequency-changer" onchange="changeFrequency(this.value)">
+                  <option value="5000">5 sec</option>
+                  <option value="10000">10 sec</option>
+                  <option value="20000">20 sec</option>
+                  <option value="30000">30 sec</option>
+                  <option value="60000">60 sec</option>
+               </select>
+            </label>
+         </div>
+      </div>
+   </body>
 </html>
