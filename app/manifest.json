@@ -15,14 +15,6 @@
 	"data": {
 		"start_window":"WatchWindow",
 		"windows":{
-			"MainWindow":{
-					"file":"Files/index.html",
-					"transparent":false,
-					"resizable":true,
-					"size":{"width":368, "height":340},
-					"min_size":{"width":368, "height":196}
-		
-				},
 			"SubWindow":{
 					"file":"Files/searchWindow.html",
 					"transparent":false,
