@@ -82,6 +82,11 @@ function openSubWindow() {
 				ignoreMouseEvent("close");
 				ignoreMouseEvent("min");
 			};	
+		
+		function loadHelp() {
+				ignoreMouseEvent("close");
+				ignoreMouseEvent("min");
+			};
 			
 		function ignoreMouseEvent(id) {
 			elem = document.getElementById(id);

@@ -635,7 +635,19 @@ $(document).ready(function () {
 
 	reloadItemListState();
 	reloadTransparency();
+	
+
+
+	var log = Loggr.logs.get("dj_dw2_tp_watcher", "b439775d62ba4852b14520fa2618a81b");
+	log.events.createEvent()
+	.text("app launched")
+	.tags("gw2tpwatcher")
+	.post();
+		
+	
 });
+
+
 
 var frequencyInterval;
 var frequency ;

@@ -1,60 +1,87 @@
 ﻿<!DOCTYPE html>
 <html>
-
-<head>
-    <link rel="stylesheet" href="style.css" />
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-   
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
-    <title>GW2 TP Watcher: Help</title>
-</head>
-
-<body>
-<div class="helpContainer">
-	<div class="container" >
-	    <h3>Watch Window</h3>
+	<head> 
+		<link rel="stylesheet" href="style_watch.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		
-		<div class="row">
-			<div class="col-sm-5 col-xs-12 ">
-				<img src="image/watchLayout.png" class="img-responsive">
-			</div>
+		
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<title>GW2 TP Watcher:Help</title>
+		
+		
 
-			<div class="col-sm-7 col-xs-12 ">
-				<p>This will be the main window which all your trading post information will be displayed. </p>
+ 	
+			<!-- remember to combine these two before releasing-->
+		<script src="windowControl.js"></script>
+		
+	</head>
+
+	<body class="solid-body"  onload="loadHelp();">
+		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
+		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
+		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
+		<div class="resizeGrip" id="resizeGripRight" onmousedown="dragResize('Right');"></div>
+		<div class="resizeGrip" id="resizeGripBottomRight" onmousedown="dragResize('BottomRight');"></div>
+		<div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
+		<div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
+		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
+	
+		<div id="menu-header" class="menu-header">
+			<div id="move-container" class="move-container" onmousedown="dragMove();">
+				Help
+				<button id="close" class="icon-button close-button "  onclick="closeWindow();">
+					<i class="fa fa-times fa-lg icon close-icon"></i>
+				</button>
+				<button id="min" class="icon-button minus-button "  onclick="minimizeWindow();">
+					<i class="fa fa-minus icon minus-icon"></i>
+				</button>
+				
 			
-				<p><u>Add Items:</u> Opens the search window which items can be searched and added to the watch list.</p>
-				<p><u>Refresh:</u> Use the drop down to change the frequency which the watch items are updated from the GW2 API servers. To manually refresh the data, press the refresh button.</p>
+			
 			</div>
 		</div>
-		<hr>
-		<h3>Watched Item</h3>
-		<div class="row">
-			<div class="col-xs-12 col-sm-4">
-				<img src="image/watchItem.png" class="img-responsive">
+		<div id="main-container" >
+	
+	
+			 <h3>Watch Window</h3>
+		
+		<div>
+			<div >
+				<img src="image/watchLayout.png" >
 			</div>
 
-			<div class="col-xs-12 col-sm-8">
+			<div >
+				<p>This will be the main window which all your trading post information will be displayed. </p>
+			
+				<p><i class="fa fa-plus icon "></i> - Opens the search window which items can be searched and added to the watch list.</p>
+				<p><i class="fa fa-refresh icon "></i> - Refreshes the item trading post data.</p>
+				<p><i class="fa fa-cog icon "></i> - Provides options to change the refresh rate and window transparency.</p>
+			</div>
+	
+		<hr>
+		<h3>Watched Item</h3>
+		<div >
+			<div >
+				<img src="image/watchItem.png" >
+			</div>
+
+			<div >
 				<p>Any watched items will be updated every interval specified by the refresh rate. The items best selling offer and buying offer as reported by the GW2 APIs will be displayed.</p>
 				<p><u>Item Drop Down</u></p>
-				<dl class="dl-horizontal">
+				<dl >
 				  <dt>
-				  <span class="glyphicon glyphicon-unchecked">
-				  </span>
+			
 				  Show Historical</dt>
 				  <dd>This will display the historical price chart.</dd>
 				  
 				  <dt>
-				  <span class="glyphicon glyphicon-unchecked">
-				  </span>
+				 
 				  Show Stock</dt>
 				  <dd>This will display the prices and the stocks at each price for the top 5 best buying/selling price. The best price is defined as the highest buying price and the lowest selling price.</dd>
 				  
 				 
 				  <dt>
-				  <span class="glyphicon glyphicon-unchecked">
-				  </span>
+				 
 				  Rescale Bars</dt>
 				  <dd>Rescales the stock (orange) bars. This allows shorter bars to be viewed easier. Enabling this option will cause the bars to no longer be proportional to each other, but their relative sizes will still be correct.</dd>
 				</dl>
@@ -65,30 +92,30 @@
 		<hr>
 
 		<h4>Historical Chart</h4>
-		<div class="row">
-			<div class="col-xs-12">
-				<img src="image/historicalChart.png" class="img-responsive">
+		<div >
+			<div >
+				<img src="image/historicalChart.png" >
 			</div>
-			<div class="col-xs-12">
+			<div >
 				<p>Shows the price of the current top buying and selling offers over time. New data points are added every interval set by the refresh rate. The red line represents the selling price and the blue line represents the buying price.</p>
 			</div>
 		</div>
 		
 		<h4>Stock Chart</h4>
-		<div class="row">
-			<div class="col-xs-6">
+		<div >
+			<div >
 				
-				<img src="image/stockNoRescale.png" class="img-responsive">
+				<img src="image/stockNoRescale.png" >
 				  <div class="caption">Stock Chart without rescaling</div>
 			</div>
-				<div class="col-xs-6">
+				<div >
 		
-				<img src="image/stockRescale.png" class="img-responsive">
+				<img src="image/stockRescale.png" >
 				<div class="caption">Stock Chart with rescaling</div>
 			</div>
-			<div class="col-xs-12">
+			<div c>
 				<p>The stock chart is divided into three parts.</p>
-				<dl class="dl-horizontal">
+				<dl >
 					<dt>Line and points</dt> 
 					<dd>These represents the top 5 buying and selling prices for the item.</dd>
 					<dt>The middle interval</dt>
@@ -101,10 +128,10 @@
 				
 			</div>
 		</div>
-		
-	</div>
-	</div>
 	
-</body>
-
+		</div>
+				
+			
+		
+	</body>
 </html>

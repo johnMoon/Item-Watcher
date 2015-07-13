@@ -32,7 +32,7 @@
 				},
 			"HelpWindow":{
 					"file":"Files/helpWindow.html",
-					"transparent":false,
+					"transparent":true,
 					"resizable":true,
 					"size":{"width":800, "height":600},
 					"min_size":{"width":800, "height":600},

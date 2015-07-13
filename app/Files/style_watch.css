@@ -396,10 +396,10 @@ input[type="checkbox"] + label span {
 input[type="checkbox"]:checked + label span {
     background:url("image/cb-checked.png")  no-repeat;
 }
-input[type="checkbox"] + label span:hover  {
+input[type="checkbox"] + label:hover span {
     background:url("image/cb-uncheck-hover.png") no-repeat;
 }
-input[type="checkbox"]:checked + label span:hover {
+input[type="checkbox"]:checked + label:hover span {
     background:url("image/cb-checked-hover.png")  no-repeat;
 }
 .sub-checkbox {
