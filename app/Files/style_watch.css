@@ -93,7 +93,6 @@ position: absolute;
 	left: 5px;
 	right: 5px;
 	bottom:5px;
-	overflow-y: auto;
 }
 
 #resizeGripTop {
@@ -607,4 +606,16 @@ bottom: 6px;
 
 	background-color:#E7DDD1;
 
+}
+
+
+.scroll-container {
+	overflow-y: auto;
+}
+
+
+.no-margin{
+margin:0px;} 
+.no-padding{
+padding:0px;
 }

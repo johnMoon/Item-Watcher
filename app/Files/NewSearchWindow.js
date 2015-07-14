@@ -639,17 +639,15 @@ function onImageFail(img) {
 // Listeners
 
 function resizeListener() {
-    var content = $("#content");
+    var content = $("#main-container");
     var searchHeader = $("#search-header");
     var resultContainer = $("#result-container");
-    var footerContainer = $("#search-footer");
-	var checkboxContainer = $("#checkboxPanel");
-	var detailButton = $("#detailSearchButton");
-    var margin = 40;
+
 	
 	
-    resultContainer.height(content.height() - searchHeader.height() - footerContainer.height()  - margin);
-	
+
+    resultContainer.height(content.height() - searchHeader.height());
+
 	
 	
 
