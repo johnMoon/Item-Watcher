@@ -15,9 +15,11 @@
 	"data": {
 		"start_window":"WatchWindow",
 		"windows":{
+
+				
 			"SubWindow":{
 					"file":"Files/searchWindow.html",
-					"transparent":false,
+					"transparent":true,
 					"resizable":true,
 					"size":{"width":368, "height":368},
 					"min_size":{"width":368, "height":368}

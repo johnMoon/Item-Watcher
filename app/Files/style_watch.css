@@ -59,12 +59,13 @@ body {
     height: 15px;
 }
 #main-container {
-    position: absolute;
-    top: 26px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    overflow-y: auto;
+
+	position: absolute;
+	top:26px;
+	left: 5px;
+	right: 5px;
+	bottom:5px;
+
 }
 #resizeGripTop {
     height: 5px;
@@ -427,4 +428,81 @@ select:focus {
 .option-label {
     position: absolute;
     bottom: 0px;
+}
+
+
+/* search */
+.spinner {
+  opacity: 0;
+  max-width: 0;
+
+  -webkit-transition: opacity 0.25s, max-width 0.45s; 
+  -moz-transition: opacity 0.25s, max-width 0.45s;
+  -o-transition: opacity 0.25s, max-width 0.45s;
+  transition: opacity 0.25s, max-width 0.45s; 
+}
+
+
+.spinner.active {
+  opacity: 1;
+  max-width: 50px; 
+}
+.gi-1x{font-size: 1em;}
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+.searchItemName{
+	display: inline-block;
+    width: 234px;
+    vertical-align: middle;
+    padding: 0;
+    margin: 0;
+
+
+}
+
+
+.search-item-cell {
+    border: 2px solid #e4e4e4;
+    width: 300px;
+    margin: 0px -2px -2px 0px;
+    display: inline-block;
+	position:relative;
+}
+
+.search-add-position{
+	position:absolute;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	width:28px;
+
+}
+
+.search-button {
+	border:0px;
+	background-color:#C0BA94;
+	color: rgba(26, 33, 32, 1);
+	outline:none;
+	box-shadow: 0px 0px 5px #888;
+}
+
+.search-button:hover {
+
+	background-color:#E7DDD1;
+
+}
+
+
+.scroll-container {
+	overflow-y: auto;
+}
+
+
+.no-margin{
+margin:0px;} 
+.no-padding{
+padding:0px;
 }

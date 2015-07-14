@@ -8,3 +8,7 @@ Instructions:<br>
 You can change the refresh rate with the drop down or instantly with the refresh button.<br>
 <br>
 Uses Spidy and the offical GW2 Api.
+
+Changes in version 1.1:<br>
+1. Fixed bugs with the searching window.<br>
+2. Changed UI.<br>
