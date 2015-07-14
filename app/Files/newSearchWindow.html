@@ -6,21 +6,13 @@
 		
 		
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<title>GW2 TP Watcher</title>
+		<title>GW2 TP Watcher:Search</title>
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={
-				'modules':[{
-				'name':'visualization',
-				'version':'1',
-				'packages':['corechart']
-				}]
-
-				}"></script>
-				
+	
 			<!-- remember to combine these two before releasing-->
 		<script src="windowControl.js"></script>
 		<script src="newSearchWindow.js"></script>
@@ -29,7 +21,7 @@
 	
 	
 	
-	<body class="transparent-body"  onload="loadWatch();">
+	<body class="solid-body"  onload="loadSearch();">
 		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
 		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
 		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
@@ -41,7 +33,7 @@
 	
 		<div id="menu-header" class="menu-header">
 			<div id="move-container" class="move-container" onmousedown="dragMove();">
-			
+				Search
 				<button id="close" class="icon-button close-button "  onclick="closeWindow();">
 					<i class="fa fa-times fa-lg icon close-icon"></i>
 				</button>
@@ -50,21 +42,6 @@
 				</button>
 				
 				
-				<button id="question" class="icon-button help-button"   onclick="openHelpPage();">
-						<i class="fa fa-question  icon"></i>
-				</button>
-				
-				<button id="option" class="icon-button option-button"   onclick="openOptionPage();">
-						<i class="fa fa-cog  icon"></i>
-				</button>
-				
-				<button id="refresh" class="icon-button refresh-button"   onclick="updateItemPrices();">
-						<i class="fa fa-refresh icon"></i>
-				</button>
-				
-				<button id="add" class="icon-button add-button"   onclick="openSubWindow();">
-						<i class="fa fa-plus  icon"></i>
-				</button>
 			
 			</div>
 		</div>

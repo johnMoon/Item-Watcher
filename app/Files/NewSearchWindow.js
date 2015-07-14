@@ -546,7 +546,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level) {
     span.addClass("searchItemName");
 
     var button = $(document.createElement('button'));
-    button.addClass("right-button  fa fa-plus  icon  ");
+    button.addClass("search-add-button  fa fa-plus  icon  ");
 
     button.click(
         function() {

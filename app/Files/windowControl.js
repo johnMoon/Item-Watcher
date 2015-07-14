@@ -93,9 +93,15 @@ function openNewSubWindow(){
 				ignoreMouseEvent("close");
 				ignoreMouseEvent("min");
 			};	
+		
+function loadSearch() {
+	ignoreMouseEvent("close");
+	ignoreMouseEvent("min");
+};	
 			
 		function ignoreMouseEvent(id) {
 			elem = document.getElementById(id);
 			elem.addEventListener("mousedown", stopEvent, false);
 		};	
+		
 			
