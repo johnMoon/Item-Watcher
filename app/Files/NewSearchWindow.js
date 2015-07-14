@@ -143,7 +143,7 @@ return;
 
     $('#resultList').empty(); // new search, remove old data
     disablePagination(); // reset pagination ui elements to first page
-    addSpinner();
+    //addSpinner();  // This might be cause of bug
     getSearchPage(searchTerm, requestedPage);
 
 
