@@ -592,13 +592,14 @@ bottom: 6px;
 	bottom:0px;
 	width:28px;
 	border:0px;
-	background-color:#8E8C8E;
+	background-color:#C0BA94;
 	color: rgba(26, 33, 32, 1);
 	outline:none;
+	box-shadow: 0px 0px 5px #888;
 }
 
 .search-add-button:hover {
-	color:#DED7AD;
-		background-color:#A28A57;
+
+	background-color:#E7DDD1;
 
 }
