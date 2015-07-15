@@ -488,7 +488,6 @@ select:focus {
 	background-color:#C0BA94;
 	color: rgba(26, 33, 32, 1);
 	outline:none;
-	box-shadow: 0px 0px 5px #888;
 }
 
 .search-button:hover {
@@ -507,6 +506,7 @@ select:focus {
 
 #pageNumber{
 	font-size:23px;
+	display:inline-block;
 }
 
 #nextButton{
@@ -518,12 +518,18 @@ select:focus {
 }
 
 #paginationPanel{
-float:right; 
-padding-right:7px;
-}
+	position:absolute;
+	right:0px;
+	top:0px;
+	}
 #notificationAlert{
-float:left;
-font-size:15px;
+	display:inline-block;
+	width: calc(100% - 60px);
+	
+}
+#notificationAndPagination{
+position:relative;
+height:30px;
 }
 
 #notificationButton{
@@ -552,7 +558,6 @@ padding:0px;
 	position:absolute;
 	height:21px;
 	right:22px;
-    box-shadow: 0px 0px 0px #888; 
 }
 
 
@@ -560,5 +565,4 @@ padding:0px;
 	position:absolute;
 	height:21px;
 	right:0px;
-	box-shadow: 0px 0px 0px #888; 
 }

@@ -340,7 +340,7 @@ function queryCalculateItemMap(searchTerm, pageNumber) {
             $("#notificationItemName").text("The server is down at the moment. Please try again later.");
 
             $("#notificationItemName").css('color', "red");
-            $("#notificationAlert").show();
+            $("#notificationAlert").visible();
         }
 
         removeSpinner();
@@ -654,7 +654,18 @@ function resizeListener() {
 }
 
 
-
+(function($) {
+    $.fn.invisible = function() {
+        return this.each(function() {
+            $(this).css("visibility", "hidden");
+        });
+    };
+    $.fn.visible = function() {
+        return this.each(function() {
+            $(this).css("visibility", "visible");
+        });
+    };
+}(jQuery));
 
 // resize on load!
 
@@ -663,7 +674,7 @@ $(function() {
 
     // any data hide alerts will hide instead of remove itself
     $("#notificationButton").on("click", function() {
-        $("#notificationAlert").hide();
+        $("#notificationAlert").invisible();
         resizeListener();
     });
 	// check if loading all tp items are done
@@ -686,7 +697,7 @@ function onStorageEvent(storageEvent) {
 
         $("#notificationItemName").css('color', "white");
         $("#notificationItemName").text("Item " + storageEvent.newValue + " is already watched");
-        $("#notificationAlert").show();
+        $("#notificationAlert").visible();
 
         resizeListener();
         // done with the event

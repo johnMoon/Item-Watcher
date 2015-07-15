@@ -21,8 +21,8 @@
 					"file":"Files/searchWindow.html",
 					"transparent":true,
 					"resizable":true,
-					"size":{"width":368, "height":368},
-					"min_size":{"width":368, "height":368}
+					"size":{"width":630, "height":368},
+					"min_size":{"width":630, "height":368}
 				},
 			"HelpWindow":{
 					"file":"Files/helpWindow.html",

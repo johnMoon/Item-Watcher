@@ -42,19 +42,20 @@
 			
 				<button   id="searchButton"  onclick="search()" class="search-button fa fa-search " >
 				</button>
-				<button id = "detailSearchButton"  class = " search-button fa fa-filter " ></Button>			
+				<button id = "detailSearchButton"  class = " search-button fa fa-filter " ></button>			
 			</div>
 		
-            <div id="notificationAndPagination" style = "width:100%;">
-               <div id="notificationAlert" class="alert alert-info alert-dismissible" role="alert" style="display:none; ">
+            <div id="notificationAndPagination" >
+               <div id="notificationAlert"  style="visibility:hidden; ">
                   <span id="notificationItemName"></span> 
-                  <span id = "notificationError"></span>
                   <button id="notificationButton"  type="button" class="fa  fa-times fa-lg icon close-icon "   ></button>
                </div>
                <div id = "paginationPanel">
-                  <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i> 				
-                  <a id="pageNumber">1</a>				
-                  <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
+					 <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i>
+						
+                  <div id="pageNumber">1</div>		
+					 <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
+                 
                </div>
             </div>
             <div id = "rarityFilter">
