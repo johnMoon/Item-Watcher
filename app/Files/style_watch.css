@@ -640,10 +640,14 @@ font-size:15px;
 #notificationButton{
 	background-color:transparent;
 	border-color: transparent;
-
+}
 .no-margin{
 margin:0px;} 
 .no-padding{
 padding:0px;
 
+}
+
+.checkbox-div-panel{
+	display:inline-block;
 }
