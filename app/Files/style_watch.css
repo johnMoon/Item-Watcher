@@ -447,11 +447,7 @@ select:focus {
   opacity: 1;
   max-width: 50px; 
 }
-.gi-1x{font-size: 1em;}
-.gi-2x{font-size: 2em;}
-.gi-3x{font-size: 3em;}
-.gi-4x{font-size: 4em;}
-.gi-5x{font-size: 5em;}
+
 
 .searchItemName{
 	display: inline-block;
@@ -543,4 +539,26 @@ padding:0px;
 
 .checkbox-div-panel{
 	display:inline-block;
+}
+
+#input{
+	width: calc(100% - 4px - 44px);
+}
+#search-bar{
+	position:relative;
+}
+
+#searchButton{
+	position:absolute;
+	height:21px;
+	right:22px;
+    box-shadow: 0px 0px 0px #888; 
+}
+
+
+#detailSearchButton{
+	position:absolute;
+	height:21px;
+	right:0px;
+	box-shadow: 0px 0px 0px #888; 
 }

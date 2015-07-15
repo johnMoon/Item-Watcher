@@ -1,149 +1,119 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" href="style_watch.css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		
-		
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<title>GW2 TP Watcher:Search</title>
-		
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	
-			<!-- remember to combine these two before releasing-->
-		<script src="windowControl.js"></script>
-		<script src="searchWindow.js"></script>
-	</head>
-	
-	
-	
-	
-	<body class="solid-body"  onload="loadSearch();"  onresize="resizeListener();">
-		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
-		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
-		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
-		<div class="resizeGrip" id="resizeGripRight" onmousedown="dragResize('Right');"></div>
-		<div class="resizeGrip" id="resizeGripBottomRight" onmousedown="dragResize('BottomRight');"></div>
-		<div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
-		<div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
-		<div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
-	
-		<div id="menu-header" class="menu-header">
-			<div id="move-container" class="move-container" onmousedown="dragMove();">
-				Search
-				<span id="cog-spinner" class="   spinner-margin spinner">
-					<i class="fa fa-spinner fa-spin "></i>
-				</span>
-				<button id="close" class="icon-button close-button "  onclick="closeWindow();">
-					<i class="fa fa-times fa-lg icon close-icon"></i>
-				</button>
-				<button id="min" class="icon-button minus-button "  onclick="minimizeWindow();">
-					<i class="fa fa-minus icon minus-icon"></i>
-				</button>
-				
-				
+   <head>
+      <link rel="stylesheet" href="style_watch.css" />
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+      <title>GW2 TP Watcher:Search</title>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+      <!-- remember to combine these two before releasing-->
+      <script src="windowControl.js"></script>
+      <script src="searchWindow.js"></script>
+   </head>
+   <body class="solid-body"  onload="loadSearch();"  onresize="resizeListener();">
+      <div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
+      <div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
+      <div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
+      <div class="resizeGrip" id="resizeGripRight" onmousedown="dragResize('Right');"></div>
+      <div class="resizeGrip" id="resizeGripBottomRight" onmousedown="dragResize('BottomRight');"></div>
+      <div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
+      <div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
+      <div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
+      <div id="menu-header" class="menu-header">
+         <div id="move-container" class="move-container" onmousedown="dragMove();">
+            Search
+            <span id="cog-spinner" class="   spinner-margin spinner">
+            <i class="fa fa-spinner fa-spin "></i>
+            </span>
+            <button id="close" class="icon-button close-button "  onclick="closeWindow();">
+            <i class="fa fa-times fa-lg icon close-icon"></i>
+            </button>
+            <button id="min" class="icon-button minus-button "  onclick="minimizeWindow();">
+            <i class="fa fa-minus icon minus-icon"></i>
+            </button>
+         </div>
+      </div>
+      <div id="main-container" >
+         <div id="search-header">
+			<div id="search-bar">
+				<input  id="input" type="text" class="search-box" placeholder="Item..." onkeypress="searchKeyPress(event)" >
 			
+				<button   id="searchButton"  onclick="search()" class="search-button fa fa-search " >
+				</button>
+				<button id = "detailSearchButton"  class = " search-button fa fa-filter " ></Button>			
 			</div>
-		</div>
-		<div id="main-container" >
 		
-			<div id="search-header">
-					<button id = "detailSearchButton"  class = " search-button fa fa-filter " style = "display:inline-block; float:right; height:21px;"></Button>			
-					<button   id="searchButton"  onclick="search()" class="search-button fa fa-search " onmouseup="blur()" type="button" style = "float:right; height:21px;" >
-					</button>
-					<div style = " overflow: hidden;" >
-					<input  id="input" type="text" class="search-box" placeholder="Item..." onkeypress="searchKeyPress(event)" style = "width:100%;">
-					</div>
-
-					<nav>
-					<ul class="pagination no-margin">
-						<li>
-							<a href="#" class = "fa-caret-left icon""aria-label="Previous" id="prevButton"  onclick="prevPage()" onmouseup="blur()">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-						<li class="active"><a id="pageNumber" href="#">1</a></li>
-						<li>
-							<a href="#" aria-label="Next" class = "fa-caret-right icon" id="nextButton"   onclick="nextPage()" onmouseup="blur()">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>	
-				
-					<div id = "rarityFilter">
-				
-					<div class="panel" id="checkboxPanel" style = "display: none;">
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxjunk" value = "junk">
-						<label for = "checkboxjunk" >
-							<span></span>Junk
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxbasic" value = "basic" >
-						<label for = "checkboxbasic" >
-							<span></span>Basic
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxfine" value = "fine">
-						<label for = "checkboxfine" >
-							<span></span>Fine
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxmasterwork" value = "masterwork">
-						<label for = "checkboxmasterwork" >
-							<span></span>Masterwork
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxrare" value = "rare">
-						<label for = "checkboxrare" >
-							<span></span>Rare
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxexotic" value = "exotic">
-						<label for = "checkboxexotic" >
-							<span></span>Exotic
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxascended" value = "ascended">
-						<label for = "checkboxascended" >
-							<span></span>Ascended
-						</label>
-					</div>
-					<div class="checkbox-div">
-						<input type="checkbox" id="checkboxlegendary" value = "legendary">
-						<label for = "checkboxlegendary" >
-							<span></span>Legendary
-						</label>
-					</div>
-				
-					</div>
-				</div>
-			</div>	
-			
-			<div  id ="result-container"  class="scroll-container" >
-				<ul id="resultList" class="no-margin no-padding" >
-				</ul> 
-			</div>	
-				
-        </div>
-			
-		
-		
-     
-				
-			
-		
-	</body>
-
-
+            <div id="notificationAndPagination" style = "width:100%;">
+               <div id="notificationAlert" class="alert alert-info alert-dismissible" role="alert" style="display:none; ">
+                  <span id="notificationItemName"></span> 
+                  <span id = "notificationError"></span>
+                  <button id="notificationButton"  type="button" class="fa  fa-times fa-lg icon close-icon "   ></button>
+               </div>
+               <div id = "paginationPanel">
+                  <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i> 				
+                  <a id="pageNumber">1</a>				
+                  <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
+               </div>
+            </div>
+            <div id = "rarityFilter">
+               <div class="panel" id="checkboxPanel" style = "display: none;">
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxjunk" value = "junk">
+                     <label for = "checkboxjunk" >
+                     <span></span>Junk
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxbasic" value = "basic" >
+                     <label for = "checkboxbasic" >
+                     <span></span>Basic
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxfine" value = "fine">
+                     <label for = "checkboxfine" >
+                     <span></span>Fine
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxmasterwork" value = "masterwork">
+                     <label for = "checkboxmasterwork" >
+                     <span></span>Masterwork
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxrare" value = "rare">
+                     <label for = "checkboxrare" >
+                     <span></span>Rare
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxexotic" value = "exotic">
+                     <label for = "checkboxexotic" >
+                     <span></span>Exotic
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxascended" value = "ascended">
+                     <label for = "checkboxascended" >
+                     <span></span>Ascended
+                     </label>
+                  </div>
+                  <div class="checkbox-div-panel">
+                     <input type="checkbox" id="checkboxlegendary" value = "legendary">
+                     <label for = "checkboxlegendary" >
+                     <span></span>Legendary
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div  id ="result-container"  class="scroll-container" >
+            <ul id="resultList" class="no-margin no-padding" >
+            </ul>
+         </div>
+      </div>
+   </body>
 </html>
