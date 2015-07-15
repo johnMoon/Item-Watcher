@@ -52,22 +52,24 @@
 			<div style = " overflow: hidden;" >
 			<input  id="input" type="text" class="form-control" placeholder="Item..." onkeypress="searchKeyPress(event)" style = "width:100%;">
         </div>
+		 
+		 
+		 
+		 <div id= "notificationAndPagination" style = "width:100%;">
+		 <div id="notificationAlert" class="alert alert-info alert-dismissible" role="alert" style="display:none; ">
+                <span id="notificationItemName"></span> 
+				<span id = "notificationError"></span>
+				<button id="notificationButton"  type="button" class="fa  fa-times fa-lg icon close-icon "   ></button>
+         </div>
 
-		<nav>
-			<ul class="pagination no-margin">
-				<li>
-					<a href="#" class = "fa-caret-left icon""aria-label="Previous" id="prevButton"  onclick="prevPage()" onmouseup="blur()">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-				<li class="active"><a id="pageNumber" href="#">1</a></li>
-				<li>
-					<a href="#" aria-label="Next" class = "fa-caret-right icon" id="nextButton"   onclick="nextPage()" onmouseup="blur()">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
-			</ul>
-		</nav>	
+		 
+		<div id = "paginationPanel">
+			<i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i> 				
+			<a id="pageNumber">1</a>				
+			<i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
+		</div>		
+		</div>
+		
 		
 			<div id = "rarityFilter">
 			
@@ -125,7 +127,7 @@
 			</div>
 			
 				<div  id ="result-container" class="resultContainer">
-				<ul id="resultList"  class="none-list" style = "padding-left:0px; ">
+				<ul id="resultList"  class="none-list" style = "padding-left:0px; padding-top:10px; ">
 				</ul> 
 			</div>	
 			

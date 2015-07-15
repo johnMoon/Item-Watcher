@@ -686,7 +686,7 @@ function onStorageEvent(storageEvent) {
     if (storageEvent.key.indexOf("item-exists") != -1) {
 
 
-        $("#notificationItemName").css('color', "black");
+        $("#notificationItemName").css('color', "white");
         $("#notificationItemName").text("Item " + storageEvent.newValue + " is already watched");
         $("#notificationAlert").show();
 

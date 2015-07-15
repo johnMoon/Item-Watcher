@@ -602,3 +602,29 @@ bottom: 6px;
 		background-color:#A28A57;
 
 }
+
+#pageNumber{
+	font-size:23px;
+}
+
+#nextButton{
+
+
+}
+#prevButton{
+
+}
+
+#paginationPanel{
+float:right; 
+padding-right:7px;
+}
+#notificationAlert{
+float:left;
+font-size:15px;
+}
+
+#notificationButton{
+	background-color:transparent;
+	border-color: transparent;
+}
