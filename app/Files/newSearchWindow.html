@@ -49,12 +49,13 @@
 			</div>
 		</div>
 		<div id="main-container" >
+			<div class="search-container">
 			<button id = "detailSearchButton"  class = "fa fa-filter  icon" style = "display:inline-block; float:right; height:21px;"></Button>			
 			<button   id="searchButton"  onclick="search()" class="fa fa-search icon" onmouseup="blur()" type="button" style = "float:right; height:21px;" >
 			</button>
 			<div style = " overflow: hidden;" >
 			<input  id="input" type="text" class="form-control" placeholder="Item..." onkeypress="searchKeyPress(event)" style = "width:100%;">
-        </div>
+			</div>
 		 
 		 
 		 
@@ -127,11 +128,11 @@
 				
 					</div>
 				</div>
-				
-			<div  id ="result-container" class="resultContainer">
-				<ul id="resultList"  class="none-list" style = "padding-left:0px; padding-top:12px; "/>
-				</div>		
 			</div>	
+			<div  id ="result-container" class="scroll-container">
+				<ul id="resultList"  class="none-list" style = "padding-left:0px; padding-top:12px; "/>
+			</div>		
+		</div>	
 			
 
 				
