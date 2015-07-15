@@ -21,7 +21,7 @@
 	
 	
 	
-	<body class="solid-body"  onload="loadSearch();">
+	<body class="solid-body"  onload="loadSearch();"  onresize="resizeListener();">
 		<div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
 		<div class="resizeGrip" id="resizeGripTop" onmousedown="dragResize('Top');"></div>
 		<div class="resizeGrip" id="resizeGripTopRight" onmousedown="dragResize('TopRight');"></div>
@@ -34,6 +34,9 @@
 		<div id="menu-header" class="menu-header">
 			<div id="move-container" class="move-container" onmousedown="dragMove();">
 				Search
+				<span id="cog-spinner" class="   spinner-margin spinner">
+					<i class="fa fa-spinner fa-spin "></i>
+				</span>
 				<button id="close" class="icon-button close-button "  onclick="closeWindow();">
 					<i class="fa fa-times fa-lg icon close-icon"></i>
 				</button>
@@ -70,68 +73,70 @@
 		</div>		
 		</div>
 		
-		
-			<div id = "rarityFilter">
-			
-				<div class="panel" id="checkboxPanel" style = "display: none;">
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxjunk" value = "junk">
-					<label for = "checkboxjunk" >
-						<span></span>Junk
-					</label>
+					<div id = "rarityFilter" style = "padding-top:12px;">
+				
+					<div class="panel" id="checkboxPanel" style = "display: none;">
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxjunk" value = "junk">
+						<label for = "checkboxjunk" >
+							<span></span>Junk
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxbasic" value = "basic" >
+						<label for = "checkboxbasic" >
+							<span></span>Basic
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxfine" value = "fine">
+						<label for = "checkboxfine" >
+							<span></span>Fine
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxmasterwork" value = "masterwork">
+						<label for = "checkboxmasterwork" >
+							<span></span>Masterwork
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxrare" value = "rare">
+						<label for = "checkboxrare" >
+							<span></span>Rare
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxexotic" value = "exotic">
+						<label for = "checkboxexotic" >
+							<span></span>Exotic
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxascended" value = "ascended">
+						<label for = "checkboxascended" >
+							<span></span>Ascended
+						</label>
+					</div>
+					<div class="checkbox-div">
+						<input type="checkbox" id="checkboxlegendary" value = "legendary">
+						<label for = "checkboxlegendary" >
+							<span></span>Legendary
+						</label>
+					</div>
+				
+					</div>
 				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxbasic" value = "basic" >
-					<label for = "checkboxbasic" >
-						<span></span>Basic
-					</label>
-				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxfine" value = "fine">
-					<label for = "checkboxfine" >
-						<span></span>Fine
-					</label>
-				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxmasterwork" value = "masterwork">
-					<label for = "checkboxmasterwork" >
-						<span></span>Masterwork
-					</label>
-				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxrare" value = "rare">
-					<label for = "checkboxrare" >
-						<span></span>Rare
-					</label>
-				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxexotic" value = "exotic">
-					<label for = "checkboxexotic" >
-						<span></span>Exotic
-					</label>
-				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxascended" value = "ascended">
-					<label for = "checkboxascended" >
-						<span></span>Ascended
-					</label>
-				</div>
-				<div class="checkbox-div">
-					<input type="checkbox" id="checkboxlegendary" value = "legendary">
-					<label for = "checkboxlegendary" >
-						<span></span>Legendary
-					</label>
-				</div>
-			
-				</div>
-			</div>
-			
-				<div  id ="result-container" class="resultContainer">
-				<ul id="resultList"  class="none-list" style = "padding-left:0px; padding-top:12px; ">
-				</ul> 
+				
+			<div  id ="result-container" class="resultContainer">
+				<ul id="resultList"  class="none-list" style = "padding-left:0px; padding-top:12px; "/>
+				</div>		
 			</div>	
 			
-         </div>
+
+				
+				
+      
 			
 		
 		

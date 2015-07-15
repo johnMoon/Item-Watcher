@@ -143,7 +143,7 @@ return;
 
     $('#resultList').empty(); // new search, remove old data
     disablePagination(); // reset pagination ui elements to first page
-    addSpinner();
+    //addSpinner();  // This might be cause of bug
     getSearchPage(searchTerm, requestedPage);
 
 
@@ -546,7 +546,7 @@ function createSearchItem(itemId, imageSrc, itemName, rarity, level) {
     span.addClass("searchItemName");
 
     var button = $(document.createElement('button'));
-    button.addClass("search-add-button  fa fa-plus  icon  ");
+    button.addClass("search-button search-add-position fa fa-plus ");
 
     button.click(
         function() {
@@ -639,17 +639,15 @@ function onImageFail(img) {
 // Listeners
 
 function resizeListener() {
-    var content = $("#content");
+    var content = $("#main-container");
     var searchHeader = $("#search-header");
     var resultContainer = $("#result-container");
-    var footerContainer = $("#search-footer");
-	var checkboxContainer = $("#checkboxPanel");
-	var detailButton = $("#detailSearchButton");
-    var margin = 40;
+
 	
 	
-    resultContainer.height(content.height() - searchHeader.height() - footerContainer.height()  - margin);
-	
+
+    resultContainer.height(content.height() - searchHeader.height());
+
 	
 	
 

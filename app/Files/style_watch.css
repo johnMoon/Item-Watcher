@@ -93,7 +93,6 @@ position: absolute;
 	left: 5px;
 	right: 5px;
 	bottom:5px;
-	overflow-y: auto;
 }
 
 #resizeGripTop {
@@ -585,23 +584,37 @@ bottom: 6px;
     display: inline-block;
 	position:relative;
 }
-.search-add-button {
+
+.search-add-position{
 	position:absolute;
 	top:0px;
 	right:0px;
 	bottom:0px;
 	width:28px;
+
+}
+
+.search-button {
 	border:0px;
-	background-color:#8E8C8E;
+	background-color:#C0BA94;
 	color: rgba(26, 33, 32, 1);
 	outline:none;
+	box-shadow: 0px 0px 5px #888;
 }
 
-.search-add-button:hover {
-	color:#DED7AD;
-		background-color:#A28A57;
+.search-button:hover {
+
+	background-color:#E7DDD1;
 
 }
+
+
+.scroll-container {
+	overflow-y: auto;
+}
+
+
+
 
 #pageNumber{
 	font-size:23px;
@@ -627,4 +640,10 @@ font-size:15px;
 #notificationButton{
 	background-color:transparent;
 	border-color: transparent;
+
+.no-margin{
+margin:0px;} 
+.no-padding{
+padding:0px;
+
 }
