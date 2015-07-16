@@ -122,6 +122,15 @@ body {
     bottom: 0;
     right: 0;
     cursor: nwse-resize;
+
+}
+
+#resizeGripBottomRightIcon {
+position: fixed;
+bottom: 0px;
+right: 0px;
+   
+
 }
 .icon {
     color: #DED7AD;
