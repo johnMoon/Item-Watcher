@@ -544,6 +544,7 @@ height:30px;
 #notificationButton{
 	background-color:transparent;
 	border-color: transparent;
+	outline:none;
 }
 .no-margin{
 margin:0px;} 
