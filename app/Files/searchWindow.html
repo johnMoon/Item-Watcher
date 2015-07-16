@@ -44,21 +44,7 @@
 				</button>
 				<button id = "detailSearchButton"  class = " search-button fa fa-filter " ></button>			
 			</div>
-		
-            <div id="notificationAndPagination" >
-               <div id="notificationAlert"  style="visibility:hidden; ">
-                  <span id="notificationItemName"></span> 
-                  <button id="notificationButton"  type="button" class="fa  fa-times fa-lg icon close-icon "   ></button>
-               </div>
-               <div id = "paginationPanel">
-					 <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i>
-						
-                  <div id="pageNumber">1</div>		
-					 <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
-                 
-               </div>
-            </div>
-            <div id = "rarityFilter">
+		 <div id = "rarityFilter">
                <div class="panel" id="checkboxPanel" style = "display: none;">
                   <div class="checkbox-div-panel">
                      <input type="checkbox" id="checkboxjunk" value = "junk">
@@ -110,6 +96,20 @@
                   </div>
                </div>
             </div>
+            <div id="notificationAndPagination" >
+               <div id="notificationAlert"  style="visibility:hidden; ">
+                  <span id="notificationItemName"></span> 
+                  <button id="notificationButton"  type="button" class="fa  fa-times fa-lg icon close-icon "   ></button>
+               </div>
+               <div id = "paginationPanel">
+					 <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i>
+						
+                  <div id="pageNumber">1</div>		
+					 <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
+                 
+               </div>
+            </div>
+           
          </div>
          <div  id ="result-container"  class="scroll-container" >
             <ul id="resultList" class="no-margin no-padding" >
