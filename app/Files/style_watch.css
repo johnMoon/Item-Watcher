@@ -620,12 +620,12 @@ bottom: 6px;
 	font-size:23px;
 }
 
-#nextButton{
-
+#nextButton:hover{
+color:#E7DDD1;
 
 }
-#prevButton{
-
+#prevButton:hover{
+color:#E7DDD1;
 }
 
 #paginationPanel{
