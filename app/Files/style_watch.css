@@ -518,12 +518,12 @@ select:focus {
 	display:inline-block;
 }
 
-#nextButton{
-
+#nextButton:hover{
+color:#E7DDD1;
 
 }
-#prevButton{
-
+#prevButton:hover{
+color:#E7DDD1;
 }
 
 #paginationPanel{
