@@ -59,13 +59,11 @@ body {
     height: 15px;
 }
 #main-container {
-
-	position: absolute;
-	top:26px;
-	left: 5px;
-	right: 5px;
-	bottom:5px;
-
+    position: absolute;
+    top: 26px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
 }
 #resizeGripTop {
     height: 5px;
@@ -122,15 +120,12 @@ body {
     bottom: 0;
     right: 0;
     cursor: nwse-resize;
-
 }
-
 #resizeGripBottomRightIcon {
-position: fixed;
-bottom: 0px;
-right: 0px;
-z-index: -3; 
-
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    z-index: -3;
 }
 .icon {
     color: #DED7AD;
@@ -438,141 +433,109 @@ select:focus {
     position: absolute;
     bottom: 0px;
 }
-
-
 /* search */
+
 .spinner {
-  opacity: 0;
-  max-width: 0;
-
-  -webkit-transition: opacity 0.25s, max-width 0.45s; 
-  -moz-transition: opacity 0.25s, max-width 0.45s;
-  -o-transition: opacity 0.25s, max-width 0.45s;
-  transition: opacity 0.25s, max-width 0.45s; 
+    opacity: 0;
+    max-width: 0;
+    -webkit-transition: opacity 0.25s, max-width 0.45s;
+    -moz-transition: opacity 0.25s, max-width 0.45s;
+    -o-transition: opacity 0.25s, max-width 0.45s;
+    transition: opacity 0.25s, max-width 0.45s;
 }
-
-
 .spinner.active {
-  opacity: 1;
-  max-width: 50px; 
+    opacity: 1;
+    max-width: 50px;
 }
-
-
-.searchItemName{
-	display: inline-block;
+.searchItemName {
+    display: inline-block;
     width: 234px;
     vertical-align: middle;
     padding: 0;
     margin: 0;
-
-
 }
-
-
 .search-item-cell {
     border: 2px solid #e4e4e4;
     width: 300px;
     margin: 0px -2px -2px 0px;
     display: inline-block;
-	position:relative;
+    position: relative;
 }
-
-.search-add-position{
-	position:absolute;
-	top:0px;
-	right:0px;
-	bottom:0px;
-	width:28px;
-
+.search-add-position {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 28px;
 }
-.search-box{
- background-color: rgba(26, 33, 32, 1);
- color:white;
- border: 2px solid #C0BA94;
- 	outline:none;
+.search-box {
+    background-color: rgba(26, 33, 32, 1);
+    color: white;
+    border: 2px solid #C0BA94;
+    outline: none;
 }
-
 .search-button {
-	border:0px;
-	background-color:#C0BA94;
-	color: rgba(26, 33, 32, 1);
-	outline:none;
+    border: 0px;
+    background-color: #C0BA94;
+    color: rgba(26, 33, 32, 1);
+    outline: none;
 }
-
 .search-button:hover {
-
-	background-color:#E7DDD1;
-
+    background-color: #E7DDD1;
 }
-
-
 .scroll-container {
-	overflow-y: auto;
+    overflow-y: auto;
 }
-
-
-
-
-#pageNumber{
-	font-size:23px;
-	display:inline-block;
+#pageNumber {
+    font-size: 23px;
+    display: inline-block;
 }
-
-#nextButton:hover{
-color:#E7DDD1;
-
+#nextButton:hover {
+    color: #E7DDD1;
 }
-#prevButton:hover{
-color:#E7DDD1;
+#prevButton:hover {
+    color: #E7DDD1;
 }
-
-#paginationPanel{
-	position:absolute;
-	right:0px;
-	top:0px;
-	}
-#notificationAlert{
-	display:inline-block;
-	width: calc(100% - 60px);
-	
+#paginationPanel {
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }
-#notificationAndPagination{
-position:relative;
-height:30px;
+#notificationAlert {
+    display: inline-block;
+    width: calc(100% - 60px);
 }
-
-#notificationButton{
-	background-color:transparent;
-	border-color: transparent;
-	outline:none;
+#notificationAndPagination {
+    position: relative;
+    height: 30px;
 }
-.no-margin{
-margin:0px;} 
-.no-padding{
-padding:0px;
-
+#notificationButton {
+    background-color: transparent;
+    border-color: transparent;
+    outline: none;
 }
-
-.checkbox-div-panel{
-	display:inline-block;
+.no-margin {
+    margin: 0px;
 }
-
-#input{
-	width: calc(100% - 4px - 44px);
+.no-padding {
+    padding: 0px;
 }
-#search-bar{
-	position:relative;
+.checkbox-div-panel {
+    display: inline-block;
 }
-
-#searchButton{
-	position:absolute;
-	height:21px;
-	right:22px;
+#input {
+    width: calc(100% - 4px - 44px);
 }
-
-
-#detailSearchButton{
-	position:absolute;
-	height:21px;
-	right:0px;
+#search-bar {
+    position: relative;
+}
+#searchButton {
+    position: absolute;
+    height: 21px;
+    right: 22px;
+}
+#detailSearchButton {
+    position: absolute;
+    height: 21px;
+    right: 0px;
 }
