@@ -21,9 +21,7 @@
       <div class="resizeGrip" id="resizeGripBottom" onmousedown="dragResize('Bottom');"></div>
       <div class="resizeGrip" id="resizeGripBottomLeft" onmousedown="dragResize('BottomLeft');"></div>
       <div class="resizeGrip" id="resizeGripLeft" onmousedown="dragResize('Left');"></div>
-	  
-	 <img  id="resizeGripBottomRightIcon" src="image/resizeCorner.png" height="10" width="10" >
-	  
+      <img  id="resizeGripBottomRightIcon" src="image/resizeCorner.png" height="10" width="10" >
       <div id="menu-header" class="menu-header">
          <div id="move-container" class="move-container" onmousedown="dragMove();">
             Search
@@ -40,14 +38,13 @@
       </div>
       <div id="main-container" >
          <div id="search-header">
-			<div id="search-bar">
-				<input  id="input" type="text" class="search-box" placeholder="Item..." onkeypress="searchKeyPress(event)" >
-			
-				<button   id="searchButton"  onclick="search()" class="search-button fa fa-search " >
-				</button>
-				<button id = "detailSearchButton"  class = " search-button fa fa-filter " ></button>			
-			</div>
-		 <div id = "rarityFilter">
+            <div id="search-bar">
+               <input  id="input" type="text" class="search-box" placeholder="Item..." onkeypress="searchKeyPress(event)" >
+               <button   id="searchButton"  onclick="search()" class="search-button fa fa-search " >
+               </button>
+               <button id = "detailSearchButton"  class = " search-button fa fa-filter " ></button>			
+            </div>
+            <div id = "rarityFilter">
                <div class="panel" id="checkboxPanel" style = "display: none;">
                   <div class="checkbox-div-panel">
                      <input type="checkbox" id="checkboxjunk" value = "junk">
@@ -105,14 +102,11 @@
                   <button id="notificationButton"  type="button" class="fa  fa-times fa-lg icon close-icon "   ></button>
                </div>
                <div id = "paginationPanel">
-					 <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i>
-						
-                  <div id="pageNumber">1</div>		
-					 <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
-                 
+                  <i  class = "fa fa-caret-left icon fa-2x" id="prevButton"  onclick="prevPage()"></i>
+                  <div id="pageNumber">1</div>
+                  <i  class = "fa fa-caret-right icon fa-2x" id="nextButton"   onclick="nextPage()" ></i> 
                </div>
             </div>
-           
          </div>
          <div  id ="result-container"  class="scroll-container" >
             <ul id="resultList" class="no-margin no-padding" >
