@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
    <head>
-      <link rel="stylesheet" href="style_watch.css" />
+      <link rel="stylesheet" href="style_watch.min.css" />
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
       <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
       <title>GW2 TP Watcher</title>
@@ -16,9 +16,9 @@
          }]
          }"></script>
       <script type="text/javascript" src="http://api.loggr.net/1/loggr.min.js"></script>
-      <!-- remember to combine these two before releasing-->
-      <script src="windowControl.js"></script>
-      <script src="watchWindow.js"></script>
+      <!-- remember to use min version for productiong-->
+      <script src="windowControl.min.js"></script>
+      <script src="watchWindow.min.js"></script>
    </head>
    <body class="transparent-body"  onload="loadWatch();">
       <div class="resizeGrip" id="resizeGripTopLeft" onmousedown="dragResize('TopLeft');"></div>
