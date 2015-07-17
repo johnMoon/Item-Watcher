@@ -94,21 +94,19 @@ function ignoreMouseEvent(id) {
     elem.addEventListener("mousedown", stopEvent, false);
 };
 
-function openNewSubWindow(){
-	overwolf.windows.obtainDeclaredWindow("NewSubWindow", function (result) {
-		if (result.status == "success") {
-			overwolf.windows.restore(result.window.id, function (result) {
+function openNewSubWindow() {
+    overwolf.windows.obtainDeclaredWindow("NewSubWindow", function(result) {
+        if (result.status == "success") {
+            overwolf.windows.restore(result.window.id, function(result) {
 
-			});
-		}
-	});
-	
+            });
+        }
+    });
+
 }
 
-		
+
 function loadSearch() {
-	ignoreMouseEvent("close");
-	ignoreMouseEvent("min");
-};	
-			
-	
+    ignoreMouseEvent("close");
+    ignoreMouseEvent("min");
+};
